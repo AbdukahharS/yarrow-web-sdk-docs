@@ -5,7 +5,7 @@
       This document provides a guide to using the Yarrow Map Web SDK for embed
       ding and interacting with Yarrow maps in your web application.
     </p>
-    <a href="#getting-started">Getting started</a>
+    <a href="#getting-started" class="btn-animate">Getting started</a>
   </div>
 </template>
 

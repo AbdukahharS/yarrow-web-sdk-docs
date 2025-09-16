@@ -3,53 +3,53 @@ import Main from './components/main.vue';
 import { ref, onMounted, onUnmounted } from 'vue'
 import sidebar from './components/sidebar.vue';
 
-const circles = ref<Array<{ top: string; left: string }>>([])
+// Pre-generate static circles to prevent any reactivity issues
+const generateStaticCircles = () => {
+  const numCircles = 8 // Fixed number of circles
 
-const calculateCircles = () => {
-  const viewportHeight = window.innerHeight
-  
-  // Calculate number of circles based on viewport height
-  // One circle roughly every 200px of height, minimum 5 circles
-  const numCircles = Math.max(5, Math.floor(viewportHeight / 200))
-  
-  const newCircles = []
-  
+  const staticCircles = []
+
+  // Predefined positions for controlled chaos
+  const positions = [
+    { top: 15, left: 12 },
+    { top: 25, left: 65 },
+    { top: 8, left: 88 },
+    { top: 35, left: 25 },
+    { top: 75, left: 15 },
+    { top: 85, left: 75 },
+    { top: 65, left: 45 },
+    { top: 90, left: 92 }
+  ]
+
   for (let i = 0; i < numCircles; i++) {
-    // Distribute circles vertically with some randomness
-    const baseTop = (i + 1) * (100 / (numCircles + 1))
-    const randomTopOffset = (Math.random() - 0.5) * 20 // ±10% variation
-    const top = Math.max(5, Math.min(95, baseTop + randomTopOffset))
-    
-    // Random horizontal positioning
-    const left = Math.random() * 100 // Between 0% and 100%
-
-    newCircles.push({
-      top: `${top}%`,
-      left: `${left}%`
+    staticCircles.push({
+      top: `${positions[i].top}%`,
+      left: `${positions[i].left}%`
     })
   }
-  
-  circles.value = newCircles
+
+  return staticCircles
 }
 
+const circles = ref(generateStaticCircles())
+
 onMounted(() => {
-  calculateCircles()
-  window.addEventListener('resize', calculateCircles)
+  // No resize listener - circles are now static
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', calculateCircles)
+  // Nothing to clean up
 })
 </script>
 
 <template>
   <div>
-    <div 
-      v-for="(circle, index) in circles" 
-      :key="index"
+    <div
+      v-for="(circle, index) in circles"
+      :key="`circle-${index}-${circle.top}-${circle.left}`"
       class="shadow-circle"
-      :style="{ 
-        top: circle.top, 
+      :style="{
+        top: circle.top,
         left: circle.left,
         '--delay': `${index * 0.5}s`
       }"

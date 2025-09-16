@@ -86,7 +86,9 @@ aside {
       transition: color 0.2s ease;
 
       &.active {
-        color: #007bff;
+        background: linear-gradient(180deg, #FE6D00 -72%, #FFFFFF 311%);
+        color: #ffffff;
+        border-radius: 12px;
       }
     }
   }

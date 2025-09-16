@@ -24,6 +24,7 @@ yarrowMap.init().then(() => {
 });`
 
 const highlightedCode = ref('')
+const copied = ref(false)
 
 onMounted(() => {
   highlightedCode.value = Prism.highlight(
@@ -33,8 +34,16 @@ onMounted(() => {
   )
 })
 
-const copyToClipboard = () => {
-  navigator.clipboard.writeText(codeContent)
+const copyToClipboard = async () => {
+  try {
+    await navigator.clipboard.writeText(codeContent)
+    copied.value = true
+    setTimeout(() => {
+      copied.value = false
+    }, 2000)
+  } catch (err) {
+    console.error('Failed to copy code: ', err)
+  }
 }
 </script>
 
@@ -45,8 +54,9 @@ const copyToClipboard = () => {
         <span>TS</span>
         <p>APP/page.tsx</p>
       </div>
-      <button class="copy-button" @click="copyToClipboard">
-        <img :src="clipboard" alt="copy" />
+      <button class="copy-button icon-animate" @click="copyToClipboard">
+        <img v-if="!copied" :src="clipboard" alt="copy" />
+        <span v-if="copied" class="copied-text">Copied!</span>
       </button>
     </div>
     <div class="body">
@@ -98,6 +108,12 @@ const copyToClipboard = () => {
       background: none;
       border: none;
       cursor: pointer;
+
+      .copied-text {
+        color: #fe6d00;
+        font-weight: 600;
+        font-size: 14px;
+      }
     }
   }
 
