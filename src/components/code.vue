@@ -1,42 +1,42 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import Prism from 'prismjs'
 import 'prismjs/themes/prism.css' // Light theme
 import 'prismjs/components/prism-typescript'
 import 'prismjs/components/prism-javascript'
 import clipboard from '../assets/clipboard.svg'
 
-const codeContent = `import { YarrowMap } from '@yarrow/yarrow-map-web-sdk';
+interface Props {
+  code: string
+  language?: string
+  filename?: string
+  fileType?: string
+}
 
-// Configuration for the map
-const mapConfig = {
-   container: 'map', // ID of the div element to render the map in
-   center: [69.2401, 41.2995], // Initial center of the map [longitude, latitude]
-   zoom: 12, // Initial zoom level
-};
-
-// Create a new map instance
-const yarrowMap = new YarrowMap(mapConfig);
-
-// Initialize the map
-yarrowMap.init().then(() => {
-   console.log('Map initialized successfully!');
-});`
+const props = withDefaults(defineProps<Props>(), {
+  language: 'typescript',
+  filename: 'code.ts',
+  fileType: 'TS'
+})
 
 const highlightedCode = ref('')
 const copied = ref(false)
 
+const prismLanguage = computed(() => {
+  return Prism.languages[props.language] || Prism.languages.typescript
+})
+
 onMounted(() => {
   highlightedCode.value = Prism.highlight(
-    codeContent,
-    Prism.languages.typescript,
-    'typescript'
+    props.code,
+    prismLanguage.value,
+    props.language
   )
 })
 
 const copyToClipboard = async () => {
   try {
-    await navigator.clipboard.writeText(codeContent)
+    await navigator.clipboard.writeText(props.code)
     copied.value = true
     setTimeout(() => {
       copied.value = false
@@ -51,8 +51,8 @@ const copyToClipboard = async () => {
   <div class="code">
     <div class="head">
       <div class="file-info">
-        <span>TS</span>
-        <p>APP/page.tsx</p>
+        <span>{{ props.fileType }}</span>
+        <p>{{ props.filename }}</p>
       </div>
       <button class="copy-button icon-animate" @click="copyToClipboard">
         <img v-if="!copied" :src="clipboard" alt="copy" />

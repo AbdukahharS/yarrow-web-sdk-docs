@@ -22,7 +22,7 @@ button {
   border: 1px solid #FFFFFF;
   width: 100%;
   max-width: 730px;
-  margin: 0 auto;
+  margin: 50px auto;
   border-radius: 50px;
   padding: 35px;
 }
@@ -57,4 +57,49 @@ button {
 .icon-animate:active {
   transform: scale(0.95);
   transition: all 0.1s ease;
+}
+
+/* Custom Scrollbar - Glass-like styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(254, 109, 0, 0.3);
+  border: 1px solid rgba(254, 109, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(254, 109, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: rgba(254, 109, 0, 0.4);
+  border: 1px solid rgba(254, 109, 0, 0.3);
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Firefox scrollbar styling */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1);
 }
