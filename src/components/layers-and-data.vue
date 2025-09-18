@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Code from './code.vue'
 
-const addLayerCode = `const myData = {
+const { t } = useI18n()
+
+const addLayerCode = computed(() => `const myData = {
   type: 'FeatureCollection',
   features: [
     {
@@ -18,25 +22,25 @@ const addLayerCode = `const myData = {
 };
 
 yarrowMap.addLayer(
-  'my-custom-layer', // A unique name for the layer
-  'circle', // The type of layer (e.g., 'circle', 'line', 'fill', 'symbol')
+  'my-custom-layer', // ${t('layersAndData.codeComments.uniqueLayerName')}
+  'circle', // ${t('layersAndData.codeComments.layerType')}
   myData,
   {
     'circle-radius': 10,
     'circle-color': '#ff0000',
   }
-);`
+);`)
 
-const advancedLayerCode = `yarrowMap.addLayer(
-  layerName,        // string - Unique identifier for the layer
-  layerType,        // Layer type: 'symbol', 'fill', 'line', 'background', 'raster', 'circle', 'heatmap', 'fill-extrusion', 'hillshade'
-  featureCollection, // GeoJSON FeatureCollection
-  paint,            // Paint properties object
-  layout,           // Layout properties object
-  iconSettings      // Icon configuration (width, height)
-);`
+const advancedLayerCode = computed(() => `yarrowMap.addLayer(
+  layerName,        // string - ${t('layersAndData.codeComments.uniqueIdentifier')}
+  layerType,        // ${t('layersAndData.codeComments.layerTypeOptions')}
+  featureCollection, // ${t('layersAndData.codeComments.geoJsonFeatureCollection')}
+  paint,            // ${t('layersAndData.codeComments.paintProperties')}
+  layout,           // ${t('layersAndData.codeComments.layoutProperties')}
+  iconSettings      // ${t('layersAndData.codeComments.iconConfiguration')}
+);`)
 
-const symbolLayerCode = `const symbolData = {
+const symbolLayerCode = computed(() => `const symbolData = {
   type: 'FeatureCollection',
   features: [
     {
@@ -57,7 +61,7 @@ yarrowMap.addLayer(
   },
   {
     'icon-image': 'custom-icon',
-    'icon-image-data': 'data:image/png;base64,...', // Base64 image data
+    'icon-image-data': 'data:image/png;base64,...', // ${t('layersAndData.codeComments.base64ImageData')}
     'icon-size': 0.8,
     'icon-allow-overlap': true,
     'text-field': ['get', 'name'],
@@ -66,12 +70,12 @@ yarrowMap.addLayer(
     'text-size': 14
   },
   {
-    width: 32,  // Icon width
-    height: 32  // Icon height
+    width: 32,  // ${t('layersAndData.codeComments.iconWidth')}
+    height: 32  // ${t('layersAndData.codeComments.iconHeight')}
   }
-);`
+);`)
 
-const lineLayerCode = `const lineData = {
+const lineLayerCode = computed(() => `const lineData = {
   type: 'FeatureCollection',
   features: [
     {
@@ -97,24 +101,24 @@ yarrowMap.addLayer(
     'line-join': 'round',
     'line-cap': 'round'
   }
-);`
+);`)
 
-const markersCode = `// Add a simple red marker (default color)
+const markersCode = computed(() => `// ${t('layersAndData.codeComments.addRedMarker')}
 const marker = yarrowMap.addMarker([41.3111, 69.2797]); // [latitude, longitude]
 
-// Add a marker with all options
+// ${t('layersAndData.codeComments.addMarkerOptions')}
 const customMarker = yarrowMap.addMarker([41.2995, 69.2401], {
-  element: customElement,     // HTMLElement - Custom marker element
-  color: '#0000ff',          // string - Marker color (default: '#FF0000')
-  draggable: true,           // boolean - Allow dragging (default: false)
-  offset: [0, -10],          // [number, number] - Pixel offset
-  anchor: 'bottom',          // Anchor position: 'center', 'top', 'bottom', 'left', 'right', etc.
-  onClick: () => {           // function - Click event handler
-    console.log('Marker clicked!');
+  element: customElement,     // ${t('layersAndData.codeComments.customMarkerElement')}
+  color: '#0000ff',          // ${t('layersAndData.codeComments.markerColor')}
+  draggable: true,           // ${t('layersAndData.codeComments.allowDragging')}
+  offset: [0, -10],          // ${t('layersAndData.codeComments.pixelOffset')}
+  anchor: 'bottom',          // ${t('layersAndData.codeComments.anchorPosition')}
+  onClick: () => {           // ${t('layersAndData.codeComments.clickEventHandler')}
+    console.log('${t('layersAndData.codeComments.markerClicked')}');
   }
 });
 
-// Add a marker with custom HTML element
+// ${t('layersAndData.codeComments.addCustomHTML')}
 const customElement = document.createElement('div');
 customElement.innerHTML = '📍';
 customElement.style.fontSize = '24px';
@@ -124,25 +128,25 @@ const htmlMarker = yarrowMap.addMarker([41.3050, 69.2500], {
   anchor: 'center'
 });
 
-// Remove a marker
-yarrowMap.removeMarker(marker);`
+// ${t('layersAndData.codeComments.removeMarker')}
+yarrowMap.removeMarker(marker);`)
 
-const removeLayerCode = `yarrowMap.removeLayer('my-custom-layer');`
+const removeLayerCode = computed(() => `yarrowMap.removeLayer('my-custom-layer');`)
 </script>
 
 <template>
   <div id="layers-and-data">
     <div class="container">
-      <h2>Working with Layers and Data</h2>
+      <h2>{{ t('layersAndData.title') }}</h2>
       <p>
-        Learn how to add custom data, markers, and layers to your map.
+        {{ t('layersAndData.description') }}
       </p>
     </div>
 
     <div class="container">
-      <h3>Adding a GeoJSON Layer</h3>
+      <h3>{{ t('layersAndData.addGeoJSON.title') }}</h3>
       <p>
-        You can add custom data to the map in the form of a <span>GeoJSON layer</span>. This is useful for displaying points, lines, or polygons.
+        {{ t('layersAndData.addGeoJSON.description', { geoJsonLayer: 'GeoJSON layer' }) }}
       </p>
     </div>
     <Code
@@ -153,9 +157,9 @@ const removeLayerCode = `yarrowMap.removeLayer('my-custom-layer');`
     />
 
     <div class="container">
-      <h3>Advanced Layer Configuration</h3>
+      <h3>{{ t('layersAndData.advancedConfig.title') }}</h3>
       <p>
-        The <span>addLayer</span> method supports advanced configuration options for different layer types:
+        {{ t('layersAndData.advancedConfig.description', { addLayer: 'addLayer' }) }}
       </p>
     </div>
     <Code
@@ -166,7 +170,7 @@ const removeLayerCode = `yarrowMap.removeLayer('my-custom-layer');`
     />
 
     <div class="container">
-      <h4>Symbol layer with custom icons:</h4>
+      <h4>{{ t('layersAndData.advancedConfig.symbolLayerTitle') }}</h4>
     </div>
     <Code
       :code="symbolLayerCode"
@@ -176,7 +180,7 @@ const removeLayerCode = `yarrowMap.removeLayer('my-custom-layer');`
     />
 
     <div class="container">
-      <h4>Line layer with styling:</h4>
+      <h4>{{ t('layersAndData.advancedConfig.lineLayerTitle') }}</h4>
     </div>
     <Code
       :code="lineLayerCode"
@@ -186,9 +190,9 @@ const removeLayerCode = `yarrowMap.removeLayer('my-custom-layer');`
     />
 
     <div class="container">
-      <h3>Adding and Removing Markers</h3>
+      <h3>{{ t('layersAndData.markers.title') }}</h3>
       <p>
-        You can add markers to the map to indicate specific locations.
+        {{ t('layersAndData.markers.description') }}
       </p>
     </div>
     <Code
@@ -200,22 +204,22 @@ const removeLayerCode = `yarrowMap.removeLayer('my-custom-layer');`
 
     <div class="container">
       <div class="marker-options">
-        <h4>Marker Options:</h4>
+        <h4>{{ t('layersAndData.markers.optionsTitle') }}</h4>
         <ul>
-          <li><span>element</span>: Custom HTML element for the marker</li>
-          <li><span>color</span>: Marker color (default: '#FF0000')</li>
-          <li><span>draggable</span>: Whether the marker can be dragged (default: false)</li>
-          <li><span>offset</span>: Pixel offset from the marker position</li>
-          <li><span>anchor</span>: Anchor point of the marker relative to its coordinates</li>
-          <li><span>onClick</span>: Click event handler function</li>
+          <li><span>element</span>: {{ t('layersAndData.markers.element') }}</li>
+          <li><span>color</span>: {{ t('layersAndData.markers.color') }}</li>
+          <li><span>draggable</span>: {{ t('layersAndData.markers.draggable') }}</li>
+          <li><span>offset</span>: {{ t('layersAndData.markers.offset') }}</li>
+          <li><span>anchor</span>: {{ t('layersAndData.markers.anchor') }}</li>
+          <li><span>onClick</span>: {{ t('layersAndData.markers.onClick') }}</li>
         </ul>
       </div>
     </div>
 
     <div class="container">
-      <h3>Removing a Layer</h3>
+      <h3>{{ t('layersAndData.removeLayer.title') }}</h3>
       <p>
-        You can remove a layer that you've previously added.
+        {{ t('layersAndData.removeLayer.description') }}
       </p>
     </div>
     <Code

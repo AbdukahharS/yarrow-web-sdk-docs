@@ -1,16 +1,23 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Logo from '../assets/logo.svg'
 
-const links = [
-  { name: 'Getting Started', href: '#getting-started' },
-  { name: 'Basic Map', href: '#basic-map' },
-  { name: 'Handling Events', href: '#handling-events' },
-  { name: 'Layers and Data', href: '#layers-and-data' },
-  { name: 'Routing', href: '#routing' },
-  { name: 'Search', href: '#search' },
-  { name: 'Public Transport', href: '#public-transport' },
-]
+const { t, locale } = useI18n()
+
+const links = computed(() => [
+  { name: t('nav.gettingStarted'), href: '#getting-started' },
+  { name: t('nav.basicMap'), href: '#basic-map' },
+  { name: t('nav.handlingEvents'), href: '#handling-events' },
+  { name: t('nav.layersAndData'), href: '#layers-and-data' },
+  { name: t('nav.routing'), href: '#routing' },
+  { name: t('nav.search'), href: '#search' },
+  { name: t('nav.publicTransport'), href: '#public-transport' },
+])
+
+const changeLocale = (newLocale: string) => {
+  locale.value = newLocale
+}
 
 const activeSection = ref('')
 
@@ -31,7 +38,7 @@ onMounted(() => {
     }
   )
 
-  links.forEach((link) => {
+  links.value.forEach((link) => {
     const element = document.querySelector(link.href)
     if (element) {
       observer?.observe(element)
@@ -47,6 +54,32 @@ onUnmounted(() => {
 <template>
   <aside>
     <img :src="Logo" />
+    <div class="language-switcher">
+      <span class="language-label">{{ t('ui.language') }}</span>
+      <div class="language-options">
+        <button
+          @click="changeLocale('en')"
+          :class="{ active: locale === 'en' }"
+          class="lang-btn"
+        >
+          EN
+        </button>
+        <button
+          @click="changeLocale('uz')"
+          :class="{ active: locale === 'uz' }"
+          class="lang-btn"
+        >
+          UZ
+        </button>
+        <button
+          @click="changeLocale('ru')"
+          :class="{ active: locale === 'ru' }"
+          class="lang-btn"
+        >
+          RU
+        </button>
+      </div>
+    </div>
     <div class="links">
       <a v-for="(link, index) in links" :key="index" :href="link.href" :class="{ active: activeSection === link.href }">
         {{ link.name }}
@@ -67,6 +100,48 @@ aside {
   border-top-right-radius: 60px;
   border-bottom-right-radius: 60px;
   padding: 65px 45px;
+
+  .language-switcher {
+    margin-top: 60px;
+    text-align: center;
+
+    .language-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #c2c2c2;
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .language-options {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+
+      .lang-btn {
+        background: transparent;
+        border: 1px solid #c2c2c2;
+        color: #c2c2c2;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          border-color: #fe6d00;
+          color: #fe6d00;
+        }
+
+        &.active {
+          background: #fe6d00;
+          border-color: #fe6d00;
+          color: #ffffff;
+        }
+      }
+    }
+  }
 
   .links {
     margin-top: 100px;

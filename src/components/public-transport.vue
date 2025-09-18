@@ -1,39 +1,43 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Code from './code.vue'
 
-const specificRouteCode = `const routeId = 'some-route-id';
+const { t } = useI18n()
+
+const specificRouteCode = computed(() => `const routeId = 'some-route-id';
 yarrowMap.showBusRoute(routeId).then(clearBusRoute => {
-  // To stop showing the bus route later
+  // ${t('publicTransport.codeComments.stopShowing')}
   // clearBusRoute();
-});`
+});`)
 
-const allBusesCode = `yarrowMap.showBusRoute().then(clearBusRoutes => {
-  // To stop showing all bus routes
+const allBusesCode = computed(() => `yarrowMap.showBusRoute().then(clearBusRoutes => {
+  // ${t('publicTransport.codeComments.stopShowingAll')}
   // clearBusRoutes();
-});`
+});`)
 
-const clearingBusesCode = `// Store the cleanup function
+const clearingBusesCode = computed(() => `// ${t('publicTransport.codeComments.storeCleanup')}
 const clearBuses = await yarrowMap.showBusRoute('route-123');
 
-// Later, clear the bus route display
-clearBuses();`
+// ${t('publicTransport.codeComments.laterClear')}
+clearBuses();`)
 </script>
 
 <template>
   <div id="public-transport">
     <div class="container">
-      <h2>Public Transport</h2>
+      <h2>{{ t('publicTransport.title') }}</h2>
       <p>
-        Display real-time public transportation information on your map.
+        {{ t('publicTransport.description') }}
       </p>
     </div>
 
     <div class="container">
-      <h3>Displaying Real-Time Bus Locations</h3>
+      <h3>{{ t('publicTransport.realTimeBuses.title') }}</h3>
       <p>
-        You can display the <span>real-time locations</span> of buses on the map.
+        {{ t('publicTransport.realTimeBuses.description', { realTimeLocations: 'real-time locations' }) }}
       </p>
-      <h4>Show buses for a specific route:</h4>
+      <h4>{{ t('publicTransport.realTimeBuses.specificRoute') }}</h4>
     </div>
     <Code
       :code="specificRouteCode"
@@ -43,9 +47,9 @@ clearBuses();`
     />
 
     <div class="container">
-      <h4>Show all buses in the current map view:</h4>
+      <h4>{{ t('publicTransport.realTimeBuses.allBuses') }}</h4>
       <p>
-        If you don't provide a <span>route_id</span>, the map will show all buses within the visible area.
+        {{ t('publicTransport.realTimeBuses.allBusesDescription', { routeId: 'route_id' }) }}
       </p>
     </div>
     <Code
@@ -56,9 +60,9 @@ clearBuses();`
     />
 
     <div class="container">
-      <h3>Clearing Bus Routes</h3>
+      <h3>{{ t('publicTransport.clearingBuses.title') }}</h3>
       <p>
-        The <span>showBusRoute</span> method returns a cleanup function that you can call to stop displaying bus locations and remove all related data:
+        {{ t('publicTransport.clearingBuses.description', { showBusRoute: 'showBusRoute' }) }}
       </p>
     </div>
     <Code
@@ -70,37 +74,37 @@ clearBuses();`
 
     <div class="container">
       <div class="cleanup-info">
-        <h4>What the cleanup function does:</h4>
+        <h4>{{ t('publicTransport.cleanupInfo.title') }}</h4>
         <ul>
-          <li>Stops the automatic bus location updates (15-second interval)</li>
-          <li>Removes all bus markers from the map</li>
-          <li>Removes all route layers from the map</li>
-          <li>Removes map move event listeners</li>
-          <li>Clears internal caches (SVG cache, etc.)</li>
+          <li>{{ t('publicTransport.cleanupInfo.stopUpdates') }}</li>
+          <li>{{ t('publicTransport.cleanupInfo.removeMarkers') }}</li>
+          <li>{{ t('publicTransport.cleanupInfo.removeLayers') }}</li>
+          <li>{{ t('publicTransport.cleanupInfo.removeListeners') }}</li>
+          <li>{{ t('publicTransport.cleanupInfo.clearCaches') }}</li>
         </ul>
       </div>
     </div>
 
     <div class="container">
       <div class="performance-info">
-        <h4>Performance Optimization:</h4>
+        <h4>{{ t('publicTransport.performanceInfo.title') }}</h4>
         <ul>
-          <li>Maximum 100 buses displayed at once (randomly selected if more exist)</li>
-          <li>5km radius filtering for general bus display (no route_id)</li>
-          <li>Automatic viewport filtering for subsequent updates</li>
-          <li>SVG icon caching for better performance</li>
-          <li>Debounced map movement updates (500ms delay)</li>
+          <li>{{ t('publicTransport.performanceInfo.maxBuses') }}</li>
+          <li>{{ t('publicTransport.performanceInfo.radiusFiltering') }}</li>
+          <li>{{ t('publicTransport.performanceInfo.viewportFiltering') }}</li>
+          <li>{{ t('publicTransport.performanceInfo.iconCaching') }}</li>
+          <li>{{ t('publicTransport.performanceInfo.debouncedUpdates') }}</li>
         </ul>
       </div>
     </div>
 
     <div class="container">
       <div class="features-info">
-        <h4>Automatic Updates:</h4>
+        <h4>{{ t('publicTransport.automaticUpdates.title') }}</h4>
         <ul>
-          <li>Bus locations update every 15 seconds</li>
-          <li>Map movement triggers bus location refresh (for general display)</li>
-          <li>Distance-based filtering (minimum 500m movement)</li>
+          <li>{{ t('publicTransport.automaticUpdates.updateInterval') }}</li>
+          <li>{{ t('publicTransport.automaticUpdates.mapMovement') }}</li>
+          <li>{{ t('publicTransport.automaticUpdates.distanceFiltering') }}</li>
         </ul>
       </div>
     </div>

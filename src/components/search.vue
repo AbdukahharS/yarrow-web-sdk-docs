@@ -1,69 +1,73 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Code from './code.vue'
 
-const searchCode = `const query = 'Tashkent';
+const { t } = useI18n()
+
+const searchCode = computed(() => `const query = 'Tashkent';
 
 const clearHighlights = yarrowMap.highlightSearchResults(query, {
-  zoomToResults: true, // Automatically zoom to fit the results
+  zoomToResults: true, // ${t('search.codeComments.autoZoomToResults')}
   onResultsUpdate: (results) => {
-    console.log('Search results:', results);
+    console.log('${t('search.codeComments.searchResults')}', results);
   },
   onLoadingStateChange: (state) => {
-    // state can be 'firstRender', 'rerender', or false
-    console.log('Loading state:', state);
+    // ${t('search.codeComments.stateCanBe')}
+    console.log('${t('search.codeComments.loadingState')}', state);
   }
 });
 
-// To remove the search results from the map later
-// clearHighlights();`
+// ${t('search.codeComments.removeResults')}
+// clearHighlights();`)
 
-const advancedSearchCode = `const clearFunction = yarrowMap.highlightSearchResults('Tashkent', {
-  layerName: 'my-search-layer',           // Custom layer name (default: 'search-results')
-  iconImage: 'custom-search-icon',        // Custom icon image name
-  highlightColor: '#ff6b35',              // Custom highlight color
-  pulseAnimation: true,                   // Enable pulse animation (default: false)
-  zoomToResults: false,                   // Auto-zoom to results (default: true)
+const advancedSearchCode = computed(() => `const clearFunction = yarrowMap.highlightSearchResults('Tashkent', {
+  layerName: 'my-search-layer',           // ${t('search.codeComments.customLayerName')}
+  iconImage: 'custom-search-icon',        // ${t('search.codeComments.customIconImageName')}
+  highlightColor: '#ff6b35',              // ${t('search.codeComments.customHighlightColor')}
+  pulseAnimation: true,                   // ${t('search.codeComments.enablePulseAnimation')}
+  zoomToResults: false,                   // ${t('search.codeComments.autoZoomToResultsDefault')}
 
-  // Event handlers
+  // ${t('search.codeComments.eventHandlers')}
   onIconClick: (lat, lng, properties) => {
-    console.log('Search result clicked:', { lat, lng, properties });
-    // Custom click behavior
+    console.log('${t('search.codeComments.searchResultClicked')}', { lat, lng, properties });
+    // ${t('search.codeComments.customClickBehavior')}
   },
 
   onResultsUpdate: (results) => {
-    console.log(\`Found \${results.length} search results\`);
-    // Handle results update
+    console.log(\`${t('search.codeComments.foundResults', { count: '${results.length}' })}\`);
+    // ${t('search.codeComments.handleResults')}
   },
 
   onLoadingStateChange: (state) => {
-    // state can be 'firstRender', 'rerender', or false
+    // ${t('search.codeComments.stateCanBe')}
     if (state === 'firstRender') {
-      console.log('Initial search loading...');
+      console.log('${t('search.codeComments.initialLoading')}');
     } else if (state === 'rerender') {
-      console.log('Updating search results...');
+      console.log('${t('search.codeComments.updatingResults')}');
     } else {
-      console.log('Search loading complete');
+      console.log('${t('search.codeComments.loadingComplete')}');
     }
   }
 });
 
-// Clear search results when done
-clearFunction();`
+// ${t('search.codeComments.clearFunction')}
+clearFunction();`)
 </script>
 
 <template>
   <div id="search">
     <div class="container">
-      <h2>Search</h2>
+      <h2>{{ t('search.title') }}</h2>
       <p>
-        Search for locations and display the results on your map.
+        {{ t('search.description') }}
       </p>
     </div>
 
     <div class="container">
-      <h3>Highlighting Search Results</h3>
+      <h3>{{ t('search.highlighting.title') }}</h3>
       <p>
-        You can perform a search and display the results on the map. The search is performed around the <span>current map center</span>.
+        {{ t('search.highlighting.description', { currentMapCenter: 'current map center' }) }}
       </p>
     </div>
     <Code
@@ -74,9 +78,9 @@ clearFunction();`
     />
 
     <div class="container">
-      <h3>Advanced Search Configuration</h3>
+      <h3>{{ t('search.advancedConfig.title') }}</h3>
       <p>
-        The <span>highlightSearchResults</span> method accepts comprehensive configuration options:
+        {{ t('search.advancedConfig.description', { highlightSearchResults: 'highlightSearchResults' }) }}
       </p>
     </div>
     <Code
@@ -88,28 +92,28 @@ clearFunction();`
 
     <div class="container">
       <div class="config-options">
-        <h4>Configuration Options:</h4>
+        <h4>{{ t('search.configOptions.title') }}</h4>
         <ul>
-          <li><span>layerName</span>: Custom name for the search results layer</li>
-          <li><span>iconImage</span>: Custom icon image to use for search results</li>
-          <li><span>highlightColor</span>: Color for highlighting search results</li>
-          <li><span>pulseAnimation</span>: Enable/disable pulse animation effect</li>
-          <li><span>zoomToResults</span>: Automatically zoom to fit search results</li>
-          <li><span>onIconClick</span>: Callback when a search result icon is clicked</li>
-          <li><span>onResultsUpdate</span>: Callback when search results are updated</li>
-          <li><span>onLoadingStateChange</span>: Callback for loading state changes</li>
+          <li><span>layerName</span>: {{ t('search.configOptions.layerName') }}</li>
+          <li><span>iconImage</span>: {{ t('search.configOptions.iconImage') }}</li>
+          <li><span>highlightColor</span>: {{ t('search.configOptions.highlightColor') }}</li>
+          <li><span>pulseAnimation</span>: {{ t('search.configOptions.pulseAnimation') }}</li>
+          <li><span>zoomToResults</span>: {{ t('search.configOptions.zoomToResults') }}</li>
+          <li><span>onIconClick</span>: {{ t('search.configOptions.onIconClick') }}</li>
+          <li><span>onResultsUpdate</span>: {{ t('search.configOptions.onResultsUpdate') }}</li>
+          <li><span>onLoadingStateChange</span>: {{ t('search.configOptions.onLoadingStateChange') }}</li>
         </ul>
       </div>
     </div>
 
     <div class="container">
       <div class="features-info">
-        <h4>Features:</h4>
+        <h4>{{ t('search.features.title') }}</h4>
         <ul>
-          <li>Automatic re-searching when the map is moved (debounced)</li>
-          <li>Distance-based filtering (minimum 500m movement triggers re-search)</li>
-          <li>Automatic cleanup of previous search results</li>
-          <li>Real-time loading state tracking</li>
+          <li>{{ t('search.features.autoResearch') }}</li>
+          <li>{{ t('search.features.distanceFiltering') }}</li>
+          <li>{{ t('search.features.autoCleanup') }}</li>
+          <li>{{ t('search.features.realTimeLoading') }}</li>
         </ul>
       </div>
     </div>

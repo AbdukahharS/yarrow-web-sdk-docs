@@ -1,38 +1,42 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Code from './code.vue'
 
-const moveEndCode = `yarrowMap.onMoveEnd((lat, lng, zoom) => {
-  console.log(\`Map moved to: \${lat}, \${lng} with zoom: \${zoom}\`);
-});`
+const { t } = useI18n()
 
-const mapClickCode = `yarrowMap.onMapClick((lat, lng) => {
-  console.log(\`Map clicked at: \${lat}, \${lng}\`);
-});`
+const moveEndCode = computed(() => `yarrowMap.onMoveEnd((lat, lng, zoom) => {
+  console.log(\`${t('handlingEvents.codeComments.mapMoved')} \${lat}, \${lng} ${t('handlingEvents.codeComments.withZoom')} \${zoom}\`);
+});`)
 
-const iconClickCode = `// Listen for clicks on POIs
+const mapClickCode = computed(() => `yarrowMap.onMapClick((lat, lng) => {
+  console.log(\`${t('handlingEvents.codeComments.mapClicked')} \${lat}, \${lng}\`);
+});`)
+
+const iconClickCode = computed(() => `// ${t('handlingEvents.codeComments.listenPOIs')}
 yarrowMap.onIconClick('pois', (lat, lng, properties) => {
-  console.log('POI clicked:', properties);
+  console.log('${t('handlingEvents.codeComments.poiClicked')}', properties);
 });
 
-// Listen for clicks on buildings
+// ${t('handlingEvents.codeComments.listenBuildings')}
 yarrowMap.onIconClick('buildings', (lat, lng, properties) => {
-  console.log('Building clicked:', properties);
-});`
+  console.log('${t('handlingEvents.codeComments.buildingClicked')}', properties);
+});`)
 </script>
 
 <template>
   <div id="handling-events">
     <div class="container">
-      <h2>Handling Events</h2>
+      <h2>{{ t('handlingEvents.title') }}</h2>
       <p>
-        You can listen for various user interactions with the map.
+        {{ t('handlingEvents.description') }}
       </p>
     </div>
 
     <div class="container">
-      <h3>Listen for Map Movement</h3>
+      <h3>{{ t('handlingEvents.mapMovement.title') }}</h3>
       <p>
-        Execute a callback function whenever the map finishes moving.
+        {{ t('handlingEvents.mapMovement.description') }}
       </p>
     </div>
     <Code
@@ -43,9 +47,9 @@ yarrowMap.onIconClick('buildings', (lat, lng, properties) => {
     />
 
     <div class="container">
-      <h3>Listen for Map Clicks</h3>
+      <h3>{{ t('handlingEvents.mapClicks.title') }}</h3>
       <p>
-        Execute a callback when the user clicks on the map.
+        {{ t('handlingEvents.mapClicks.description') }}
       </p>
     </div>
     <Code
@@ -56,9 +60,9 @@ yarrowMap.onIconClick('buildings', (lat, lng, properties) => {
     />
 
     <div class="container">
-      <h3>Listen for Clicks on POIs or Buildings</h3>
+      <h3>{{ t('handlingEvents.poiClicks.title') }}</h3>
       <p>
-        You can add click listeners to specific groups of features on the map, like <span>points of interest (POIs)</span> or <span>buildings</span>.
+        {{ t('handlingEvents.poiClicks.description', { pois: 'points of interest (POIs)', buildings: 'buildings' }) }}
       </p>
     </div>
     <Code

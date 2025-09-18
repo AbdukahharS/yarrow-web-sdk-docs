@@ -1,11 +1,16 @@
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
+
 <template>
   <div class="hero">
-    <h1><span>Yarrow Map</span> Web SDK Documentation</h1>
+    <h1><span>Yarrow Map</span> {{ t('hero.title') }}</h1>
     <p>
-      This document provides a guide to using the Yarrow Map Web SDK for embed
-      ding and interacting with Yarrow maps in your web application.
+      {{ t('hero.subtitle') }}
     </p>
-    <a href="#getting-started" class="btn-animate">Getting started</a>
+    <a href="#getting-started" class="btn-animate">{{ t('hero.cta') }}</a>
   </div>
 </template>
 

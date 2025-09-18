@@ -1,30 +1,34 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Code from './code.vue'
 
-const simpleRouteCode = `const start = [41.2995, 69.2401]; // [latitude, longitude]
+const { t } = useI18n()
+
+const simpleRouteCode = computed(() => `const start = [41.2995, 69.2401]; // [latitude, longitude]
 const end = [41.3111, 69.2797];
 const profile = 'car'; // 'car', 'bicycle', or 'pedestrian'
 
 yarrowMap.buildRouteWithLabels(start, end, profile).then(({ features, directions }) => {
-  console.log('Route built:', features);
-  console.log('Directions:', directions);
-});`
+  console.log('${t('routing.codeComments.routeBuilt')}', features);
+  console.log('${t('routing.codeComments.directions')}', directions);
+});`)
 
-const multiStopRouteCode = `const coordinates = [
-  [41.2995, 69.2401], // Start
-  [41.3111, 69.2797], // Waypoint 1
-  [41.325, 69.285],   // End
+const multiStopRouteCode = computed(() => `const coordinates = [
+  [41.2995, 69.2401], // ${t('routing.codeComments.startPoint')}
+  [41.3111, 69.2797], // ${t('routing.codeComments.waypointOne')}
+  [41.325, 69.285],   // ${t('routing.codeComments.endPoint')}
 ];
 const profile = 'car';
 
 yarrowMap.buildMultiSegmentRouteWithLabels(coordinates, profile).then(({ features, directions }) => {
-  console.log('Multi-segment route built:', features);
-  console.log('Directions:', directions);
-});`
+  console.log('${t('routing.codeComments.multiSegmentRoute')}', features);
+  console.log('${t('routing.codeComments.directions')}', directions);
+});`)
 
-const clearRoutesCode = `yarrowMap.clearAllRoutes();`
+const clearRoutesCode = computed(() => `yarrowMap.clearAllRoutes();`)
 
-const multipleRoutesCode = `// Array of route features (GeoJSON LineString features)
+const multipleRoutesCode = computed(() => `// ${t('routing.codeComments.routeFeatures')}
 const routes = [
   {
     type: 'Feature',
@@ -50,26 +54,26 @@ const routes = [
   }
 ];
 
-// Render routes with default styling
+// ${t('routing.codeComments.renderDefault')}
 yarrowMap.renderRoutes(routes);
 
-// Render routes with custom base layer name
-yarrowMap.renderRoutes(routes, 'my-custom-routes');`
+// ${t('routing.codeComments.renderCustom')}
+yarrowMap.renderRoutes(routes, 'my-custom-routes');`)
 </script>
 
 <template>
   <div id="routing">
     <div class="container">
-      <h2>Routing</h2>
+      <h2>{{ t('routing.title') }}</h2>
       <p>
-        The SDK provides powerful routing capabilities for different transportation modes.
+        {{ t('routing.description') }}
       </p>
     </div>
 
     <div class="container">
-      <h3>Building and Displaying a Simple Route</h3>
+      <h3>{{ t('routing.simpleRoute.title') }}</h3>
       <p>
-        Calculate and display a route between a start and end point.
+        {{ t('routing.simpleRoute.description') }}
       </p>
     </div>
     <Code
@@ -80,9 +84,9 @@ yarrowMap.renderRoutes(routes, 'my-custom-routes');`
     />
 
     <div class="container">
-      <h3>Building and Displaying a Multi-Stop Route</h3>
+      <h3>{{ t('routing.multiStopRoute.title') }}</h3>
       <p>
-        You can also create a route that passes through <span>multiple waypoints</span>.
+        {{ t('routing.multiStopRoute.description', { multipleWaypoints: 'multiple waypoints' }) }}
       </p>
     </div>
     <Code
@@ -93,9 +97,9 @@ yarrowMap.renderRoutes(routes, 'my-custom-routes');`
     />
 
     <div class="container">
-      <h3>Clearing Routes</h3>
+      <h3>{{ t('routing.clearRoutes.title') }}</h3>
       <p>
-        To remove all route-related layers from the map:
+        {{ t('routing.clearRoutes.description') }}
       </p>
     </div>
     <Code
@@ -106,9 +110,9 @@ yarrowMap.renderRoutes(routes, 'my-custom-routes');`
     />
 
     <div class="container">
-      <h3>Rendering Multiple Routes</h3>
+      <h3>{{ t('routing.multipleRoutes.title') }}</h3>
       <p>
-        You can render multiple route features with automatic color coding:
+        {{ t('routing.multipleRoutes.description') }}
       </p>
     </div>
     <Code
@@ -120,11 +124,11 @@ yarrowMap.renderRoutes(routes, 'my-custom-routes');`
 
     <div class="container">
       <div class="features-info">
-        <h4>Features:</h4>
+        <h4>{{ t('routing.features.title') }}</h4>
         <ul>
-          <li>Automatically assigns different colors to each route (#3b82f6, #10b981, #f59e0b, #ef4444, #8b5cf6)</li>
-          <li>Creates separate layers for each route (${baseLayerName}-0, ${baseLayerName}-1, etc.)</li>
-          <li>Default base layer name is 'route' if not specified</li>
+          <li>{{ t('routing.features.autoColors') }}</li>
+          <li>{{ t('routing.features.separateLayers') }}</li>
+          <li>{{ t('routing.features.defaultName') }}</li>
         </ul>
       </div>
     </div>

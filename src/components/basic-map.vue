@@ -1,44 +1,48 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Code from './code.vue'
 
-const changeStylesCode = `// Switch to satellite view
+const { t } = useI18n()
+
+const changeStylesCode = computed(() => `// ${t('basicMap.codeComments.switchSatellite')}
 yarrowMap.changeStyles('satellite');
 
-// Switch to hybrid view (satellite with labels)
+// ${t('basicMap.codeComments.switchHybrid')}
 yarrowMap.changeStyles('hybrid');
 
-// Switch back to the default map style
-yarrowMap.changeStyles();`
+// ${t('basicMap.codeComments.switchDefault')}
+yarrowMap.changeStyles();`)
 
-const zoomToCode = `// Fly to a new location with a specific zoom level
-yarrowMap.zoomTo(41.3111, 69.2797, 15); // Latitude, Longitude, Zoom Level`
+const zoomToCode = computed(() => `// ${t('basicMap.codeComments.flyToLocation')}
+yarrowMap.zoomTo(41.3111, 69.2797, 15); // ${t('basicMap.codeComments.latLngZoomLevel')}`)
 
-const fitBoundsCode = `const geojsonData = {
+const fitBoundsCode = computed(() => `const geojsonData = {
   type: 'FeatureCollection',
   features: [
-    // Your GeoJSON features here
+    // ${t('basicMap.codeComments.yourGeoJSONFeatures')}
   ],
 };
 
-yarrowMap.fitBounds(geojsonData);`
+yarrowMap.fitBounds(geojsonData);`)
 
-const backgroundColorCode = `// Change the map background to a custom color
-yarrowMap.changeBackgroundColor('#f0f0f0'); // Light gray background`
+const backgroundColorCode = computed(() => `// ${t('basicMap.codeComments.changeBackground')}
+yarrowMap.changeBackgroundColor('#f0f0f0'); // ${t('basicMap.codeComments.lightGrayBackground')}`)
 </script>
 
 <template>
   <div id="basic-map">
     <div class="container">
-      <h2>Basic Map Manipulation</h2>
+      <h2>{{ t('basicMap.title') }}</h2>
       <p>
-        Learn how to control your map's appearance and view programmatically.
+        {{ t('basicMap.description') }}
       </p>
     </div>
 
     <div class="container">
-      <h3>Changing the Map Style</h3>
+      <h3>{{ t('basicMap.changeMapStyle.title') }}</h3>
       <p>
-        You can change the map's visual style. The available styles are <span>satellite</span>, <span>hybrid</span>, and the default map style.
+        {{ t('basicMap.changeMapStyle.description', { satellite: 'satellite', hybrid: 'hybrid' }) }}
       </p>
     </div>
     <Code
@@ -49,11 +53,11 @@ yarrowMap.changeBackgroundColor('#f0f0f0'); // Light gray background`
     />
 
     <div class="container">
-      <h3>Moving the Map View</h3>
+      <h3>{{ t('basicMap.moveMapView.title') }}</h3>
       <p>
-        You can programmatically move the map to a new location or fit it to a specific geographic area.
+        {{ t('basicMap.moveMapView.description') }}
       </p>
-      <h4>Zooming to a specific point:</h4>
+      <h4>{{ t('basicMap.moveMapView.zoomToPoint') }}</h4>
     </div>
     <Code
       :code="zoomToCode"
@@ -63,9 +67,9 @@ yarrowMap.changeBackgroundColor('#f0f0f0'); // Light gray background`
     />
 
     <div class="container">
-      <h4>Fitting the map to a set of features:</h4>
+      <h4>{{ t('basicMap.moveMapView.fitToFeatures') }}</h4>
       <p>
-        This is useful when you want to display a set of points, lines, or polygons and ensure they are all visible.
+        {{ t('basicMap.moveMapView.fitDescription') }}
       </p>
     </div>
     <Code
@@ -76,9 +80,9 @@ yarrowMap.changeBackgroundColor('#f0f0f0'); // Light gray background`
     />
 
     <div class="container">
-      <h3>Changing Background Color</h3>
+      <h3>{{ t('basicMap.backgroundColor.title') }}</h3>
       <p>
-        You can change the background color of the map programmatically:
+        {{ t('basicMap.backgroundColor.description') }}
       </p>
     </div>
     <Code
@@ -90,8 +94,7 @@ yarrowMap.changeBackgroundColor('#f0f0f0'); // Light gray background`
 
     <div class="container">
       <p class="note">
-        <strong>Note:</strong> The changeBackgroundColor method waits for the map style
-        to be fully loaded before applying the background color change.
+        <strong>{{ t('basicMap.note.title') }}</strong> {{ t('basicMap.note.description') }}
       </p>
     </div>
   </div>

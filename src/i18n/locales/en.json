@@ -1,0 +1,302 @@
+{
+  "nav": {
+    "gettingStarted": "Getting Started",
+    "basicMap": "Basic Map",
+    "handlingEvents": "Handling Events",
+    "layersAndData": "Layers and Data",
+    "routing": "Routing",
+    "search": "Search",
+    "publicTransport": "Public Transport"
+  },
+  "hero": {
+    "title": "Web SDK Documentation",
+    "subtitle": "This document provides a guide to using the Yarrow Map Web SDK for embedding and interacting with Yarrow maps in your web application.",
+    "cta": "Getting started"
+  },
+  "gettingStarted": {
+    "title": "Getting Started",
+    "installation": {
+      "title": "Installation",
+      "description": "First, add the {sdk} to your project using your preferred package manager.",
+      "copied": "Copied to clipboard!",
+      "copyFailed": "Copy failed"
+    },
+    "initialization": {
+      "title": "Initialization",
+      "description": "To get started, you need to create an instance of {yarrowMap}. This requires a configuration object that specifies the container element, center coordinates, and zoom level."
+    },
+    "configuration": {
+      "title": "Configuration Options",
+      "description": "The {yarrowMapConfig} class accepts the following parameters:",
+      "exampleTitle": "Example with all options:"
+    }
+  },
+  "code": {
+    "copy": "copy",
+    "copied": "Copied!",
+    "comments": {
+      "configForMap": "Configuration for the map",
+      "containerComment": "ID of the div element to render the map in",
+      "centerComment": "Initial center of the map [longitude, latitude]",
+      "zoomComment": "Initial zoom level",
+      "createInstance": "Create a new map instance",
+      "initializeMap": "Initialize the map",
+      "successMessage": "Map initialized successfully!",
+      "containerParam": "string | HTMLElement - ID of the div element or the element itself",
+      "centerParam": "[number, number] - Initial center [longitude, latitude]",
+      "zoomParam": "number - Initial zoom level (default: 10)",
+      "minZoomParam": "number - Minimum zoom level (default: 0)",
+      "maxZoomParam": "number - Maximum zoom level (default: 19)",
+      "containerIdComment": "Container ID",
+      "centerCoordinatesComment": "Center coordinates",
+      "initialZoomComment": "Initial zoom",
+      "minimumZoomComment": "Minimum zoom",
+      "maximumZoomComment": "Maximum zoom"
+    }
+  },
+  "basicMap": {
+    "title": "Basic Map Manipulation",
+    "description": "Learn how to control your map's appearance and view programmatically.",
+    "changeMapStyle": {
+      "title": "Changing the Map Style",
+      "description": "You can change the map's visual style. The available styles are {satellite}, {hybrid}, and the default map style."
+    },
+    "moveMapView": {
+      "title": "Moving the Map View",
+      "description": "You can programmatically move the map to a new location or fit it to a specific geographic area.",
+      "zoomToPoint": "Zooming to a specific point:",
+      "fitToFeatures": "Fitting the map to a set of features:",
+      "fitDescription": "This is useful when you want to display a set of points, lines, or polygons and ensure they are all visible."
+    },
+    "backgroundColor": {
+      "title": "Changing Background Color",
+      "description": "You can change the background color of the map programmatically:"
+    },
+    "note": {
+      "title": "Note:",
+      "description": "The changeBackgroundColor method waits for the map style to be fully loaded before applying the background color change."
+    },
+    "codeComments": {
+      "switchSatellite": "Switch to satellite view",
+      "switchHybrid": "Switch to hybrid view (satellite with labels)",
+      "switchDefault": "Switch back to the default map style",
+      "flyToLocation": "Fly to a new location with a specific zoom level",
+      "changeBackground": "Change the map background to a custom color",
+      "lightGrayBackground": "Light gray background",
+      "yourGeoJSONFeatures": "Your GeoJSON features here",
+      "latLngZoomLevel": "Latitude, Longitude, Zoom Level"
+    }
+  },
+  "handlingEvents": {
+    "title": "Handling Events",
+    "description": "You can listen for various user interactions with the map.",
+    "mapMovement": {
+      "title": "Listen for Map Movement",
+      "description": "Execute a callback function whenever the map finishes moving."
+    },
+    "mapClicks": {
+      "title": "Listen for Map Clicks",
+      "description": "Execute a callback when the user clicks on the map."
+    },
+    "poiClicks": {
+      "title": "Listen for Clicks on POIs or Buildings",
+      "description": "You can add click listeners to specific groups of features on the map, like {pois} or {buildings}."
+    },
+    "codeComments": {
+      "mapMoved": "Map moved to:",
+      "withZoom": "with zoom:",
+      "mapClicked": "Map clicked at:",
+      "listenPOIs": "Listen for clicks on POIs",
+      "poiClicked": "POI clicked:",
+      "listenBuildings": "Listen for clicks on buildings",
+      "buildingClicked": "Building clicked:"
+    }
+  },
+  "layersAndData": {
+    "title": "Working with Layers and Data",
+    "description": "Learn how to add custom data, markers, and layers to your map.",
+    "addGeoJSON": {
+      "title": "Adding a GeoJSON Layer",
+      "description": "You can add custom data to the map in the form of a {geoJsonLayer}. This is useful for displaying points, lines, or polygons."
+    },
+    "advancedConfig": {
+      "title": "Advanced Layer Configuration",
+      "description": "The {addLayer} method supports advanced configuration options for different layer types:",
+      "symbolLayerTitle": "Symbol layer with custom icons:",
+      "lineLayerTitle": "Line layer with styling:"
+    },
+    "markers": {
+      "title": "Adding and Removing Markers",
+      "description": "You can add markers to the map to indicate specific locations.",
+      "optionsTitle": "Marker Options:",
+      "element": "Custom HTML element for the marker",
+      "color": "Marker color (default: '#FF0000')",
+      "draggable": "Whether the marker can be dragged (default: false)",
+      "offset": "Pixel offset from the marker position",
+      "anchor": "Anchor point of the marker relative to its coordinates",
+      "onClick": "Click event handler function"
+    },
+    "removeLayer": {
+      "title": "Removing a Layer",
+      "description": "You can remove a layer that you've previously added."
+    },
+    "codeComments": {
+      "uniqueLayerName": "A unique name for the layer",
+      "layerType": "The type of layer (e.g., 'circle', 'line', 'fill', 'symbol')",
+      "uniqueIdentifier": "Unique identifier for the layer",
+      "paintProperties": "Paint properties object",
+      "layoutProperties": "Layout properties object",
+      "iconConfiguration": "Icon configuration (width, height)",
+      "iconWidth": "Icon width",
+      "iconHeight": "Icon height",
+      "addRedMarker": "Add a simple red marker (default color)",
+      "addMarkerOptions": "Add a marker with all options",
+      "customMarkerElement": "HTMLElement - Custom marker element",
+      "markerColor": "string - Marker color (default: '#FF0000')",
+      "allowDragging": "boolean - Allow dragging (default: false)",
+      "pixelOffset": "[number, number] - Pixel offset",
+      "anchorPosition": "Anchor position: 'center', 'top', 'bottom', 'left', 'right', etc.",
+      "clickEventHandler": "function - Click event handler",
+      "markerClicked": "Marker clicked!",
+      "addCustomHTML": "Add a marker with custom HTML element",
+      "removeMarker": "Remove a marker",
+      "layerTypeOptions": "Layer type: 'symbol', 'fill', 'line', 'background', 'raster', 'circle', 'heatmap', 'fill-extrusion', 'hillshade'",
+      "geoJsonFeatureCollection": "GeoJSON FeatureCollection",
+      "base64ImageData": "Base64 image data"
+    }
+  },
+  "routing": {
+    "title": "Routing",
+    "description": "The SDK provides powerful routing capabilities for different transportation modes.",
+    "simpleRoute": {
+      "title": "Building and Displaying a Simple Route",
+      "description": "Calculate and display a route between a start and end point."
+    },
+    "multiStopRoute": {
+      "title": "Building and Displaying a Multi-Stop Route",
+      "description": "You can also create a route that passes through {multipleWaypoints}."
+    },
+    "clearRoutes": {
+      "title": "Clearing Routes",
+      "description": "To remove all route-related layers from the map:"
+    },
+    "multipleRoutes": {
+      "title": "Rendering Multiple Routes",
+      "description": "You can render multiple route features with automatic color coding:"
+    },
+    "features": {
+      "title": "Features:",
+      "autoColors": "Automatically assigns different colors to each route (#3b82f6, #10b981, #f59e0b, #ef4444, #8b5cf6)",
+      "separateLayers": "Creates separate layers for each route (${baseLayerName}-0, ${baseLayerName}-1, etc.)",
+      "defaultName": "Default base layer name is 'route' if not specified"
+    },
+    "codeComments": {
+      "startPoint": "Start",
+      "waypointOne": "Waypoint 1",
+      "endPoint": "End",
+      "routeBuilt": "Route built:",
+      "directions": "Directions:",
+      "multiSegmentRoute": "Multi-segment route built:",
+      "routeFeatures": "Array of route features (GeoJSON LineString features)",
+      "renderDefault": "Render routes with default styling",
+      "renderCustom": "Render routes with custom base layer name"
+    }
+  },
+  "search": {
+    "title": "Search",
+    "description": "Search for locations and display the results on your map.",
+    "highlighting": {
+      "title": "Highlighting Search Results",
+      "description": "You can perform a search and display the results on the map. The search is performed around the {currentMapCenter}."
+    },
+    "advancedConfig": {
+      "title": "Advanced Search Configuration",
+      "description": "The {highlightSearchResults} method accepts comprehensive configuration options:"
+    },
+    "configOptions": {
+      "title": "Configuration Options:",
+      "layerName": "Custom name for the search results layer",
+      "iconImage": "Custom icon image to use for search results",
+      "highlightColor": "Color for highlighting search results",
+      "pulseAnimation": "Enable/disable pulse animation effect",
+      "zoomToResults": "Automatically zoom to fit search results",
+      "onIconClick": "Callback when a search result icon is clicked",
+      "onResultsUpdate": "Callback when search results are updated",
+      "onLoadingStateChange": "Callback for loading state changes"
+    },
+    "features": {
+      "title": "Features:",
+      "autoResearch": "Automatic re-searching when the map is moved (debounced)",
+      "distanceFiltering": "Distance-based filtering (minimum 500m movement triggers re-search)",
+      "autoCleanup": "Automatic cleanup of previous search results",
+      "realTimeLoading": "Real-time loading state tracking"
+    },
+    "codeComments": {
+      "searchResults": "Search results:",
+      "loadingState": "Loading state:",
+      "removeResults": "To remove the search results from the map later",
+      "clearFunction": "Clear search results when done",
+      "searchResultClicked": "Search result clicked:",
+      "customClickBehavior": "Custom click behavior",
+      "foundResults": "Found {count} search results",
+      "handleResults": "Handle results update",
+      "initialLoading": "Initial search loading...",
+      "updatingResults": "Updating search results...",
+      "loadingComplete": "Search loading complete",
+      "autoZoomToResults": "Automatically zoom to fit the results",
+      "customLayerName": "Custom layer name (default: 'search-results')",
+      "customIconImageName": "Custom icon image name",
+      "customHighlightColor": "Custom highlight color",
+      "enablePulseAnimation": "Enable pulse animation (default: false)",
+      "autoZoomToResultsDefault": "Auto-zoom to results (default: true)",
+      "eventHandlers": "Event handlers",
+      "stateCanBe": "state can be 'firstRender', 'rerender', or false"
+    }
+  },
+  "publicTransport": {
+    "title": "Public Transport",
+    "description": "Display real-time public transportation information on your map.",
+    "realTimeBuses": {
+      "title": "Displaying Real-Time Bus Locations",
+      "description": "You can display the {realTimeLocations} of buses on the map.",
+      "specificRoute": "Show buses for a specific route:",
+      "allBuses": "Show all buses in the current map view:",
+      "allBusesDescription": "If you don't provide a {routeId}, the map will show all buses within the visible area."
+    },
+    "clearingBuses": {
+      "title": "Clearing Bus Routes",
+      "description": "The {showBusRoute} method returns a cleanup function that you can call to stop displaying bus locations and remove all related data:"
+    },
+    "cleanupInfo": {
+      "title": "What the cleanup function does:",
+      "stopUpdates": "Stops the automatic bus location updates (15-second interval)",
+      "removeMarkers": "Removes all bus markers from the map",
+      "removeLayers": "Removes all route layers from the map",
+      "removeListeners": "Removes map move event listeners",
+      "clearCaches": "Clears internal caches (SVG cache, etc.)"
+    },
+    "performanceInfo": {
+      "title": "Performance Optimization:",
+      "maxBuses": "Maximum 100 buses displayed at once (randomly selected if more exist)",
+      "radiusFiltering": "5km radius filtering for general bus display (no route_id)",
+      "viewportFiltering": "Automatic viewport filtering for subsequent updates",
+      "iconCaching": "SVG icon caching for better performance",
+      "debouncedUpdates": "Debounced map movement updates (500ms delay)"
+    },
+    "automaticUpdates": {
+      "title": "Automatic Updates:",
+      "updateInterval": "Bus locations update every 15 seconds",
+      "mapMovement": "Map movement triggers bus location refresh (for general display)",
+      "distanceFiltering": "Distance-based filtering (minimum 500m movement)"
+    },
+    "codeComments": {
+      "stopShowing": "To stop showing the bus route later",
+      "stopShowingAll": "To stop showing all bus routes",
+      "storeCleanup": "Store the cleanup function",
+      "laterClear": "Later, clear the bus route display"
+    }
+  },
+  "ui": {
+    "language": "Language"
+  }
+}

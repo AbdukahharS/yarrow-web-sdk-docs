@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Code from './code.vue'
+
+const { t } = useI18n()
 
 const installCommand = 'npm install @yarrow/yarrow-map-web-sdk'
 const buttonText = ref(installCommand)
@@ -8,71 +11,70 @@ const buttonText = ref(installCommand)
 const copyToClipboard = async () => {
   try {
     await navigator.clipboard.writeText(installCommand)
-    buttonText.value = 'Copied to clipboard!'
+    buttonText.value = t('gettingStarted.installation.copied')
     setTimeout(() => {
       buttonText.value = installCommand
     }, 2000)
   } catch (err) {
     console.error('Failed to copy: ', err)
-    buttonText.value = 'Copy failed'
+    buttonText.value = t('gettingStarted.installation.copyFailed')
     setTimeout(() => {
       buttonText.value = installCommand
     }, 2000)
   }
 }
 
-const setupCode = `import { YarrowMap } from '@yarrow/yarrow-map-web-sdk';
+const setupCode = computed(() => `import { YarrowMap } from '@yarrow/yarrow-map-web-sdk';
 
-// Configuration for the map
+// ${t('code.comments.configForMap')}
 const mapConfig = {
-  container: 'map', // ID of the div element to render the map in
-  center: [69.2401, 41.2995], // Initial center of the map [longitude, latitude]
-  zoom: 12, // Initial zoom level
+  container: 'map', // ${t('code.comments.containerComment')}
+  center: [69.2401, 41.2995], // ${t('code.comments.centerComment')}
+  zoom: 12, // ${t('code.comments.zoomComment')}
 };
 
-// Create a new map instance
+// ${t('code.comments.createInstance')}
 const yarrowMap = new YarrowMap(mapConfig);
 
-// Initialize the map
+// ${t('code.comments.initializeMap')}
 yarrowMap.init().then(() => {
-  console.log('Map initialized successfully!');
-});`
+  console.log('${t('code.comments.successMessage')}');
+});`)
 
-const configOptionsCode = `const mapConfig = new YarrowMapConfig(
-  container,    // string | HTMLElement - ID of the div element or the element itself
-  center,       // [number, number] - Initial center [longitude, latitude]
-  zoom,         // number - Initial zoom level (default: 10)
-  minZoom,      // number - Minimum zoom level (default: 0)
-  maxZoom       // number - Maximum zoom level (default: 19)
-);`
+const configOptionsCode = computed(() => `const mapConfig = new YarrowMapConfig(
+  container,    // ${t('code.comments.containerParam')}
+  center,       // ${t('code.comments.centerParam')}
+  zoom,         // ${t('code.comments.zoomParam')}
+  minZoom,      // ${t('code.comments.minZoomParam')}
+  maxZoom       // ${t('code.comments.maxZoomParam')}
+);`)
 
-const fullExampleCode = `import { YarrowMap, YarrowMapConfig } from '@yarrow/yarrow-map-web-sdk';
+const fullExampleCode = computed(() => `import { YarrowMap, YarrowMapConfig } from '@yarrow/yarrow-map-web-sdk';
 
 const mapConfig = new YarrowMapConfig(
-  'map',                    // Container ID
-  [69.2401, 41.2995],      // Center coordinates
-  12,                      // Initial zoom
-  5,                       // Minimum zoom
-  18                       // Maximum zoom
+  'map',                    // ${t('code.comments.containerIdComment')}
+  [69.2401, 41.2995],      // ${t('code.comments.centerCoordinatesComment')}
+  12,                      // ${t('code.comments.initialZoomComment')}
+  5,                       // ${t('code.comments.minimumZoomComment')}
+  18                       // ${t('code.comments.maximumZoomComment')}
 );
 
 const yarrowMap = new YarrowMap(mapConfig);
 yarrowMap.init().then(() => {
-  console.log('Map initialized successfully!');
-});`
+  console.log('${t('code.comments.successMessage')}');
+});`)
 </script>
 
 <template>
   <div id="getting-started">
     <div class="container">
-      <h2>Getting Started</h2>
+      <h2>{{ t('gettingStarted.title') }}</h2>
     </div>
 
     <div class="container">
-      <h2>Installation</h2>
+      <h2>{{ t('gettingStarted.installation.title') }}</h2>
       <p>
-        First, add the <span>Yarrow Map Web SDK</span> to your project using
-        your preferred package manager.
+        {{ t('gettingStarted.installation.description', { sdk: 'Yarrow Map Web SDK' }) }}
       </p>
       <button class="install-button btn-animate" @click="copyToClipboard">
         {{ buttonText }}
@@ -80,11 +82,9 @@ yarrowMap.init().then(() => {
     </div>
 
     <div class="container">
-      <h2>Initialization</h2>
+      <h2>{{ t('gettingStarted.initialization.title') }}</h2>
       <p>
-        To get started, you need to create an instance of
-        <span>YarrowMap</span>. This requires a configuration object that
-        specifies the container element, center coordinates, and zoom level.
+        {{ t('gettingStarted.initialization.description', { yarrowMap: 'YarrowMap' }) }}
       </p>
     </div>
     <Code
@@ -95,9 +95,9 @@ yarrowMap.init().then(() => {
     />
 
     <div class="container">
-      <h2>Configuration Options</h2>
+      <h2>{{ t('gettingStarted.configuration.title') }}</h2>
       <p>
-        The <span>YarrowMapConfig</span> class accepts the following parameters:
+        {{ t('gettingStarted.configuration.description', { yarrowMapConfig: 'YarrowMapConfig' }) }}
       </p>
     </div>
     <Code
@@ -108,7 +108,7 @@ yarrowMap.init().then(() => {
     />
 
     <div class="container">
-      <h3>Example with all options:</h3>
+      <h3>{{ t('gettingStarted.configuration.exampleTitle') }}</h3>
     </div>
     <Code
       :code="fullExampleCode"
