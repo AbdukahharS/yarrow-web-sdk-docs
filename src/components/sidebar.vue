@@ -21,10 +21,33 @@ const changeLocale = (newLocale: string) => {
 }
 
 const activeSection = ref('')
+const isMobile = ref(false)
+const isDrawerOpen = ref(false)
+
+const checkIsMobile = () => {
+  isMobile.value = window.innerWidth < 768
+}
+
+const toggleDrawer = () => {
+  isDrawerOpen.value = !isDrawerOpen.value
+}
+
+const closeDrawer = () => {
+  isDrawerOpen.value = false
+}
+
+const handleLinkClick = () => {
+  if (isMobile.value) {
+    closeDrawer()
+  }
+}
 
 let observer: IntersectionObserver | null = null
 
 onMounted(() => {
+  checkIsMobile()
+  window.addEventListener('resize', checkIsMobile)
+
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -48,12 +71,41 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  window.removeEventListener('resize', checkIsMobile)
   observer?.disconnect()
+})
+
+defineExpose({
+  toggleDrawer,
+  isMobile
 })
 </script>
 
 <template>
-  <aside>
+  <!-- Mobile hamburger button -->
+  <button
+    v-if="isMobile"
+    @click="toggleDrawer"
+    class="hamburger-btn"
+    :class="{ open: isDrawerOpen }"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Overlay for mobile -->
+  <div
+    v-if="isMobile && isDrawerOpen"
+    class="overlay"
+    @click="closeDrawer"
+  ></div>
+
+  <!-- Sidebar -->
+  <aside :class="{
+    'mobile-hidden': isMobile && !isDrawerOpen,
+    'mobile-drawer': isMobile && isDrawerOpen
+  }">
     <img :src="Logo" />
     <div class="language-switcher">
       <span class="language-label">{{ t('ui.language') }}</span>
@@ -82,7 +134,13 @@ onUnmounted(() => {
       </div>
     </div>
     <div class="links">
-      <a v-for="(link, index) in links" :key="index" :href="link.href" :class="{ active: activeSection === link.href }">
+      <a
+        v-for="(link, index) in links"
+        :key="index"
+        :href="link.href"
+        :class="{ active: activeSection === link.href }"
+        @click="handleLinkClick"
+      >
         {{ link.name }}
       </a>
     </div>
@@ -90,6 +148,65 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+/* Hamburger button styles */
+.hamburger-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+  background: #ffffff;
+  border: none;
+  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.hamburger-btn.open {
+  top: 20px;
+  left: 240px;
+}
+
+.hamburger-btn span {
+  width: 20px;
+  height: 2px;
+  background: #333;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.hamburger-btn.open span:first-child {
+  width: 30px;
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-btn.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-btn.open span:last-child {
+  width: 30px;
+  transform: rotate(-45deg) translate(4px, -4px);
+}
+
+/* Overlay for mobile drawer */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
 aside {
   width: 283px;
   background: #ffffff;
@@ -101,6 +218,9 @@ aside {
   border-top-right-radius: 60px;
   border-bottom-right-radius: 60px;
   padding: 65px 45px;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto;
 
   .language-switcher {
     margin-top: 30px;
@@ -167,6 +287,25 @@ aside {
         border-radius: 12px;
       }
     }
+  }
+}
+
+/* Mobile responsive styles */
+@media (max-width: 767px) {
+  aside {
+    border-radius: 0;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 20px;
+    width: 300px;
+  }
+
+  aside.mobile-hidden {
+    transform: translateX(-100%);
+  }
+
+  aside.mobile-drawer {
+    transform: translateX(0);
   }
 }
 </style>

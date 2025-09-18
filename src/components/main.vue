@@ -25,5 +25,13 @@ import PublicTransport from './public-transport.vue'
 <style scoped>
 main {
   margin-left: 283px;
+  transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 767px) {
+  main {
+    margin-left: 0;
+    padding: 20px;
+  }
 }
 </style>

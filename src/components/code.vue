@@ -19,7 +19,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   language: 'typescript',
   filename: 'code.ts',
-  fileType: 'TS'
+  fileType: 'TS',
 })
 
 const copied = ref(false)
@@ -29,11 +29,7 @@ const prismLanguage = computed(() => {
 })
 
 const highlightedCode = computed(() => {
-  return Prism.highlight(
-    props.code,
-    prismLanguage.value,
-    props.language
-  )
+  return Prism.highlight(props.code, prismLanguage.value, props.language)
 })
 
 const copyToClipboard = async () => {
@@ -101,7 +97,7 @@ const copyToClipboard = async () => {
   inset: 0;
   background: rgba(255, 255, 255, 0.25);
   border-radius: 50px;
-  border: 1px solid #FFFFFF
+  border: 1px solid #ffffff;
 }
 
 .code .head {
@@ -159,6 +155,7 @@ const copyToClipboard = async () => {
   pre {
     margin: 0;
     padding: 0;
+    padding-bottom: 10px;
     background: transparent;
     overflow-x: auto;
 
@@ -199,5 +196,40 @@ const copyToClipboard = async () => {
 
 :deep(.token.property) {
   color: #005cc5;
+}
+
+@media screen and (max-width: 768px) {
+  .code {
+    border-radius: 30px;
+
+    .head {
+      padding: 15px 25px;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+
+      .file-info p {
+        font-size: 16px;
+      }
+
+      .file-info span {
+        font-size: 16px;
+        padding: 4px 12px;
+      }
+    }
+
+    .body {
+      padding: 20px 25px;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+
+      pre code {
+        font-size: 16px;
+      }
+    }
+
+    &::after {
+      border-radius: 30px;
+    }
+  }
 }
 </style>
