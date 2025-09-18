@@ -204,6 +204,7 @@ defineExpose({
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
+  height: 100vh;
   z-index: 999;
 }
 
@@ -297,6 +298,7 @@ aside {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     padding: 20px;
+    padding-bottom: 60px;
     width: 300px;
   }
 

@@ -39,6 +39,7 @@ const { t } = useI18n()
     font-size: 20px;
     max-width: 680px;
     margin-top: 24px;
+    text-align: center;
   }
 
   a {
