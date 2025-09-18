@@ -298,5 +298,8 @@
   },
   "ui": {
     "language": "Til"
+  },
+  "app": {
+    "title": "Yarrow Web SDK Hujjatlari"
   }
 }

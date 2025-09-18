@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import Main from './components/main.vue';
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import sidebar from './components/sidebar.vue';
+import { useI18n } from 'vue-i18n';
 
 // Pre-generate static circles to prevent any reactivity issues
 const generateStaticCircles = () => {
@@ -32,6 +33,13 @@ const generateStaticCircles = () => {
 }
 
 const circles = ref(generateStaticCircles())
+
+const { t, locale } = useI18n()
+
+// Update document title when locale changes
+watch(locale, () => {
+  document.title = t('app.title')
+}, { immediate: true })
 
 onMounted(() => {
   // No resize listener - circles are now static

@@ -298,5 +298,8 @@
   },
   "ui": {
     "language": "Language"
+  },
+  "app": {
+    "title": "Yarrow Web SDK Docs"
   }
 }
