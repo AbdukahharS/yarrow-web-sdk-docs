@@ -9,9 +9,14 @@ const messages = {
   ru
 }
 
+const getStoredLocale = (): string => {
+  const stored = localStorage.getItem('locale')
+  return stored && ['en', 'uz', 'ru'].includes(stored) ? stored : 'en'
+}
+
 const i18n = createI18n({
   legacy: false,
-  locale: 'en',
+  locale: getStoredLocale(),
   fallbackLocale: 'en',
   messages
 })

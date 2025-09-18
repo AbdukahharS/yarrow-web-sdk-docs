@@ -17,6 +17,7 @@ const links = computed(() => [
 
 const changeLocale = (newLocale: string) => {
   locale.value = newLocale
+  localStorage.setItem('locale', newLocale)
 }
 
 const activeSection = ref('')
@@ -102,7 +103,7 @@ aside {
   padding: 65px 45px;
 
   .language-switcher {
-    margin-top: 60px;
+    margin-top: 30px;
     text-align: center;
 
     .language-label {
@@ -144,7 +145,7 @@ aside {
   }
 
   .links {
-    margin-top: 100px;
+    margin-top: 70px;
     display: flex;
     flex-direction: column;
     gap: 30px;
