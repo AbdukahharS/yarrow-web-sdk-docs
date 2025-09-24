@@ -297,7 +297,10 @@
     }
   },
   "ui": {
-    "language": "Language"
+    "language": "Language",
+    "theme": "Theme",
+    "switchToLight": "Switch to light mode",
+    "switchToDark": "Switch to dark mode"
   },
   "app": {
     "title": "Yarrow Web SDK Docs"

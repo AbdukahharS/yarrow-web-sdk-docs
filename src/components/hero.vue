@@ -22,14 +22,16 @@ const { t } = useI18n()
   align-items: center;
   flex-direction: column;
   padding: 2em;
+  color: var(--text-primary);
 
   h1 {
     font-weight: 600;
     font-size: 36px;
     text-align: center;
+    color: var(--text-primary);
 
     span {
-      color: #fe6d00;
+      color: var(--accent-color);
       font-weight: 700;
     }
   }
@@ -40,11 +42,12 @@ const { t } = useI18n()
     max-width: 680px;
     margin-top: 24px;
     text-align: center;
+    color: var(--text-secondary);
   }
 
   a {
     display: block;
-    background: linear-gradient(180deg, #fe6d00 -72%, #ffffff 311%);
+    background: linear-gradient(180deg, var(--accent-color) -72%, var(--bg-secondary) 311%);
     color: #ffffff;
     text-decoration: none;
     font-weight: 700;
@@ -52,6 +55,7 @@ const { t } = useI18n()
     padding: 14px 52px;
     border-radius: 20px;
     margin-top: 50px;
+    transition: all 0.3s ease;
   }
 }
 </style>

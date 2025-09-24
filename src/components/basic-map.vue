@@ -112,6 +112,7 @@ yarrowMap.changeBackgroundColor('#f0f0f0'); // ${t('basicMap.codeComments.lightG
       font-size: 32px;
       text-align: center;
       margin-bottom: 20px;
+      color: var(--text-primary);
     }
 
     h3 {
@@ -119,6 +120,7 @@ yarrowMap.changeBackgroundColor('#f0f0f0'); // ${t('basicMap.codeComments.lightG
       font-size: 24px;
       text-align: center;
       margin-bottom: 20px;
+      color: var(--text-primary);
     }
 
     h4 {
@@ -127,6 +129,7 @@ yarrowMap.changeBackgroundColor('#f0f0f0'); // ${t('basicMap.codeComments.lightG
       text-align: center;
       margin-bottom: 15px;
       margin-top: 40px;
+      color: var(--text-primary);
     }
 
     p {
@@ -135,22 +138,25 @@ yarrowMap.changeBackgroundColor('#f0f0f0'); // ${t('basicMap.codeComments.lightG
       text-align: center;
       max-width: 600px;
       margin: 20px auto;
+      color: var(--text-secondary);
 
       span {
-        color: #fe6d00;
+        color: var(--accent-color);
         font-weight: 700;
       }
     }
 
     .note {
-      background: #f8f9fa;
-      border-left: 4px solid #fe6d00;
+      background: var(--bg-secondary);
+      border-left: 4px solid var(--accent-color);
       padding: 20px;
       margin: 20px auto;
       border-radius: 5px;
       font-size: 16px;
       text-align: left;
       max-width: 800px;
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
     }
   }
 }

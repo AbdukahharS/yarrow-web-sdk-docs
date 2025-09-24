@@ -26,6 +26,7 @@ import PublicTransport from './public-transport.vue'
 main {
   margin-left: 283px;
   transition: margin-left 0.3s ease;
+  color: var(--text-primary);
 }
 
 @media (max-width: 767px) {

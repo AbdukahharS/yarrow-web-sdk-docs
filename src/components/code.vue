@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useDarkMode } from '../composables/useDarkMode'
 import Prism from 'prismjs'
 import 'prismjs/themes/prism.css' // Light theme
 import 'prismjs/components/prism-typescript'
@@ -8,6 +9,7 @@ import 'prismjs/components/prism-javascript'
 import clipboard from '../assets/clipboard.svg'
 
 const { t } = useI18n()
+useDarkMode() // Ensure theme system is active
 
 interface Props {
   code: string
@@ -73,7 +75,7 @@ const copyToClipboard = async () => {
   margin: 0 auto;
   border-radius: 50px;
   overflow: hidden;
-  color: black;
+  color: var(--text-primary);
   font-weight: 600;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
 }
@@ -95,15 +97,15 @@ const copyToClipboard = async () => {
   z-index: 1;
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.25);
+  background: var(--bg-glass);
   border-radius: 50px;
-  border: 1px solid #ffffff;
+  border: 1px solid var(--border-color);
 }
 
 .code .head {
   position: relative;
   z-index: 3;
-  background: #ffffff;
+  background: var(--bg-secondary);
   border-top-right-radius: 50px;
   border-top-left-radius: 50px;
   padding: 17px 40px;
@@ -128,7 +130,7 @@ const copyToClipboard = async () => {
     p {
       font-size: 20px;
       font-weight: 500;
-      color: #fe6d00;
+      color: var(--accent-color);
     }
   }
 
@@ -138,10 +140,19 @@ const copyToClipboard = async () => {
     cursor: pointer;
 
     .copied-text {
-      color: #fe6d00;
+      color: var(--accent-color);
       font-weight: 600;
       font-size: 14px;
     }
+  }
+}
+
+.dark .code .head {
+  background: var(--bg-secondary-dark);
+  border-bottom: 1px solid var(--border-color);
+
+  span {
+    background: #da5c10;
   }
 }
 
@@ -164,39 +175,17 @@ const copyToClipboard = async () => {
       font-size: 20px;
       line-height: 1.5;
       font-weight: 500;
-      color: #000; /* Darker text for better contrast on light bg */
+      color: var(--text-primary);
+      text-shadow: none !important;
     }
   }
 }
 
-/* Custom syntax highlighting colors for light background */
-:deep(.token.comment) {
-  color: #a0a2c0;
+/* Dark mode code background */
+:root.dark .code .body {
+  background: rgba(26, 26, 26, 0.3);
 }
 
-:deep(.token.string) {
-  color: #898fff;
-}
-
-:deep(.token.number) {
-  color: #8db390;
-}
-
-:deep(.token.keyword) {
-  color: #0ba115;
-}
-
-:deep(.token.function) {
-  color: #898fff;
-}
-
-:deep(.token.punctuation) {
-  color: #24292e;
-}
-
-:deep(.token.property) {
-  color: #005cc5;
-}
 
 @media screen and (max-width: 768px) {
   .code {
@@ -231,5 +220,120 @@ const copyToClipboard = async () => {
       border-radius: 30px;
     }
   }
+}
+</style>
+
+<style>
+/* Remove PrismJS default backgrounds and reset all tokens */
+.token {
+  background: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* Global syntax highlighting colors - light theme */
+.token.comment {
+  color: #a0a2c0;
+  transition: color 0.15s ease-out;
+  background: none !important;
+}
+
+.token.string {
+  color: #898fff;
+  transition: color 0.15s ease-out;
+  background: none !important;
+}
+
+.token.number {
+  color: #8db390;
+  transition: color 0.15s ease-out;
+  background: none !important;
+}
+
+.token.keyword {
+  color: #0ba115;
+  transition: color 0.15s ease-out;
+  background: none !important;
+}
+
+.token.function {
+  color: #898fff;
+  transition: color 0.15s ease-out;
+  background: none !important;
+}
+
+.token.punctuation {
+  color: #24292e;
+  transition: color 0.15s ease-out;
+  background: none !important;
+}
+
+.token.property {
+  color: #005cc5;
+  transition: color 0.15s ease-out;
+  background: none !important;
+}
+
+/* Global syntax highlighting colors - dark theme */
+:root.dark .token.comment {
+  color: #6a9955 !important;
+  font-style: italic;
+  background: none !important;
+}
+
+:root.dark .token.string {
+  color: #ce9178 !important;
+  background: none !important;
+}
+
+:root.dark .token.number {
+  color: #b5cea8 !important;
+  background: none !important;
+}
+
+:root.dark .token.keyword {
+  color: #569cd6 !important;
+  background: none !important;
+}
+
+:root.dark .token.function {
+  color: #dcdcaa !important;
+  background: none !important;
+}
+
+:root.dark .token.punctuation {
+  color: #d4d4d4 !important;
+  background: none !important;
+}
+
+:root.dark .token.property {
+  color: #9cdcfe !important;
+  background: none !important;
+}
+
+:root.dark .token.operator {
+  color: #d4d4d4 !important;
+  background: none !important;
+}
+
+:root.dark .token.boolean {
+  color: #569cd6 !important;
+  background: none !important;
+}
+
+:root.dark .token.constant {
+  color: #4fc1ff !important;
+  background: none !important;
+}
+
+:root.dark .token.class-name {
+  color: #4ec9b0 !important;
+  background: none !important;
+}
+
+:root.dark .token.variable {
+  color: #9cdcfe !important;
+  background: none !important;
 }
 </style>

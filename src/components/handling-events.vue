@@ -86,6 +86,8 @@ yarrowMap.onIconClick('buildings', (lat, lng, properties) => {
       font-size: 32px;
       text-align: center;
       margin-bottom: 20px;
+      color: var(--text-primary);
+      transition: all 0.3s ease;
     }
 
     h3 {
@@ -93,6 +95,8 @@ yarrowMap.onIconClick('buildings', (lat, lng, properties) => {
       font-size: 24px;
       text-align: center;
       margin-bottom: 20px;
+      color: var(--text-primary);
+      transition: all 0.3s ease;
     }
 
     p {
@@ -101,10 +105,13 @@ yarrowMap.onIconClick('buildings', (lat, lng, properties) => {
       text-align: center;
       max-width: 600px;
       margin: 20px auto;
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
 
       span {
-        color: #fe6d00;
+        color: var(--accent-color);
         font-weight: 700;
+        transition: all 0.3s ease;
       }
     }
   }

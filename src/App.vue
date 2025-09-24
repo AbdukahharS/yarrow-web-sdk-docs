@@ -2,7 +2,9 @@
 import Main from './components/main.vue'
 import { watch } from 'vue'
 import sidebar from './components/sidebar.vue'
+import FloatingControls from './components/floating-controls.vue'
 import { useI18n } from 'vue-i18n'
+import { useDarkMode } from './composables/useDarkMode'
 
 const circles = [
   { top: 15, left: 15 },
@@ -12,6 +14,7 @@ const circles = [
 ]
 
 const { t, locale } = useI18n()
+useDarkMode() // Initialize dark mode
 
 // Update document title when locale changes
 watch(
@@ -36,6 +39,7 @@ watch(
     ></div>
   </div>
   <sidebar />
+  <FloatingControls />
   <Main />
 </template>
 
@@ -47,11 +51,21 @@ watch(
   background: #fe6d0066;
   box-shadow: 0px -15px 250px 100px #fe6d0066;
   z-index: -1;
+  transition: all 0.15s ease-out;
+}
+
+:root.dark .shadow-circle {
+  background: #fe6d0044;
+  box-shadow: 0px -15px 250px 100px #fe6d0044;
 }
 
 @media screen and (max-width: 768px) {
   .shadow-circle {
     box-shadow: 0px -10px 150px 50px #fe6d0066;
+  }
+
+  :root.dark .shadow-circle {
+    box-shadow: 0px -10px 150px 50px #fe6d0044;
   }
 }
 </style>

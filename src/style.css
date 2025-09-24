@@ -1,3 +1,42 @@
+:root {
+  /* Light theme variables */
+  --bg-primary: #F6F6F6;
+  --bg-secondary: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.25);
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --text-muted: #c2c2c2;
+  --border-color: #FFFFFF;
+  --accent-color: #FE6D00;
+  --accent-hover: #ff7a1a;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --scrollbar-track: rgba(0, 0, 0, 0.1);
+  --scrollbar-thumb: rgba(0, 0, 0, 0.3);
+  --scrollbar-thumb-hover: rgba(254, 109, 0, 0.3);
+  --overlay-color: rgba(0, 0, 0, 0.5);
+
+  /* Transition timing for smooth theme switching */
+  --transition-theme: all 0.15s ease-out;
+}
+
+:root.dark {
+  /* Dark theme variables */
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #161616;
+  --bg-glass: rgba(26, 26, 26, 0.25);
+  --text-primary: #ffffff;
+  --text-secondary: #e0e0e0;
+  --text-muted: #888888;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --accent-color: #FE6D00;
+  --accent-hover: #ff7a1a;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --scrollbar-track: rgba(255, 255, 255, 0.1);
+  --scrollbar-thumb: rgba(255, 255, 255, 0.2);
+  --scrollbar-thumb-hover: rgba(254, 109, 0, 0.4);
+  --overlay-color: rgba(0, 0, 0, 0.7);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -10,7 +49,40 @@ html, body {
 }
 
 body {
-  background: #F6F6F6;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: var(--transition-theme);
+}
+
+/* Apply smooth transitions only to specific elements that use theme colors */
+body,
+.container,
+.container::after,
+aside,
+h1, h2, h3, h4, h5, h6,
+p, span,
+button,
+a,
+.code,
+.code .head,
+.code .body,
+.shadow-circle {
+  transition: background-color 0.15s ease-out,
+              color 0.15s ease-out,
+              border-color 0.15s ease-out,
+              box-shadow 0.15s ease-out;
+}
+
+/* Optimize performance for theme switching */
+body,
+aside,
+.container,
+.code {
+  will-change: background-color;
+}
+
+.shadow-circle {
+  will-change: box-shadow;
 }
 
 button {
@@ -27,9 +99,9 @@ button {
   border-radius: 50px;
   padding: 35px;
   overflow: hidden;
-  color: black;
+  color: var(--text-primary);
   font-weight: 600;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2), var(--transition-theme);
 }
 
 .container::before {
@@ -49,9 +121,9 @@ button {
   z-index: 1;
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.25);
+  background: var(--bg-glass);
   border-radius: 50px;
-  border: 1px solid #FFFFFF
+  border: 1px solid var(--border-color);
 }
 
 .container > * {
@@ -67,7 +139,7 @@ button {
 .btn-animate:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(254, 109, 0, 0.4);
-  background: linear-gradient(168.78deg, #ff7a1a -33.7%, #ffffff 254.67%);
+  background: linear-gradient(168.78deg, var(--accent-hover) -33.7%, var(--bg-secondary) 254.67%);
 }
 
 .btn-animate:active {
@@ -98,23 +170,23 @@ button {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--scrollbar-track);
   border-radius: 10px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--scrollbar-thumb);
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--border-color);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   transition: all 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(254, 109, 0, 0.3);
+  background: var(--scrollbar-thumb-hover);
   border: 1px solid rgba(254, 109, 0, 0.2);
   box-shadow: 0 2px 8px rgba(254, 109, 0, 0.1);
 }
@@ -125,7 +197,7 @@ button {
 }
 
 ::-webkit-scrollbar-corner {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--scrollbar-track);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -133,5 +205,5 @@ button {
 /* Firefox scrollbar styling */
 html {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1);
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }

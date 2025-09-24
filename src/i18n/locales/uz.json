@@ -297,7 +297,10 @@
     }
   },
   "ui": {
-    "language": "Til"
+    "language": "Til",
+    "theme": "Mavzu",
+    "switchToLight": "Yorug' rejimga o'tish",
+    "switchToDark": "Qorong'u rejimga o'tish"
   },
   "app": {
     "title": "Yarrow Web SDK Hujjatlari"

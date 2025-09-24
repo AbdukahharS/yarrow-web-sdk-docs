@@ -297,7 +297,10 @@
     }
   },
   "ui": {
-    "language": "Язык"
+    "language": "Язык",
+    "theme": "Тема",
+    "switchToLight": "Переключиться на светлый режим",
+    "switchToDark": "Переключиться на темный режим"
   },
   "app": {
     "title": "Документация Yarrow Web SDK"

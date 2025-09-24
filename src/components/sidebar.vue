@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Logo from '../assets/logo.svg'
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 
 const links = computed(() => [
   { name: t('nav.gettingStarted'), href: '#getting-started' },
@@ -14,11 +14,6 @@ const links = computed(() => [
   { name: t('nav.search'), href: '#search' },
   { name: t('nav.publicTransport'), href: '#public-transport' },
 ])
-
-const changeLocale = (newLocale: string) => {
-  locale.value = newLocale
-  localStorage.setItem('locale', newLocale)
-}
 
 const activeSection = ref('')
 const isMobile = ref(false)
@@ -107,32 +102,6 @@ defineExpose({
     'mobile-drawer': isMobile && isDrawerOpen
   }">
     <img :src="Logo" />
-    <div class="language-switcher">
-      <span class="language-label">{{ t('ui.language') }}</span>
-      <div class="language-options">
-        <button
-          @click="changeLocale('en')"
-          :class="{ active: locale === 'en' }"
-          class="lang-btn"
-        >
-          EN
-        </button>
-        <button
-          @click="changeLocale('uz')"
-          :class="{ active: locale === 'uz' }"
-          class="lang-btn"
-        >
-          UZ
-        </button>
-        <button
-          @click="changeLocale('ru')"
-          :class="{ active: locale === 'ru' }"
-          class="lang-btn"
-        >
-          RU
-        </button>
-      </div>
-    </div>
     <div class="links">
       <a
         v-for="(link, index) in links"
@@ -154,7 +123,7 @@ defineExpose({
   top: 20px;
   left: 20px;
   z-index: 1001;
-  background: #ffffff;
+  background: var(--bg-secondary);
   border: none;
   border-radius: 8px;
   width: 44px;
@@ -165,7 +134,7 @@ defineExpose({
   justify-content: center;
   align-items: center;
   gap: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px var(--shadow-color);
   transition: all 0.3s ease;
 }
 
@@ -177,7 +146,7 @@ defineExpose({
 .hamburger-btn span {
   width: 20px;
   height: 2px;
-  background: #333;
+  background: var(--text-secondary);
   transition: all 0.3s ease;
   transform-origin: center;
 }
@@ -203,14 +172,14 @@ defineExpose({
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--overlay-color);
   height: 100vh;
   z-index: 999;
 }
 
 aside {
   width: 283px;
-  background: #ffffff;
+  background: var(--bg-secondary);
   position: fixed;
   top: 0;
   bottom: 0;
@@ -223,57 +192,15 @@ aside {
   z-index: 1000;
   overflow-y: auto;
 
-  .language-switcher {
-    margin-top: 30px;
-    text-align: center;
-
-    .language-label {
-      font-size: 14px;
-      font-weight: 600;
-      color: #c2c2c2;
-      display: block;
-      margin-bottom: 15px;
-    }
-
-    .language-options {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-
-      .lang-btn {
-        background: transparent;
-        border: 1px solid #c2c2c2;
-        color: #c2c2c2;
-        padding: 6px 12px;
-        border-radius: 8px;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-
-        &:hover {
-          border-color: #fe6d00;
-          color: #fe6d00;
-        }
-
-        &.active {
-          background: #fe6d00;
-          border-color: #fe6d00;
-          color: #ffffff;
-        }
-      }
-    }
-  }
-
   .links {
-    margin-top: 70px;
+    margin-top: 80px;
     display: flex;
     flex-direction: column;
     gap: 30px;
 
     a {
       font-weight: 600;
-      color: #c2c2c2;
+      color: var(--text-muted);
       text-decoration: none;
       font-size: 18px;
       display: block;
@@ -283,7 +210,7 @@ aside {
       transition: color 0.2s ease;
 
       &.active {
-        background: linear-gradient(180deg, #FE6D00 -72%, #FFFFFF 311%);
+        background: linear-gradient(180deg, #FE6D00 -72%, var(--bg-secondary) 311%);
         color: #ffffff;
         border-radius: 12px;
       }
