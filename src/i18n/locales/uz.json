@@ -8,7 +8,23 @@
     "search": "Qidirish",
     "publicTransport": "Umumiy Transport",
     "utilityMethods": "Utility Metodlari",
-    "advancedFeatures": "Ilg'or Xususiyatlar"
+    "advancedFeatures": "Ilg'or Xususiyatlar",
+    "ios": {
+      "installation": "O'rnatish",
+      "overview": "Umumiy Ko'rinish",
+      "initialization": "Ishga Tushirish",
+      "mapSettings": "Xarita Sozlamalari",
+      "zoomControls": "Masshtabni Boshqarish",
+      "markers": "Markerlarni Boshqarish",
+      "routing": "Marshrutlarni Boshqarish",
+      "camera": "Kamerani Boshqarish",
+      "gestures": "Gestlarni Ishlash",
+      "userLocation": "Foydalanuvchi Joylashuvi",
+      "weather": "Ob-havo",
+      "geocoding": "Geokodlash",
+      "layers": "Qatlamlarni Boshqarish",
+      "bestPractices": "Eng Yaxshi Amaliyotlar"
+    }
   },
   "hero": {
     "title": "Web SDK Dokumentatsiyasi",

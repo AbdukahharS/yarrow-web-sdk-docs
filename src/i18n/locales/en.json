@@ -8,7 +8,23 @@
     "search": "Search",
     "publicTransport": "Public Transport",
     "utilityMethods": "Utility Methods",
-    "advancedFeatures": "Advanced Features"
+    "advancedFeatures": "Advanced Features",
+    "ios": {
+      "installation": "Installation",
+      "overview": "Overview",
+      "initialization": "Initialization",
+      "mapSettings": "Map Settings",
+      "zoomControls": "Zoom Controls",
+      "markers": "Marker Management",
+      "routing": "Route Management",
+      "camera": "Camera Control",
+      "gestures": "Gesture Handling",
+      "userLocation": "User Location",
+      "weather": "Weather",
+      "geocoding": "Geocoding",
+      "layers": "Layer Management",
+      "bestPractices": "Best Practices"
+    }
   },
   "hero": {
     "title": "Web SDK Documentation",

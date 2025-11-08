@@ -8,7 +8,23 @@
     "search": "Поиск",
     "publicTransport": "Общественный транспорт",
     "utilityMethods": "Вспомогательные методы",
-    "advancedFeatures": "Продвинутые функции"
+    "advancedFeatures": "Продвинутые функции",
+    "ios": {
+      "installation": "Установка",
+      "overview": "Обзор",
+      "initialization": "Инициализация",
+      "mapSettings": "Настройки карты",
+      "zoomControls": "Управление масштабом",
+      "markers": "Управление маркерами",
+      "routing": "Управление маршрутами",
+      "camera": "Управление камерой",
+      "gestures": "Обработка жестов",
+      "userLocation": "Местоположение пользователя",
+      "weather": "Погода",
+      "geocoding": "Геокодирование",
+      "layers": "Управление слоями",
+      "bestPractices": "Лучшие практики"
+    }
   },
   "hero": {
     "title": "Документация Web SDK",

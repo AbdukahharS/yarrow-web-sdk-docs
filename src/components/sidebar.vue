@@ -1,11 +1,26 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute, useRouter } from 'vue-router'
 import Logo from '../assets/logo.svg'
+import CustomSelect from './CustomSelect.vue'
 
 const { t } = useI18n()
+const route = useRoute()
+const router = useRouter()
 
-const links = computed(() => [
+const sdkOptions = [
+  { name: 'Web SDK', value: 'web-sdk', path: '/web-sdk' },
+  { name: 'iOS SDK', value: 'ios-sdk', path: '/ios-sdk' }
+]
+
+const currentSDK = computed(() => {
+  const path = route.path
+  if (path.includes('ios')) return 'ios-sdk'
+  return 'web-sdk'
+})
+
+const webSDKLinks = computed(() => [
   { name: t('nav.gettingStarted'), href: '#getting-started' },
   { name: t('nav.basicMap'), href: '#basic-map' },
   { name: t('nav.handlingEvents'), href: '#handling-events' },
@@ -16,6 +31,34 @@ const links = computed(() => [
   { name: t('nav.utilityMethods'), href: '#utility-methods' },
   { name: t('nav.advancedFeatures'), href: '#advanced-features' },
 ])
+
+const iOSSDKLinks = computed(() => [
+  { name: t('nav.ios.installation'), href: '#ios-installation' },
+  { name: t('nav.ios.overview'), href: '#ios-overview' },
+  { name: t('nav.ios.initialization'), href: '#ios-initialization' },
+  { name: t('nav.ios.mapSettings'), href: '#ios-map-settings' },
+  { name: t('nav.ios.zoomControls'), href: '#ios-zoom-controls' },
+  { name: t('nav.ios.markers'), href: '#ios-markers' },
+  { name: t('nav.ios.routing'), href: '#ios-routing' },
+  { name: t('nav.ios.camera'), href: '#ios-camera' },
+  { name: t('nav.ios.gestures'), href: '#ios-gestures' },
+  { name: t('nav.ios.userLocation'), href: '#ios-user-location' },
+  { name: t('nav.ios.weather'), href: '#ios-weather' },
+  { name: t('nav.ios.geocoding'), href: '#ios-geocoding' },
+  { name: t('nav.ios.layers'), href: '#ios-layers' },
+  { name: t('nav.ios.bestPractices'), href: '#ios-best-practices' },
+])
+
+const links = computed(() => {
+  return currentSDK.value === 'ios-sdk' ? iOSSDKLinks.value : webSDKLinks.value
+})
+
+const handleSDKChange = (value: string) => {
+  const sdk = sdkOptions.find(s => s.value === value)
+  if (sdk) {
+    router.push(sdk.path)
+  }
+}
 
 const activeSection = ref('')
 const isMobile = ref(false)
@@ -41,10 +84,11 @@ const handleLinkClick = () => {
 
 let observer: IntersectionObserver | null = null
 
-onMounted(() => {
-  checkIsMobile()
-  window.addEventListener('resize', checkIsMobile)
+const setupObserver = () => {
+  // Disconnect existing observer if any
+  observer?.disconnect()
 
+  // Create new observer
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -59,12 +103,27 @@ onMounted(() => {
     }
   )
 
-  links.value.forEach((link) => {
-    const element = document.querySelector(link.href)
-    if (element) {
-      observer?.observe(element)
-    }
-  })
+  // Wait for next tick to ensure DOM is updated
+  setTimeout(() => {
+    links.value.forEach((link) => {
+      const element = document.querySelector(link.href)
+      if (element) {
+        observer?.observe(element)
+      }
+    })
+  }, 100)
+}
+
+onMounted(() => {
+  checkIsMobile()
+  window.addEventListener('resize', checkIsMobile)
+  setupObserver()
+})
+
+// Watch for route changes and re-setup observer
+watch(() => route.path, () => {
+  activeSection.value = '' // Reset active section
+  setupObserver()
 })
 
 onUnmounted(() => {
@@ -104,6 +163,16 @@ defineExpose({
     'mobile-drawer': isMobile && isDrawerOpen
   }">
     <img :src="Logo" />
+
+    <!-- SDK Selector -->
+    <div class="sdk-selector">
+      <CustomSelect
+        :model-value="currentSDK"
+        :options="sdkOptions"
+        @update:model-value="handleSDKChange"
+      />
+    </div>
+
     <div class="links">
       <a
         v-for="(link, index) in links"
@@ -187,18 +256,22 @@ aside {
   bottom: 0;
   left: 0;
   height: 100vh;
-  border-top-right-radius: 60px;
-  border-bottom-right-radius: 60px;
-  padding: 65px 45px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  padding: 45px 35px;
   transition: transform 0.3s ease;
   z-index: 1000;
   overflow-y: auto;
 
+  .sdk-selector {
+    margin-top: 30px;
+  }
+
   .links {
-    margin-top: 80px;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
 
     a {
       font-weight: 600;
@@ -216,6 +289,10 @@ aside {
         color: #ffffff;
         border-radius: 12px;
       }
+
+      &:not(.active):hover {
+        color: #FE6D00;
+      }
     }
   }
 }
@@ -229,6 +306,20 @@ aside {
     padding: 20px;
     padding-bottom: 60px;
     width: 300px;
+
+    .sdk-selector {
+      margin-top: 20px;
+    }
+
+    .links {
+      margin-top: 20px;
+      gap: 15px;
+
+      a {
+        font-size: 16px;
+        padding: 12px 0;
+      }
+    }
   }
 
   aside.mobile-hidden {

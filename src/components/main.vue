@@ -1,28 +1,9 @@
 <script setup lang="ts">
-import Hero from './hero.vue'
-import gettingStarted from './getting-started.vue'
-import BasicMap from './basic-map.vue'
-import HandlingEvents from './handling-events.vue'
-import LayersAndData from './layers-and-data.vue'
-import Routing from './routing.vue'
-import Search from './search.vue'
-import PublicTransport from './public-transport.vue'
-import UtilityMethods from './utility-methods.vue'
-import AdvancedFeatures from './advanced-features.vue'
 </script>
 
 <template>
   <main>
-    <Hero />
-    <gettingStarted />
-    <BasicMap />
-    <HandlingEvents />
-    <LayersAndData />
-    <Routing />
-    <Search />
-    <PublicTransport />
-    <UtilityMethods />
-    <AdvancedFeatures />
+    <router-view />
   </main>
 </template>
 
