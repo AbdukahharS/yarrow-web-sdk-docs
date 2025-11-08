@@ -1,0 +1,28 @@
+stages:
+  - build
+
+variables:
+  NODE_VERSION: "18"
+
+# Cache node_modules for faster builds
+.node_cache: &node_cache
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules/
+
+build:
+  stage: build
+  image: node:${NODE_VERSION}-alpine
+  <<: *node_cache
+  script:
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 day
+  only:
+    - main
