@@ -97,6 +97,12 @@ yarrowMap.renderRoutes(routes, 'my-custom-routes');`)
     />
 
     <div class="container">
+      <p class="note">
+        <strong>{{ t('routing.importantNote') }}</strong> {{ t('routing.coordinateFormat') }}
+      </p>
+    </div>
+
+    <div class="container">
       <h3>{{ t('routing.clearRoutes.title') }}</h3>
       <p>
         {{ t('routing.clearRoutes.description') }}
@@ -183,6 +189,19 @@ yarrowMap.renderRoutes(routes, 'my-custom-routes');`)
         font-weight: 700;
         transition: all 0.3s ease;
       }
+    }
+
+    .note {
+      background: var(--bg-secondary);
+      border-left: 4px solid var(--accent-color);
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 5px;
+      font-size: 16px;
+      text-align: left;
+      max-width: 800px;
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
     }
 
     .features-info {

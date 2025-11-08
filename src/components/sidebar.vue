@@ -13,6 +13,8 @@ const links = computed(() => [
   { name: t('nav.routing'), href: '#routing' },
   { name: t('nav.search'), href: '#search' },
   { name: t('nav.publicTransport'), href: '#public-transport' },
+  { name: t('nav.utilityMethods'), href: '#utility-methods' },
+  { name: t('nav.advancedFeatures'), href: '#advanced-features' },
 ])
 
 const activeSection = ref('')

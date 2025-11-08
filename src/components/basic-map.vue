@@ -14,6 +14,22 @@ yarrowMap.changeStyles('hybrid');
 // ${t('basicMap.codeComments.switchDefault')}
 yarrowMap.changeStyles();`)
 
+const initialThemeCode = computed(() => `// ${t('basicMap.codeComments.initializeDarkTheme')}
+const mapConfig = new YarrowMapConfig(
+  'map',
+  [69.2401, 41.2995],
+  12,
+  5,
+  18,
+  'dark'  // ${t('basicMap.codeComments.setInitialTheme')}
+);`)
+
+const switchThemeCode = computed(() => `// ${t('basicMap.codeComments.switchDarkMode')}
+await yarrowMap.changeTheme('dark');
+
+// ${t('basicMap.codeComments.switchLightMode')}
+await yarrowMap.changeTheme('light');`)
+
 const zoomToCode = computed(() => `// ${t('basicMap.codeComments.flyToLocation')}
 yarrowMap.zoomTo(41.3111, 69.2797, 15); // ${t('basicMap.codeComments.latLngZoomLevel')}`)
 
@@ -51,6 +67,42 @@ yarrowMap.changeBackgroundColor('#f0f0f0'); // ${t('basicMap.codeComments.lightG
       filename="map-styles.ts"
       file-type="TS"
     />
+
+    <div class="container">
+      <h3>{{ t('basicMap.changeTheme.title') }}</h3>
+      <p>
+        {{ t('basicMap.changeTheme.description') }}
+      </p>
+      <h4>{{ t('basicMap.changeTheme.settingInitialTheme') }}</h4>
+    </div>
+    <Code
+      :code="initialThemeCode"
+      language="typescript"
+      filename="initial-theme.ts"
+      file-type="TS"
+    />
+
+    <div class="container">
+      <h4>{{ t('basicMap.changeTheme.switchingDynamically') }}</h4>
+    </div>
+    <Code
+      :code="switchThemeCode"
+      language="typescript"
+      filename="switch-theme.ts"
+      file-type="TS"
+    />
+
+    <div class="container">
+      <div class="feature-box">
+        <h4>{{ t('basicMap.changeTheme.featuresTitle') }}</h4>
+        <ul>
+          <li>{{ t('basicMap.changeTheme.autoRefetch') }}</li>
+          <li>{{ t('basicMap.changeTheme.updateLayers') }}</li>
+          <li>{{ t('basicMap.changeTheme.preserveIcons') }}</li>
+          <li>{{ t('basicMap.changeTheme.seamlessTransition') }}</li>
+        </ul>
+      </div>
+    </div>
 
     <div class="container">
       <h3>{{ t('basicMap.moveMapView.title') }}</h3>
@@ -157,6 +209,37 @@ yarrowMap.changeBackgroundColor('#f0f0f0'); // ${t('basicMap.codeComments.lightG
       max-width: 800px;
       color: var(--text-secondary);
       transition: all 0.3s ease;
+    }
+
+    .feature-box {
+      max-width: 800px;
+      margin: 30px auto;
+      text-align: left;
+      background: var(--bg-secondary);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px var(--shadow-color);
+      transition: all 0.3s ease;
+
+      h4 {
+        text-align: left;
+        margin-bottom: 15px;
+        margin-top: 0;
+      }
+
+      ul {
+        list-style: disc;
+        padding-left: 20px;
+        margin: 0;
+
+        li {
+          padding: 8px 0;
+          font-size: 16px;
+          color: var(--text-secondary);
+          transition: all 0.3s ease;
+          line-height: 1.6;
+        }
+      }
     }
   }
 }

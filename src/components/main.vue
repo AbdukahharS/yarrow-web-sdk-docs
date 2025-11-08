@@ -7,6 +7,8 @@ import LayersAndData from './layers-and-data.vue'
 import Routing from './routing.vue'
 import Search from './search.vue'
 import PublicTransport from './public-transport.vue'
+import UtilityMethods from './utility-methods.vue'
+import AdvancedFeatures from './advanced-features.vue'
 </script>
 
 <template>
@@ -19,6 +21,8 @@ import PublicTransport from './public-transport.vue'
     <Routing />
     <Search />
     <PublicTransport />
+    <UtilityMethods />
+    <AdvancedFeatures />
   </main>
 </template>
 

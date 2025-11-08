@@ -46,7 +46,8 @@ const configOptionsCode = computed(() => `const mapConfig = new YarrowMapConfig(
   center,       // ${t('code.comments.centerParam')}
   zoom,         // ${t('code.comments.zoomParam')}
   minZoom,      // ${t('code.comments.minZoomParam')}
-  maxZoom       // ${t('code.comments.maxZoomParam')}
+  maxZoom,      // ${t('code.comments.maxZoomParam')}
+  theme         // ${t('code.comments.themeParam')}
 );`)
 
 const fullExampleCode = computed(() => `import { YarrowMap, YarrowMapConfig } from '@yarrow/yarrow-map-web-sdk';
@@ -56,7 +57,8 @@ const mapConfig = new YarrowMapConfig(
   [69.2401, 41.2995],      // ${t('code.comments.centerCoordinatesComment')}
   12,                      // ${t('code.comments.initialZoomComment')}
   5,                       // ${t('code.comments.minimumZoomComment')}
-  18                       // ${t('code.comments.maximumZoomComment')}
+  18,                      // ${t('code.comments.maximumZoomComment')}
+  'dark'                   // ${t('code.comments.themeComment')}
 );
 
 const yarrowMap = new YarrowMap(mapConfig);
@@ -85,6 +87,9 @@ yarrowMap.init().then(() => {
       <h2>{{ t('gettingStarted.initialization.title') }}</h2>
       <p>
         {{ t('gettingStarted.initialization.description', { yarrowMap: 'YarrowMap' }) }}
+      </p>
+      <p class="note">
+        <strong>{{ t('gettingStarted.initialization.importantNote') }}</strong> {{ t('gettingStarted.initialization.coordinateFormat') }}
       </p>
     </div>
     <Code
@@ -165,6 +170,19 @@ yarrowMap.init().then(() => {
       display: block;
       margin: 0 auto;
       cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .note {
+      background: var(--bg-secondary);
+      border-left: 4px solid var(--accent-color);
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 5px;
+      font-size: 16px;
+      text-align: left;
+      max-width: 800px;
+      color: var(--text-secondary);
       transition: all 0.3s ease;
     }
   }

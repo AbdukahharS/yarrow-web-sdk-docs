@@ -111,7 +111,6 @@ const customMarker = yarrowMap.addMarker([41.2995, 69.2401], {
   element: customElement,     // ${t('layersAndData.codeComments.customMarkerElement')}
   color: '#0000ff',          // ${t('layersAndData.codeComments.markerColor')}
   draggable: true,           // ${t('layersAndData.codeComments.allowDragging')}
-  offset: [0, -10],          // ${t('layersAndData.codeComments.pixelOffset')}
   anchor: 'bottom',          // ${t('layersAndData.codeComments.anchorPosition')}
   onClick: () => {           // ${t('layersAndData.codeComments.clickEventHandler')}
     console.log('${t('layersAndData.codeComments.markerClicked')}');
@@ -209,7 +208,6 @@ const removeLayerCode = computed(() => `yarrowMap.removeLayer('my-custom-layer')
           <li><span>element</span>: {{ t('layersAndData.markers.element') }}</li>
           <li><span>color</span>: {{ t('layersAndData.markers.color') }}</li>
           <li><span>draggable</span>: {{ t('layersAndData.markers.draggable') }}</li>
-          <li><span>offset</span>: {{ t('layersAndData.markers.offset') }}</li>
           <li><span>anchor</span>: {{ t('layersAndData.markers.anchor') }}</li>
           <li><span>onClick</span>: {{ t('layersAndData.markers.onClick') }}</li>
         </ul>

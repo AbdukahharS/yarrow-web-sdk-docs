@@ -1,306 +1,398 @@
 {
   "nav": {
     "gettingStarted": "Boshlash",
-    "basicMap": "Asosiy Xarita",
-    "handlingEvents": "Hodisalarni Boshqarish",
+    "basicMap": "Xarita Bilan Ishlash",
+    "handlingEvents": "Voqealarni Boshqarish",
     "layersAndData": "Qatlamlar va Ma'lumotlar",
-    "routing": "Marshrutlash",
-    "search": "Qidiruv",
-    "publicTransport": "Jamoat Transporti"
+    "routing": "Marshrut Qurilishi",
+    "search": "Qidirish",
+    "publicTransport": "Umumiy Transport",
+    "utilityMethods": "Utility Metodlari",
+    "advancedFeatures": "Ilg'or Xususiyatlar"
   },
   "hero": {
-    "title": "Web SDK Hujjatlari",
-    "subtitle": "Ushbu hujjat web ilovangizda Yarrow xaritalarini joylashtirish va ular bilan ishlash uchun Yarrow Map Web SDK dan foydalanish bo'yicha qo'llanma beradi.",
+    "title": "Web SDK Dokumentatsiyasi",
+    "subtitle": "Ushbu hujjat Yarrow Map Web SDK-sidan veb-ilovangizga Yarrow xaritalarini o'rnatish va bilan ishlash bo'yicha keng ko'lamli qo'llanma beradi.",
     "cta": "Boshlash"
   },
   "gettingStarted": {
     "title": "Boshlash",
     "installation": {
       "title": "O'rnatish",
-      "description": "Avvalo, o'zingiz afzal ko'rgan paket menejeridan foydalanib loyihangizga {sdk} ni qo'shing.",
-      "copied": "Buferga nusxalandi!",
-      "copyFailed": "Nusxalash amalga oshmadi"
+      "description": "Avvalo, {sdk}-ni o'zingizning afzal paket menejeri orqali loyihangizga qo'shing.",
+      "copied": "Clipboardga nusxa olindi!",
+      "copyFailed": "Nusxa olish muvaffaqiyatsiz bo'ldi"
     },
     "initialization": {
       "title": "Ishga Tushirish",
-      "description": "Boshlash uchun {yarrowMap} ning misolini yaratishingiz kerak. Bu konteyner elementi, markaz koordinatalari va masshtab darajasini belgilaydigan konfiguratsiya obyektini talab qiladi."
+      "description": "{yarrowMap} misolini yaratishni boshlash uchun sizga konfiguratsiya objekti kerak bo'ladi. Bu konteyner elementi, markaziy koordinatalar va zoom darajasini belgilaydigan parametrlarni o'z ichiga oladi.",
+      "importantNote": "Muhim - Koordinata Formati:",
+      "coordinateFormat": "Ushbu SDK xarita konfiguratsiyasi uchun [longitude, latitude] formatini (MapLibre GL konventsiyasiga mos keladigan), lekin marshrutlash va markerlar kabi boshqa barcha metodlar uchun [latitude, longitude] formatini ishlatadi (umumiy foydalanishga mos keladigan)."
     },
     "configuration": {
-      "title": "Konfiguratsiya Sozlamalari",
-      "description": "{yarrowMapConfig} klassi quyidagi parametrlarni qabul qiladi:",
-      "exampleTitle": "Barcha sozlamalarga misol:"
+      "title": "Konfiguratsiya Variantlari",
+      "description": "{yarrowMapConfig} sinfi quyidagi parametrlarni qabul qiladi:",
+      "exampleTitle": "Barcha variantlar bilan misol:"
     }
   },
   "code": {
-    "copy": "nusxalash",
-    "copied": "Nusxalandi!",
+    "copy": "nusxa olish",
+    "copied": "Nusxa olindi!",
     "comments": {
       "configForMap": "Xarita uchun konfiguratsiya",
-      "containerComment": "Xaritani ko'rsatish uchun div elementining ID si",
-      "centerComment": "Xaritaning boshlang'ich markazi [uzunlik, kenglik]",
-      "zoomComment": "Boshlang'ich masshtab darajasi",
+      "containerComment": "Xaritani render qilish uchun div elementining ID-si",
+      "centerComment": "Dastlabki markaz [longitude, latitude] - MapLibre konventsiyasi",
+      "zoomComment": "Dastlabki zoom darajasi",
       "createInstance": "Yangi xarita misolini yaratish",
       "initializeMap": "Xaritani ishga tushirish",
       "successMessage": "Xarita muvaffaqiyatli ishga tushirildi!",
-      "containerParam": "string | HTMLElement - div elementining ID si yoki elementning o'zi",
-      "centerParam": "[number, number] - Boshlang'ich markaz [uzunlik, kenglik]",
-      "zoomParam": "number - Boshlang'ich masshtab darajasi (standart: 10)",
-      "minZoomParam": "number - Minimal masshtab darajasi (standart: 0)",
-      "maxZoomParam": "number - Maksimal masshtab darajasi (standart: 19)",
-      "containerIdComment": "Konteyner ID si",
-      "centerCoordinatesComment": "Markaz koordinatalari",
-      "initialZoomComment": "Boshlang'ich masshtab",
-      "minimumZoomComment": "Minimal masshtab",
-      "maximumZoomComment": "Maksimal masshtab"
+      "containerParam": "string | HTMLElement - div elementining ID-si yoki element o'zi",
+      "centerParam": "[number, number] - Dastlabki markaz [longitude, latitude] - MapLibre konventsiyasi",
+      "zoomParam": "number - Dastlabki zoom darajasi (default: 10)",
+      "minZoomParam": "number - Minimal zoom darajasi (default: 0)",
+      "maxZoomParam": "number - Maksimal zoom darajasi (default: 19)",
+      "themeParam": "'light' | 'dark' - Xarita temasini (default: 'light')",
+      "containerIdComment": "Konteyner ID-si",
+      "centerCoordinatesComment": "Markaziy koordinatalar",
+      "initialZoomComment": "Dastlabki zoom",
+      "minimumZoomComment": "Minimal zoom",
+      "maximumZoomComment": "Maksimal zoom",
+      "themeComment": "Tema (ixtiyoriy, default: 'light')"
     }
   },
   "basicMap": {
-    "title": "Asosiy Xarita Boshqaruvi",
-    "description": "Xaritangizning ko'rinishi va ko'rinishini dasturiy ravishda qanday boshqarishni o'rganing.",
+    "title": "Xarita Manipulatsiyasi",
+    "description": "Xaritangizning ko'rinishini va ko'rinishini programma orqali boshqarishni o'rganing.",
     "changeMapStyle": {
       "title": "Xarita Uslubini O'zgartirish",
-      "description": "Siz xaritaning vizual uslubini o'zgartirishingiz mumkin. Mavjud uslublar {satellite}, {hybrid} va standart xarita uslubidir."
+      "description": "Xaritaning vizual uslubini o'zgartirishingiz mumkin. Mavjud uslublar {satellite}, {hybrid} va standart xarita uslubi."
+    },
+    "changeTheme": {
+      "title": "Xarita Temasini O'zgartirish",
+      "description": "Dastlabki temani konfiguratsiyada o'rnatishingiz yoki ishga tushirilgandan keyin yorug' va qorong'i temalar orasida dinamik tarzda o'tishingiz mumkin.",
+      "settingInitialTheme": "Dastlabki temani o'rnatish:",
+      "switchingDynamically": "Temani dinamik tarzda o'tkazish:",
+      "featuresTitle": "Xususiyatlar:",
+      "autoRefetch": "Serverdan tegishli uslublarni avtomatik ravishda qayta yuklab oladi",
+      "updateLayers": "Barcha xarita qatlamlarini temaga moslashtiradi",
+      "preserveIcons": "Maxsus ikonalar va markerlarni saqlaydi",
+      "seamlessTransition": "Muammosiz tema o'tishi"
     },
     "moveMapView": {
-      "title": "Xarita Ko'rinishini Harakatlantirish",
-      "description": "Siz xaritani dasturiy ravishda yangi joyga ko'chirishingiz yoki ma'lum geografik hududga moslashtirshingiz mumkin.",
-      "zoomToPoint": "Ma'lum nuqtaga masshtablash:",
-      "fitToFeatures": "Xaritani obyektlar to'plamiga moslashtirish:",
-      "fitDescription": "Bu nuqtalar, chiziqlar yoki ko'pburchaklar to'plamini ko'rsatishda va ularning barchasini ko'rinadigan qilishda foydalidir."
+      "title": "Xarita Ko'rinishini Harakatlantirib Yo'llanish",
+      "description": "Xaritani yangi joyga programma orqali harakatlantirishingiz yoki u muayyan geografik sohani mos keltirishingiz mumkin.",
+      "zoomToPoint": "Ma'lum bir nuqtaga zoom qilish:",
+      "fitToFeatures": "Xaritani xususiyatlar to'plamiga mos keltirib yo'llanish:",
+      "fitDescription": "Bu nuqtalar, chiziqlar yoki poligonlarni ko'rsatishni istagan va hammasini ko'rinishga kiritishni ta'minlamoqchi bo'lganingizda foydali."
     },
     "backgroundColor": {
       "title": "Fon Rangini O'zgartirish",
-      "description": "Siz xaritaning fon rangini dasturiy ravishda o'zgartirishingiz mumkin:"
+      "description": "Xarita fon rangini programma orqali o'zgartirishingiz mumkin:"
     },
     "note": {
       "title": "Eslatma:",
-      "description": "changeBackgroundColor usuli xarita uslubi to'liq yuklanishini kutadi, so'ngra fon rangini o'zgartirishni qo'llaydi."
+      "description": "changeBackgroundColor metodi fon rangi o'zgarishini qo'llashdan oldin xarita uslubi to'liq yuklangan kuni kutadi."
     },
     "codeComments": {
-      "switchSatellite": "Sun'iy yo'ldosh ko'rinishiga o'tish",
-      "switchHybrid": "Gibrid ko'rinishiga o'tish (yorliqlar bilan sun'iy yo'ldosh)",
+      "switchSatellite": "Sun'iy yo'ldosh ko'rinishiga o'tkazing",
+      "switchHybrid": "Gibrid ko'rinishiga o'tkazing (etiketlar bilan sun'iy yo'ldosh)",
       "switchDefault": "Standart xarita uslubiga qaytish",
-      "flyToLocation": "Yangi joyga ma'lum masshtab bilan uchish",
-      "changeBackground": "Xarita fonini maxsus rangga o'zgartirish",
-      "lightGrayBackground": "Och kulrang fon",
-      "yourGeoJSONFeatures": "Bu yerda sizning GeoJSON obyektlaringiz",
-      "latLngZoomLevel": "Kenglik, Uzunlik, Masshtab darajasi"
+      "initializeDarkTheme": "Qorong'i tema bilan ishga tushirish",
+      "setInitialTheme": "Dastlabki temani qorong'iga o'rnatish",
+      "switchDarkMode": "Qorong'i rejimga o'tkazing",
+      "switchLightMode": "Yorug' rejimga o'tkazing (default)",
+      "flyToLocation": "Ma'lum bir zoom darajasi bilan yangi joyga ko'chib o'tish",
+      "changeBackground": "Xarita fonini maxsus ranga o'zgartirish",
+      "lightGrayBackground": "Engil yog'in fon",
+      "yourGeoJSONFeatures": "Sizning GeoJSON xususiyatlaringiz bu yerda",
+      "latLngZoomLevel": "Kenglik, Uzunlik, Zoom Darajasi"
     }
   },
   "handlingEvents": {
-    "title": "Hodisalarni Boshqarish",
-    "description": "Siz xarita bilan foydalanuvchining turli o'zaro ta'sirlarini tinglashingiz mumkin.",
+    "title": "Voqealarni Boshqarish",
+    "description": "Xarita bilan turli foydalanuvchi o'z-o'ziga ishlashini tinglashingiz mumkin.",
     "mapMovement": {
-      "title": "Xarita Harakatini Tinglash",
-      "description": "Xarita harakati tugaganda callback funksiyasini bajarish."
+      "title": "Xarita Harakatlanishini Tinglash",
+      "description": "Xarita harakatlanishini tugatganda callback funksiyasini bajarish."
     },
     "mapClicks": {
-      "title": "Xarita Bosishlarini Tinglash",
-      "description": "Foydalanuvchi xaritani bosganda callback funksiyasini bajarish."
+      "title": "Xarita Bosmalarini Tinglash",
+      "description": "Foydalanuvchi xaritani bosganida callback ni bajarish."
     },
     "poiClicks": {
-      "title": "POI yoki Binolar Bosishlarini Tinglash",
-      "description": "Siz xaritadagi ma'lum obyektlar guruhlariga, masalan {pois} yoki {buildings} ga bosish tinglovchilarini qo'shishingiz mumkin."
+      "title": "POI yoki Binolardagi Bosmalarni Tinglash",
+      "description": "Xarita ustidagi xususiyatlarning muayyan guruhlariga, masalan {pois} yoki {buildings}-ga click tinglashini qo'shing."
     },
     "codeComments": {
-      "mapMoved": "Xarita ko'chirildi:",
-      "withZoom": "masshtab bilan:",
-      "mapClicked": "Xarita bosildi:",
-      "listenPOIs": "POI larni bosishni tinglash",
-      "poiClicked": "POI bosildi:",
-      "listenBuildings": "Binolarni bosishni tinglash",
-      "buildingClicked": "Bino bosildi:"
+      "mapMoved": "Xarita shu joyga ko'chdi:",
+      "withZoom": "zoom bilan:",
+      "mapClicked": "Xarita shu nuqtada bosindi:",
+      "listenPOIs": "POI-lardagi bosmalarni tinglash",
+      "poiClicked": "POI bosindi:",
+      "listenBuildings": "Binolardagi bosmalarni tinglash",
+      "buildingClicked": "Bino bosindi:"
     }
   },
   "layersAndData": {
-    "title": "Qatlamlar va Ma'lumotlar bilan Ishlash",
-    "description": "Xaritangizga maxsus ma'lumotlar, markerlar va qatlamlarni qanday qo'shishni o'rganing.",
+    "title": "Qatlamlar va Ma'lumotlar Bilan Ishlash",
+    "description": "Xaritaga maxsus ma'lumotlar, markerlar va qatlamlarni qo'shishni o'rganing.",
     "addGeoJSON": {
-      "title": "GeoJSON Qatlami Qo'shish",
-      "description": "Siz xaritaga {geoJsonLayer} shaklida maxsus ma'lumotlarni qo'shishingiz mumkin. Bu nuqtalar, chiziqlar yoki ko'pburchaklarni ko'rsatish uchun foydalidir."
+      "title": "GeoJSON Qatlamini Qo'shish",
+      "description": "Xaritaga {geoJsonLayer} shaklida maxsus ma'lumotlarni qo'shing. Bu nuqtalar, chiziqlar yoki poligonlarni ko'rsatish uchun foydali."
     },
     "advancedConfig": {
-      "title": "Kengaytirilgan Qatlam Konfiguratsiyasi",
-      "description": "{addLayer} usuli turli qatlam turlari uchun kengaytirilgan konfiguratsiya parametrlarini qo'llab-quvvatlaydi:",
-      "symbolLayerTitle": "Maxsus ikonkalar bilan simvol qatlami:",
-      "lineLayerTitle": "Uslub bilan chiziq qatlami:"
+      "title": "Qavat Konfiguratsiyasining Ilg'or Variantlari",
+      "description": "{addLayer} metodi turli qavat turlari uchun ilg'or konfiguratsiya variantlarini qo'llab-quvvatlaydi:",
+      "symbolLayerTitle": "Maxsus ikonalar bilan simvol qavati:",
+      "lineLayerTitle": "Uslublanmagan chiziq qavati:"
     },
     "markers": {
-      "title": "Markerlarni Qo'shish va Olib Tashlash",
-      "description": "Siz ma'lum joylarni ko'rsatish uchun xaritaga markerlar qo'shishingiz mumkin.",
-      "optionsTitle": "Marker Sozlamalari:",
+      "title": "Markerlarni Qo'shish va O'chirish",
+      "description": "Xarita ustiga muayyan joylarni ko'rsatish uchun markerlarni qo'shing.",
+      "optionsTitle": "Marker Variantlari:",
       "element": "Marker uchun maxsus HTML elementi",
-      "color": "Marker rangi (standart: '#FF0000')",
-      "draggable": "Markerni sudrab olish mumkinmi (standart: false)",
-      "offset": "Marker pozitsiyasidan piksel siljishi",
-      "anchor": "Koordinatalarga nisbatan markerning anchor nuqtasi",
-      "onClick": "Bosish hodisasi ishlov beruvchi funksiya"
+      "color": "Marker rangi (default: '#FF0000')",
+      "draggable": "Markerni tortish mumkin bo'ladimi (default: false)",
+      "anchor": "Uning koordinatalariga nisbatan marker ning ankori nuqtasi",
+      "onClick": "Bosmani amalga oshirish funksiyasi"
     },
     "removeLayer": {
-      "title": "Qatlamni Olib Tashlash",
-      "description": "Siz oldin qo'shgan qatlamni olib tashlashingiz mumkin."
+      "title": "Qavat O'chirish",
+      "description": "Avvaldan qo'shgan qavat o'chirishingiz mumkin."
     },
     "codeComments": {
-      "uniqueLayerName": "Qatlam uchun noyob nom",
-      "layerType": "Qatlam turi (masalan, 'circle', 'line', 'fill', 'symbol')",
-      "uniqueIdentifier": "Qatlam uchun noyob identifikator",
-      "paintProperties": "Bo'yoq xususiyatlari obyekti",
-      "layoutProperties": "Tartib xususiyatlari obyekti",
-      "iconConfiguration": "Ikonka konfiguratsiyasi (kenglik, balandlik)",
-      "iconWidth": "Ikonka kengligi",
-      "iconHeight": "Ikonka balandligi",
-      "addRedMarker": "Oddiy qizil marker qo'shish (standart rang)",
-      "addMarkerOptions": "Barcha sozlamalar bilan marker qo'shish",
+      "uniqueLayerName": "Qavat uchun o'ziga xos nom",
+      "layerType": "Qavat turi (masalan, 'circle', 'line', 'fill', 'symbol')",
+      "uniqueIdentifier": "Qavat uchun o'ziga xos identifikator",
+      "paintProperties": "Paint xususiyatlari objekti",
+      "layoutProperties": "Layout xususiyatlari objekti",
+      "iconConfiguration": "Icon konfiguratsiyasi (kenglik, balandlik)",
+      "iconWidth": "Icon kenglik",
+      "iconHeight": "Icon balandlik",
+      "addRedMarker": "Sodda qizil marker qo'shish (default rang)",
+      "addMarkerOptions": "Barcha variantlar bilan marker qo'shish",
       "customMarkerElement": "HTMLElement - Maxsus marker elementi",
-      "markerColor": "string - Marker rangi (standart: '#FF0000')",
-      "allowDragging": "boolean - Sudrab olishga ruxsat berish (standart: false)",
-      "pixelOffset": "[number, number] - Piksel siljishi",
-      "anchorPosition": "Anchor pozitsiyasi: 'center', 'top', 'bottom', 'left', 'right', va boshqalar",
-      "clickEventHandler": "function - Bosish hodisasi ishlov beruvchi",
-      "markerClicked": "Marker bosildi!",
+      "markerColor": "string - Marker rangi (default: '#FF0000')",
+      "allowDragging": "boolean - Tortishga ruxsat berish (default: false)",
+      "anchorPosition": "Ankori joyoti: 'center', 'top', 'bottom', 'left', 'right', 'top-left', 'top-right', 'bottom-left', 'bottom-right'",
+      "clickEventHandler": "function - Bosmani amalga oshirish funksiyasi",
+      "markerClicked": "Marker bosindi!",
       "addCustomHTML": "Maxsus HTML elementi bilan marker qo'shish",
-      "removeMarker": "Markerni olib tashlash",
-      "layerTypeOptions": "Qatlam turi: 'symbol', 'fill', 'line', 'background', 'raster', 'circle', 'heatmap', 'fill-extrusion', 'hillshade'",
+      "removeMarker": "Markerni o'chirish",
+      "layerTypeOptions": "Qavat turi: 'symbol', 'fill', 'line', 'background', 'raster', 'circle', 'heatmap', 'fill-extrusion', 'hillshade'",
       "geoJsonFeatureCollection": "GeoJSON FeatureCollection",
-      "base64ImageData": "Base64 tasvir ma'lumotlari"
+      "base64ImageData": "Base64 rasm ma'lumotlari"
     }
   },
   "routing": {
-    "title": "Marshrutlash",
-    "description": "SDK turli transport turlari uchun kuchli marshrutlash imkoniyatlarini taqdim etadi.",
+    "title": "Marshrut Qurilishi",
+    "description": "SDK turli transport usullari uchun kuchli marshrut qurilish imkoniyatlarini taqdim etadi.",
+    "importantNote": "Muhim Eslatma:",
+    "coordinateFormat": "SDK barcha foydalanuvchiga ko'rsatilgan koordinata parametrlari (marshrut, markerlar va boshqalar) uchun [latitude, longitude] formatini ishlatadi, keyin u ishlash uchun zarur bo'lgan joylarda MapLibre-ning [longitude, latitude] formatiga ichki tarzda konvertatsiya qilinadi.",
     "simpleRoute": {
-      "title": "Oddiy Marshrutni Qurish va Ko'rsatish",
-      "description": "Boshlang'ich va oxirgi nuqta orasidagi marshrutni hisoblash va ko'rsatish."
+      "title": "Oddiy Marshrut Qurish va Ko'rsatish",
+      "description": "Boshlanish va tugatish nuqtasining orasida marshrut hisoblash va ko'rsatish."
     },
     "multiStopRoute": {
-      "title": "Ko'p To'xtashli Marshrutni Qurish va Ko'rsatish",
-      "description": "Siz {multipleWaypoints} dan o'tuvchi marshrutni ham yaratishingiz mumkin."
+      "title": "Ko'p To'xtatish Marshrutini Qurish va Ko'rsatish",
+      "description": "{multipleWaypoints} dan o'tadigan marshrut yaratishingiz mumkin."
     },
     "clearRoutes": {
-      "title": "Marshrutlarni Tozalash",
-      "description": "Xaritadan barcha marshrut bilan bog'liq qatlamlarni olib tashlash uchun:"
+      "title": "Marshrutlarni Toza Qilish",
+      "description": "Xarita dan barcha marshrut-tegishli qatlamlarni olib tashlash uchun:"
     },
     "multipleRoutes": {
-      "title": "Ko'plab Marshrutlarni Chizish",
-      "description": "Siz avtomatik rang kodlash bilan ko'plab marshrut obyektlarini chizishingiz mumkin:"
+      "title": "Ko'p Marshrutlarni Render Qilish",
+      "description": "Avtomatik rang kodlash bilan ko'p marshrut xususiyatlarini render qilishingiz mumkin:"
     },
     "features": {
       "title": "Xususiyatlar:",
-      "autoColors": "Har bir marshrutga avtomatik ravishda turli ranglar beradi (#3b82f6, #10b981, #f59e0b, #ef4444, #8b5cf6)",
-      "separateLayers": "Har bir marshrut uchun alohida qatlamlar yaratadi (${baseLayerName}-0, ${baseLayerName}-1, va boshqalar)",
-      "defaultName": "Agar ko'rsatilmagan bo'lsa, standart qatlam nomi 'route' dir"
+      "autoColors": "Har bir marshrutga avtomatik ravishda turli ranglarni tayinlaydi (#3b82f6, #10b981, #f59e0b, #ef4444, #8b5cf6)",
+      "separateLayers": "Har bir marshrut uchun alohida qatlamlarni yaratadi (${baseLayerName}-0, ${baseLayerName}-1, va boshqalar)",
+      "defaultName": "Belgilanmasa standart asosiy qavat nomi 'route'"
     },
     "codeComments": {
-      "startPoint": "Boshlanish",
-      "waypointOne": "1-yo'l nuqtasi",
-      "endPoint": "Oxiri",
+      "startPoint": "Boshlanish [latitude, longitude]",
+      "waypointOne": "To'xtatish 1",
+      "endPoint": "Tugatish",
       "routeBuilt": "Marshrut qurildi:",
-      "directions": "Yo'nalishlar:",
+      "directions": "Yo'naltirishlar:",
       "multiSegmentRoute": "Ko'p segmentli marshrut qurildi:",
-      "routeFeatures": "Marshrut obyektlari massivi (GeoJSON LineString obyektlari)",
-      "renderDefault": "Standart uslub bilan marshrutlarni chizish",
-      "renderCustom": "Maxsus qatlam nomi bilan marshrutlarni chizish"
+      "routeFeatures": "Marshrut xususiyatlari massivi (GeoJSON LineString xususiyatlari)",
+      "renderDefault": "Marshrutlarni standart uslub bilan render qilish",
+      "renderCustom": "Marshrutlarni maxsus asosiy qavat nomi bilan render qilish"
     }
   },
   "search": {
-    "title": "Qidiruv",
-    "description": "Joylarni qidiring va natijalarni xaritangizda ko'rsating.",
+    "title": "Qidirish",
+    "description": "Joylarni qidiring va natijalarni xarita ustida ko'rsating.",
     "highlighting": {
-      "title": "Qidiruv Natijalarini Ajratib Ko'rsatish",
-      "description": "Siz qidiruv amalga oshirishingiz va natijalarni xaritada ko'rsatishingiz mumkin. Qidiruv {currentMapCenter} atrofida amalga oshiriladi."
+      "title": "Qidirish Natijalarini Ajratib Ko'rsatish",
+      "description": "Qidirish amalga oshiringiz va natijalarni xarita ustida ko'rsating. Qidirish {currentMapCenter} atrofida amalga oshiriladi."
     },
     "advancedConfig": {
-      "title": "Kengaytirilgan Qidiruv Konfiguratsiyasi",
-      "description": "{highlightSearchResults} usuli keng qamrovli konfiguratsiya parametrlarini qabul qiladi:"
+      "title": "Qidirish Konfiguratsiyasining Ilg'or Variantlari",
+      "description": "{highlightSearchResults} metodi keng qamrovli konfiguratsiya variantlarini qabul qiladi:"
     },
     "configOptions": {
-      "title": "Konfiguratsiya Sozlamalari:",
-      "layerName": "Qidiruv natijalari qatlami uchun maxsus nom",
-      "iconImage": "Qidiruv natijalari uchun foydalaniladigan maxsus ikonka tasviri",
-      "highlightColor": "Qidiruv natijalarini ajratib ko'rsatish rangi",
-      "pulseAnimation": "Puls animatsiya effektini yoqish/o'chirish",
-      "zoomToResults": "Qidiruv natijalariga avtomatik masshtablash",
-      "onIconClick": "Qidiruv natijasi ikonkasi bosilganda callback",
-      "onResultsUpdate": "Qidiruv natijalari yangilanganda callback",
-      "onLoadingStateChange": "Yuklash holati o'zgarishi uchun callback"
+      "title": "Konfiguratsiya Variantlari:",
+      "layerName": "Qidirish natijalari qavati uchun maxsus nom",
+      "iconImage": "Qidirish natijalari uchun foydalanilishi kerak bo'lgan maxsus icon rasmi",
+      "highlightColor": "Qidirish natijalarini ajratib ko'rsatish uchun rang",
+      "pulseAnimation": "Puls animatsiyasi effektini yoqish/o'chirish",
+      "zoomToResults": "Avtomatik ravishda qidirish natijalariga zoom qilish",
+      "onIconClick": "Qidirish natijasi ikonasini bosganda callback",
+      "onResultsUpdate": "Qidirish natijalariga yangilanish bo'lganda callback",
+      "onLoadingStateChange": "Yuklash holati o'zgarishida callback"
     },
     "features": {
       "title": "Xususiyatlar:",
-      "autoResearch": "Xarita harakatlanganda avtomatik qayta qidiruv (debounced)",
-      "distanceFiltering": "Masofa asosidagi filtrlash (minimal 500m harakat qayta qidiruvni boshlaydi)",
-      "autoCleanup": "Oldingi qidiruv natijalarini avtomatik tozalash",
-      "realTimeLoading": "Real vaqt yuklash holati kuzatuvi"
+      "autoResearch": "Xarita ko'chganda avtomatik qayta qidirish (debounced)",
+      "distanceFiltering": "Masofaga asoslangan filtrlash (500m harakati qayta qidirish bo'yishn aktivatsiya qiladi)",
+      "autoCleanup": "Oldingi qidirish natijalarining avtomatik toza qilinishi",
+      "realTimeLoading": "Haqiqiy vaqt yuklash holati kuzatishi"
     },
     "codeComments": {
-      "searchResults": "Qidiruv natijalari:",
+      "searchResults": "Qidirish natijalari:",
       "loadingState": "Yuklash holati:",
-      "removeResults": "Keyinroq qidiruv natijalarini xaritadan olib tashlash uchun",
-      "clearFunction": "Qidiruv natijalarini tozalash tugaganda",
-      "searchResultClicked": "Qidiruv natijasi bosildi:",
-      "customClickBehavior": "Maxsus bosish harakati",
-      "foundResults": "{count} ta qidiruv natijasi topildi",
-      "handleResults": "Natijalar yangilanishini boshqarish",
-      "initialLoading": "Dastlabki qidiruv yuklanmoqda...",
-      "updatingResults": "Qidiruv natijalari yangilanmoqda...",
-      "loadingComplete": "Qidiruv yuklash tugadi",
-      "autoZoomToResults": "Natijalarga avtomatik masshtablash",
-      "customLayerName": "Maxsus qatlam nomi (standart: 'search-results')",
-      "customIconImageName": "Maxsus ikonka tasviri nomi",
+      "removeResults": "Keyinroq xarita dan qidirish natijalarini olib tashlash uchun",
+      "clearFunction": "Bajarilganda qidirish natijalarini tozalash",
+      "searchResultClicked": "Qidirish natijasi bosindi:",
+      "customClickBehavior": "Maxsus bosmani xatti-harakati",
+      "foundResults": "{count} qidirish natijasi topildi",
+      "handleResults": "Natijalarga yangilanishni boshqarish",
+      "initialLoading": "Dastlabki qidirish yuklanamoqda...",
+      "updatingResults": "Qidirish natijalari yangilanmoqda...",
+      "loadingComplete": "Qidirish yuklash tugallandi",
+      "autoZoomToResults": "Avtomatik ravishda natijalariga zoom qilish",
+      "customLayerName": "Maxsus qavat nomi (default: 'search-results')",
+      "customIconImageName": "Maxsus icon rasmi nomi",
       "customHighlightColor": "Maxsus ajratib ko'rsatish rangi",
-      "enablePulseAnimation": "Puls animatsiyasini yoqish (standart: false)",
-      "autoZoomToResultsDefault": "Natijalarga avto-masshtab (standart: true)",
-      "eventHandlers": "Hodisa ishlovchilari",
-      "stateCanBe": "holat 'firstRender', 'rerender', yoki false bo'lishi mumkin"
+      "enablePulseAnimation": "Puls animatsiyasini yoqish (default: false)",
+      "autoZoomToResultsDefault": "Natijalariga avtomatik zoom (default: true)",
+      "eventHandlers": "Voqea boshqaruvchilari",
+      "stateCanBe": "state bo'lishi mumkin 'firstRender', 'rerender', yoki false"
     }
   },
   "publicTransport": {
-    "title": "Jamoat Transporti",
-    "description": "Xaritangizda real vaqt jamoat transporti ma'lumotlarini ko'rsating.",
+    "title": "Umumiy Transport",
+    "description": "Xarita ustida real vaqt umumiy transport ma'lumotlarini ko'rsating.",
     "realTimeBuses": {
-      "title": "Real Vaqt Avtobus Joylarini Ko'rsatish",
-      "description": "Siz xaritada avtobuslarning {realTimeLocations} ni ko'rsatishingiz mumkin.",
-      "specificRoute": "Ma'lum marshrut uchun avtobuslarni ko'rsatish:",
-      "allBuses": "Joriy xarita ko'rinishidagi barcha avtobuslarni ko'rsatish:",
-      "allBusesDescription": "Agar siz {routeId} bermagan bo'lsangiz, xarita ko'rinadigan hudud ichidagi barcha avtobuslarni ko'rsatadi."
+      "title": "Real Vaqt Avtobusning Joylashuvini Ko'rsatish",
+      "description": "Xarita ustida avtobuslarning {realTimeLocations} ko'rsatishingiz mumkin.",
+      "specificRoute": "Ma'lum bir marshrut uchun avtobuslarni ko'rsatish:",
+      "allBuses": "Joriy xarita ko'rinishida barcha avtobuslarni ko'rsatish:",
+      "allBusesDescription": "Agar {routeId} ni taqdim etmasangiz, xarita ko'rinishi sohada barcha avtobuslarni ko'rsatadi."
     },
     "clearingBuses": {
-      "title": "Avtobus Marshrutlarini Tozalash",
-      "description": "{showBusRoute} usuli avtobus joylarini ko'rsatishni to'xtatish va barcha bog'liq ma'lumotlarni olib tashlash uchun chaqirishingiz mumkin bo'lgan tozalash funksiyasini qaytaradi:"
+      "title": "Avtobuslar Marshrutini Toza Qilish",
+      "description": "{showBusRoute} metodi avtobuslar joyashatishi va dastlabki ma'lumotlarni olib tashlash uchun chaqira oladigan tozalash funksiyasini qaytaradi:"
     },
     "cleanupInfo": {
       "title": "Tozalash funksiyasi nima qiladi:",
-      "stopUpdates": "Avtomatik avtobus joylari yangilanishini to'xtatadi (15 soniyalik interval)",
-      "removeMarkers": "Barcha avtobus markerlarini xaritadan olib tashlaydi",
-      "removeLayers": "Barcha marshrut qatlamlarini xaritadan olib tashlaydi",
-      "removeListeners": "Xarita harakat hodisa tinglovchilarini olib tashlaydi",
-      "clearCaches": "Ichki keshlarni tozalaydi (SVG keshi va boshqalar)"
+      "stopUpdates": "Avtomatik avtobuslar joyashatishini yangilashni to'xtatadi (15 soniya oraligi)",
+      "removeMarkers": "Xarita dan barcha avtobuslar markerlarini olib tashlaydi",
+      "removeLayers": "Xarita dan barcha marshrut qatlamlarini olib tashlaydi",
+      "removeListeners": "Xarita harakati voqea tinglovchilerini olib tashlaydi",
+      "clearCaches": "Ichki keshlashni tozalaydi (SVG kesh, va boshqalar)"
     },
     "performanceInfo": {
-      "title": "Samaradorlik Optimizatsiyasi:",
-      "maxBuses": "Bir vaqtda maksimal 100 ta avtobus ko'rsatiladi (ko'proq mavjud bo'lsa tasodifiy tanlanadi)",
-      "radiusFiltering": "Umumiy avtobus ko'rsatishi uchun 5km radius filtrlash (route_id yo'q)",
-      "viewportFiltering": "Keyingi yangilanishlar uchun avtomatik viewport filtrlash",
-      "iconCaching": "Yaxshi ishlash uchun SVG ikonka keshlash",
-      "debouncedUpdates": "Debounced xarita harakat yangilanishlari (500ms kechikish)"
+      "title": "Ishlash Samaradorligi:",
+      "maxBuses": "Maksimal 100 avtobuslar bir vaqtda ko'rsatiladi (agar ko'pchilik mavjud bo'lsa, tasodifiy ravishda tanlangan)",
+      "radiusFiltering": "Umumiy avtobuslar ko'rinishi uchun 5 km radius filtri (marshrut_id yo'q)",
+      "viewportFiltering": "Keyingi yangilashlar uchun avtomatik ko'rinish filtri",
+      "iconCaching": "Yaxshi samaradorlik uchun SVG icon kesh qilish",
+      "debouncedUpdates": "Xarita harakati yangilashini debounced (500ms kechikishi)"
     },
     "automaticUpdates": {
-      "title": "Avtomatik Yangilanishlar:",
-      "updateInterval": "Avtobus joylari har 15 soniyada yangilanadi",
-      "mapMovement": "Xarita harakati avtobus joylari yangilanishini boshlaydi (umumiy ko'rsatish uchun)",
-      "distanceFiltering": "Masofa asosidagi filtrlash (minimal 500m harakat)"
+      "title": "Avtomatik Yangilashlar:",
+      "updateInterval": "Avtobuslar joylari har 15 soniyada yangilanadi",
+      "mapMovement": "Xarita harakati avtobuslar joyashatishini yangilashni trigger qiladi (umumiy ko'rinishi uchun)",
+      "distanceFiltering": "Masofaga asoslangan filtrlash (500m minimal harakati)"
     },
     "codeComments": {
-      "stopShowing": "Keyinroq avtobus marshrutini ko'rsatishni to'xtatish uchun",
-      "stopShowingAll": "Barcha avtobus marshrutlarini ko'rsatishni to'xtatish uchun",
+      "stopShowing": "Keyinroq avtobuslar marshrutini ko'rsatishni to'xtatish uchun",
+      "stopShowingAll": "Keyinroq barcha avtobuslar marshrutini ko'rsatishni to'xtatish uchun",
       "storeCleanup": "Tozalash funksiyasini saqlash",
-      "laterClear": "Keyinroq, avtobus marshruti ko'rsatishini tozalash"
+      "laterClear": "Keyinroq, avtobuslar marshruti ko'rsatishini tozalash"
+    }
+  },
+  "utilityMethods": {
+    "title": "Utility Metodlari",
+    "description": "Geografik ma'lumotlar bilan ishlash uchun yordamchi metodlari.",
+    "boundingBox": {
+      "title": "Chegaralangan Qutini Hisoblash",
+      "description": "SDK GeoJSON ma'lumotlarining chegaralangan qutisini hisoblash uchun utility metodi taqdim etadi:",
+      "supportedTitle": "Qo'llab-quvvatlanadigan Geometriya Turlari:",
+      "point": "Nuqta",
+      "lineString": "ChiziqString",
+      "polygon": "Polygon",
+      "containsTitle": "Chegaralangan quti o'z ichiga oladi:",
+      "xMin": "Minimal uzunlik",
+      "xMax": "Maksimal uzunlik",
+      "yMin": "Minimal kenglik",
+      "yMax": "Maksimal kenglik"
+    },
+    "codeComments": {
+      "output": "Chiqarish: { xMin: 69.240, xMax: 69.280, yMin: 41.299, yMax: 41.3111 }"
+    }
+  },
+  "advancedFeatures": {
+    "title": "Ilg'or Xususiyatlar",
+    "description": "Ilg'or sozlash, ishlash samaradorligi optimizatsiyasi va eng yaxshi amaliyotlar.",
+    "customIcons": {
+      "title": "Maxsus Ikonalar va Uslub",
+      "loadingTitle": "Maxsus Ikonalarni Yuklash:",
+      "loadingDescription": "SDK ishga tushirish paytida serverdan ikonalarni avtomatik ravishda yuklab oladi va keshlaydi. Siz bu ikonalarni sizning qatlama ichida nom bo'yicha ko'rishingiz mumkin:",
+      "customDataTitle": "Maxsus Icon Ma'lumotlari:",
+      "customDataDescription": "Siz maxsus icon ma'lumotlarini to'g'ridan-to'g'ri taqdim etishingiz mumkin:"
+    },
+    "performance": {
+      "title": "Ishlash Samaradorligi Optimizatsiyasi",
+      "layerManagement": {
+        "title": "Qavat Boshqaruvi:",
+        "autoCleanup": "Qatlamlar ayni nom bilan qayta qo'shilganda avtomatik ravishda tozalanadi",
+        "sourceRemoval": "Manba qatlamlar bilan birga olib tashlanadi, xotira oqalishini oldini olish uchun",
+        "iconCache": "Icon rasmlari redundant yuklanishni oldini olish uchun keshlangan"
+      },
+      "busOptimization": {
+        "title": "Avtobuslar Marshtuti Optimizatsiyasi:",
+        "maxBusLimit": "Maksimal avtobuslar chegarasi katta ma'lumotlar to'plamlar bilan ishlash muammolarini oldini oladi",
+        "viewportFiltering": "Ko'rinish-asosli filtrlash keraksiz marker yaratishni kamaytiradi",
+        "svgCaching": "SVG kesh qilish rendering samaradorligini yaxshilaydi",
+        "debouncedUpdates": "Debounced yangilashlar ortiqcha API chaqiruvlarini oldini oladi"
+      },
+      "memoryManagement": {
+        "title": "Xotira Boshqaruvi:",
+        "autoCleanup": "Intervallar va voqea tinglovchilerining avtomatik toza qilinishi",
+        "cacheClearing": "Komponent yo'q qilinishida keshlash tozalash",
+        "markerRemoval": "To'g'ri marker olib tashlash xotira oqalishini oldini oladi"
+      }
+    },
+    "bestPractices": {
+      "title": "Eng Yaxshi Amaliyotlar",
+      "cleanupTitle": "1. Har doim resurslarni tozalang:",
+      "reuseLayerTitle": "2. Dinamik kontent uchun qavat nomlarini qayta ishlating:",
+      "meaningfulNamesTitle": "3. Mazmunli qavat nomlarini ishlating:",
+      "errorHandlingTitle": "4. Xatolarni mos ravishda boshqaring:"
+    },
+    "codeComments": {
+      "iconsAutomatic": "Ikonalar init() dan keyin avtomatik ravishda mavjud",
+      "useServerIcons": "Server taqdim etilgan ikonalarni foydalaning",
+      "referencesIcon": "Xususiyat xossalaridan ikonaga murojaat qiladi",
+      "whenDoneCleanup": "Tugaganda, toza qiling",
+      "autoCleanupPrevious": "Bu oldingi qavalni avtomatik ravishda toza qiladi",
+      "goodDescriptive": "Yaxshi: tasviri va o'ziga xos",
+      "avoidGeneric": "Tomon qo'yish: umumiy nomlar, ular toqnash qilishi mumkin",
+      "routeFailed": "Marshrut qurilishi muvaffaqiyatsiz bo'ldi:",
+      "handleError": "Xatoni mos ravishda boshqaring"
     }
   },
   "ui": {
     "language": "Til",
-    "theme": "Mavzu",
-    "switchToLight": "Yorug' rejimga o'tish",
-    "switchToDark": "Qorong'u rejimga o'tish"
+    "theme": "Tema",
+    "switchToLight": "Yorug' rejimga o'tkazing",
+    "switchToDark": "Qorong'i rejimga o'tkazing"
   },
   "app": {
     "title": "Yarrow Web SDK Hujjatlari"

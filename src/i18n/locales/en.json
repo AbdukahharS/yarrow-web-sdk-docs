@@ -6,11 +6,13 @@
     "layersAndData": "Layers and Data",
     "routing": "Routing",
     "search": "Search",
-    "publicTransport": "Public Transport"
+    "publicTransport": "Public Transport",
+    "utilityMethods": "Utility Methods",
+    "advancedFeatures": "Advanced Features"
   },
   "hero": {
     "title": "Web SDK Documentation",
-    "subtitle": "This document provides a guide to using the Yarrow Map Web SDK for embedding and interacting with Yarrow maps in your web application.",
+    "subtitle": "This document provides a comprehensive guide to using the Yarrow Map Web SDK for embedding and interacting with Yarrow maps in your web application.",
     "cta": "Getting started"
   },
   "gettingStarted": {
@@ -23,7 +25,9 @@
     },
     "initialization": {
       "title": "Initialization",
-      "description": "To get started, you need to create an instance of {yarrowMap}. This requires a configuration object that specifies the container element, center coordinates, and zoom level."
+      "description": "To get started, you need to create an instance of {yarrowMap}. This requires a configuration object that specifies the container element, center coordinates, and zoom level.",
+      "importantNote": "Important - Coordinate Format:",
+      "coordinateFormat": "This SDK uses [longitude, latitude] format for map configuration (matching MapLibre GL convention), but [latitude, longitude] format for all other methods like routing and markers (matching common usage)."
     },
     "configuration": {
       "title": "Configuration Options",
@@ -37,21 +41,23 @@
     "comments": {
       "configForMap": "Configuration for the map",
       "containerComment": "ID of the div element to render the map in",
-      "centerComment": "Initial center of the map [longitude, latitude]",
+      "centerComment": "Initial center [longitude, latitude] - MapLibre convention",
       "zoomComment": "Initial zoom level",
       "createInstance": "Create a new map instance",
       "initializeMap": "Initialize the map",
       "successMessage": "Map initialized successfully!",
       "containerParam": "string | HTMLElement - ID of the div element or the element itself",
-      "centerParam": "[number, number] - Initial center [longitude, latitude]",
+      "centerParam": "[number, number] - Initial center [longitude, latitude] - MapLibre convention",
       "zoomParam": "number - Initial zoom level (default: 10)",
       "minZoomParam": "number - Minimum zoom level (default: 0)",
       "maxZoomParam": "number - Maximum zoom level (default: 19)",
+      "themeParam": "'light' | 'dark' - Map theme (default: 'light')",
       "containerIdComment": "Container ID",
       "centerCoordinatesComment": "Center coordinates",
       "initialZoomComment": "Initial zoom",
       "minimumZoomComment": "Minimum zoom",
-      "maximumZoomComment": "Maximum zoom"
+      "maximumZoomComment": "Maximum zoom",
+      "themeComment": "Theme (optional, default: 'light')"
     }
   },
   "basicMap": {
@@ -60,6 +66,17 @@
     "changeMapStyle": {
       "title": "Changing the Map Style",
       "description": "You can change the map's visual style. The available styles are {satellite}, {hybrid}, and the default map style."
+    },
+    "changeTheme": {
+      "title": "Changing the Map Theme",
+      "description": "You can set the initial theme in the configuration or switch between light and dark themes dynamically after initialization.",
+      "settingInitialTheme": "Setting initial theme:",
+      "switchingDynamically": "Switching theme dynamically:",
+      "featuresTitle": "Features:",
+      "autoRefetch": "Automatically re-fetches appropriate styles from the server",
+      "updateLayers": "Updates all map layers to match the theme",
+      "preserveIcons": "Preserves custom icons and markers",
+      "seamlessTransition": "Seamless theme transition"
     },
     "moveMapView": {
       "title": "Moving the Map View",
@@ -80,6 +97,10 @@
       "switchSatellite": "Switch to satellite view",
       "switchHybrid": "Switch to hybrid view (satellite with labels)",
       "switchDefault": "Switch back to the default map style",
+      "initializeDarkTheme": "Initialize with dark theme",
+      "setInitialTheme": "Set initial theme to dark",
+      "switchDarkMode": "Switch to dark mode",
+      "switchLightMode": "Switch to light mode (default)",
       "flyToLocation": "Fly to a new location with a specific zoom level",
       "changeBackground": "Change the map background to a custom color",
       "lightGrayBackground": "Light gray background",
@@ -132,7 +153,6 @@
       "element": "Custom HTML element for the marker",
       "color": "Marker color (default: '#FF0000')",
       "draggable": "Whether the marker can be dragged (default: false)",
-      "offset": "Pixel offset from the marker position",
       "anchor": "Anchor point of the marker relative to its coordinates",
       "onClick": "Click event handler function"
     },
@@ -154,8 +174,7 @@
       "customMarkerElement": "HTMLElement - Custom marker element",
       "markerColor": "string - Marker color (default: '#FF0000')",
       "allowDragging": "boolean - Allow dragging (default: false)",
-      "pixelOffset": "[number, number] - Pixel offset",
-      "anchorPosition": "Anchor position: 'center', 'top', 'bottom', 'left', 'right', etc.",
+      "anchorPosition": "Anchor position: 'center', 'top', 'bottom', 'left', 'right', 'top-left', 'top-right', 'bottom-left', 'bottom-right'",
       "clickEventHandler": "function - Click event handler",
       "markerClicked": "Marker clicked!",
       "addCustomHTML": "Add a marker with custom HTML element",
@@ -168,6 +187,8 @@
   "routing": {
     "title": "Routing",
     "description": "The SDK provides powerful routing capabilities for different transportation modes.",
+    "importantNote": "Important Note:",
+    "coordinateFormat": "The SDK uses [latitude, longitude] format for all user-facing coordinate parameters (routing, markers, etc.), which is then internally converted to MapLibre's [longitude, latitude] format where needed.",
     "simpleRoute": {
       "title": "Building and Displaying a Simple Route",
       "description": "Calculate and display a route between a start and end point."
@@ -191,7 +212,7 @@
       "defaultName": "Default base layer name is 'route' if not specified"
     },
     "codeComments": {
-      "startPoint": "Start",
+      "startPoint": "Start [latitude, longitude]",
       "waypointOne": "Waypoint 1",
       "endPoint": "End",
       "routeBuilt": "Route built:",
@@ -294,6 +315,77 @@
       "stopShowingAll": "To stop showing all bus routes",
       "storeCleanup": "Store the cleanup function",
       "laterClear": "Later, clear the bus route display"
+    }
+  },
+  "utilityMethods": {
+    "title": "Utility Methods",
+    "description": "Helper methods for working with geographic data.",
+    "boundingBox": {
+      "title": "Calculating Bounding Box",
+      "description": "The SDK provides a utility method to calculate the bounding box of GeoJSON data:",
+      "supportedTitle": "Supported Geometry Types:",
+      "point": "Point",
+      "lineString": "LineString",
+      "polygon": "Polygon",
+      "containsTitle": "The bounding box contains:",
+      "xMin": "Minimum longitude",
+      "xMax": "Maximum longitude",
+      "yMin": "Minimum latitude",
+      "yMax": "Maximum latitude"
+    },
+    "codeComments": {
+      "output": "Output: { xMin: 69.240, xMax: 69.280, yMin: 41.299, yMax: 41.3111 }"
+    }
+  },
+  "advancedFeatures": {
+    "title": "Advanced Features",
+    "description": "Advanced customization, performance optimization, and best practices.",
+    "customIcons": {
+      "title": "Custom Icons and Styling",
+      "loadingTitle": "Loading Custom Icons:",
+      "loadingDescription": "The SDK automatically loads and caches icons from the server during initialization. You can reference these icons by name in your layers:",
+      "customDataTitle": "Custom Icon Data:",
+      "customDataDescription": "You can also provide custom icon data directly:"
+    },
+    "performance": {
+      "title": "Performance Optimization",
+      "layerManagement": {
+        "title": "Layer Management:",
+        "autoCleanup": "Layers are automatically cleaned up when re-added with the same name",
+        "sourceRemoval": "Sources are removed along with layers to prevent memory leaks",
+        "iconCache": "Icon images are cached to avoid redundant loading"
+      },
+      "busOptimization": {
+        "title": "Bus Route Optimization:",
+        "maxBusLimit": "Maximum bus limit prevents performance issues with large datasets",
+        "viewportFiltering": "Viewport-based filtering reduces unnecessary marker creation",
+        "svgCaching": "SVG caching improves rendering performance",
+        "debouncedUpdates": "Debounced updates prevent excessive API calls"
+      },
+      "memoryManagement": {
+        "title": "Memory Management:",
+        "autoCleanup": "Automatic cleanup of intervals and event listeners",
+        "cacheClearing": "Cache clearing on component destruction",
+        "markerRemoval": "Proper marker removal prevents memory leaks"
+      }
+    },
+    "bestPractices": {
+      "title": "Best Practices",
+      "cleanupTitle": "1. Always clean up resources:",
+      "reuseLayerTitle": "2. Reuse layer names for dynamic content:",
+      "meaningfulNamesTitle": "3. Use meaningful layer names:",
+      "errorHandlingTitle": "4. Handle errors appropriately:"
+    },
+    "codeComments": {
+      "iconsAutomatic": "Icons are automatically available after init()",
+      "useServerIcons": "Use server-provided icons",
+      "referencesIcon": "References the icon from feature properties",
+      "whenDoneCleanup": "When done, clean up",
+      "autoCleanupPrevious": "This will automatically clean up the previous layer",
+      "goodDescriptive": "Good: descriptive and unique",
+      "avoidGeneric": "Avoid: generic names that might conflict",
+      "routeFailed": "Route building failed:",
+      "handleError": "Handle error appropriately"
     }
   },
   "ui": {
