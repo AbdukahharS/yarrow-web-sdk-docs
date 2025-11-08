@@ -2,7 +2,7 @@ stages:
   - build
 
 variables:
-  NODE_VERSION: "18"
+  NODE_VERSION: "22.12"
 
 # Cache node_modules for faster builds
 .node_cache: &node_cache
