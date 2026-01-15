@@ -1,5 +1,59 @@
-# Vue 3 + TypeScript + Vite
+# Yarrow Map Web SDK Documentation
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Official documentation website for the Yarrow Map Web SDK.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## About
+
+Yarrow Map Web SDK is a powerful mapping library for embedding and interacting with Yarrow maps in web applications. This documentation site provides comprehensive guides and API references.
+
+## Features
+
+- Getting started guide
+- Map initialization and configuration
+- Layer management (GeoJSON, markers)
+- Routing capabilities
+- Search functionality
+- Public transport integration
+- Event handling
+- Multi-language support (via vue-i18n)
+
+## Tech Stack
+
+- Vue 3
+- TypeScript
+- Vite
+- Prism.js (code highlighting)
+- vue-i18n (internationalization)
+
+## Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## Documentation Contents
+
+The documentation covers:
+
+1. **Getting Started** - Installation and initialization
+2. **Map Manipulation** - Styles, view control, background
+3. **Events** - Click handlers, movement listeners
+4. **Layers & Data** - GeoJSON, markers, advanced configuration
+5. **Routing** - Simple and multi-stop routes
+6. **Search** - Search results and configuration
+7. **Public Transport** - Real-time bus tracking
+8. **Utilities** - Bounding box calculations
+
+## Live Demo
+
+[View Documentation](https://yarrow-web-sdk-docs.netlify.app/)
