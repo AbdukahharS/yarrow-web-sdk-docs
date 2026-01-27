@@ -1,10 +1,31 @@
-# Yarrow Web SDK Documentation
+# Yarrow Map Web SDK Documentation
 
-Vue 3 + TypeScript documentation site for the Yarrow Web SDK, built with Vite.
+Official documentation website for the Yarrow Map Web SDK.
 
-## Development
+## About
 
-### Standard Setup
+Yarrow Map Web SDK is a powerful mapping library for embedding and interacting with Yarrow maps in web applications. This documentation site provides comprehensive guides and API references.
+
+## Features
+
+- Getting started guide
+- Map initialization and configuration
+- Layer management (GeoJSON, markers)
+- Routing capabilities
+- Search functionality
+- Public transport integration
+- Event handling
+- Multi-language support (via vue-i18n)
+
+## Tech Stack
+
+- Vue 3
+- TypeScript
+- Vite
+- Prism.js (code highlighting)
+- vue-i18n (internationalization)
+
+## Getting Started
 
 ```bash
 # Install dependencies
@@ -20,37 +41,19 @@ npm run build
 npm run preview
 ```
 
-### Docker Setup
+## Documentation Contents
 
-#### Development with Docker
+The documentation covers:
 
-Run the development server with hot reload:
+1. **Getting Started** - Installation and initialization
+2. **Map Manipulation** - Styles, view control, background
+3. **Events** - Click handlers, movement listeners
+4. **Layers & Data** - GeoJSON, markers, advanced configuration
+5. **Routing** - Simple and multi-stop routes
+6. **Search** - Search results and configuration
+7. **Public Transport** - Real-time bus tracking
+8. **Utilities** - Bounding box calculations
 
-```bash
-docker-compose up dev
-```
+## Live Demo
 
-The application will be available at `http://localhost:5173`
-
-#### Production with Docker
-
-Build and run the production version:
-
-```bash
-# Using docker-compose
-docker-compose up prod
-
-# Or build and run manually
-docker build -t yarrow-docs .
-docker run -p 8080:80 yarrow-docs
-```
-
-The application will be available at `http://localhost:8080`
-
-## Features
-
-- Multi-language support (English, Uzbek, Russian)
-- Animated background with floating circles
-- Syntax highlighting with PrismJS
-- Responsive design
-- Accessibility compliant
+[View Documentation](https://yarrow-web-sdk-docs.netlify.app/)
