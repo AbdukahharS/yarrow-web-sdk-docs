@@ -24,7 +24,11 @@
       "geocoding": "Geokodlash",
       "layers": "Qatlamlarni Boshqarish",
       "bestPractices": "Eng Yaxshi Amaliyotlar"
-    }
+    },
+    "reactUsage": "React Ishlatilishi",
+    "apiReference": "API Ma'lumotnomasi",
+    "versionInformation": "Versiya Ma'lumotlari",
+    "support": "Yordam"
   },
   "hero": {
     "title": "Web SDK Dokumentatsiyasi",
@@ -49,6 +53,23 @@
       "title": "Konfiguratsiya Variantlari",
       "description": "{yarrowMapConfig} sinfi quyidagi parametrlarni qabul qiladi:",
       "exampleTitle": "Barcha variantlar bilan misol:"
+    },
+    "reactUsage": {
+      "title": "React Ishlatilishi",
+      "intro": "React API-lar quyidagi subpath orqali eksport qilinadi",
+      "quickStart": "1. YarrowMapView bilan tez boshlash",
+      "onReadyTitle": "2. onReady orqali xarita instance-ga kirish",
+      "onReadyDescription": "Dastlabki sozlashdan keyin imperative map logikasini ishlatish uchun",
+      "hookTitle": "3. useYarrowMap bilan kengaytirilgan kompozitsiya",
+      "hookDescription": "Yuklanish/xato holati, xarita instance va maxsus UI kompozitsiyasi uchun hookdan foydalaning:",
+      "configKeyTitle": "4. configKey bilan xaritani qayta ishga tushirish",
+      "configKeyDescription": "Konfiguratsiya identity o'zgarganda xarita qayta yaratilishini boshqarish uchun",
+      "ssrNoteTitle": "SSR eslatma:",
+      "ssrNoteDescription": "React integratsiyasi faqat brauzer muhitida ishga tushadi",
+      "controlsNoteTitle": "Eslatma:",
+      "controlsNoteDescription": "Standart holatda barcha MapLibre control-lar (zoom, navigation, attribution) ishga tushishda olib tashlanadi. Kerak bo'lsa MapLibre",
+      "requiredText": "talab qilinadi",
+      "ifNeededText": "ishlating."
     }
   },
   "code": {
@@ -81,7 +102,9 @@
     "description": "Xaritangizning ko'rinishini va ko'rinishini programma orqali boshqarishni o'rganing.",
     "changeMapStyle": {
       "title": "Xarita Uslubini O'zgartirish",
-      "description": "Xaritaning vizual uslubini o'zgartirishingiz mumkin. Mavjud uslublar {satellite}, {hybrid} va standart xarita uslubi."
+      "description": "Xaritaning vizual uslubini o'zgartirishingiz mumkin. Mavjud uslublar {satellite}, {hybrid} va standart xarita uslubi.",
+      "pitchNote": "Xarita",
+      "pitchNoteSuffix": "gacha bo'lgan 3D pitch ko'rinishini qo'llab-quvvatlaydi."
     },
     "changeTheme": {
       "title": "Xarita Temasini O'zgartirish",
@@ -146,7 +169,9 @@
       "listenPOIs": "POI-lardagi bosmalarni tinglash",
       "poiClicked": "POI bosindi:",
       "listenBuildings": "Binolardagi bosmalarni tinglash",
-      "buildingClicked": "Bino bosindi:"
+      "buildingClicked": "Bino bosindi:",
+      "onLayerAlias": "Eslatma: onLayerClick onIconClick uchun alias (bir xil metod)",
+      "sameAsOnIconClick": "onIconClick bilan bir xil"
     }
   },
   "layersAndData": {
@@ -351,6 +376,10 @@
     },
     "codeComments": {
       "output": "Chiqarish: { xMin: 69.240, xMax: 69.280, yMin: 41.299, yMax: 41.3111 }"
+    },
+    "clearLocalCache": {
+      "title": "Lokal keshni tozalash",
+      "description": "Xarita kesh resurslarini dasturiy ravishda tozalashingiz mumkin:"
     }
   },
   "advancedFeatures": {
@@ -412,5 +441,51 @@
   },
   "app": {
     "title": "Yarrow Web SDK Hujjatlari"
+  },
+  "apiReference": {
+    "title": "API Ma'lumotnomasi",
+    "configClassTitle": "YarrowMapConfig klassi",
+    "methodsTitle": "YarrowMap klass metodlari",
+    "typeDefinitionsTitle": "Type ta'riflari",
+    "table": {
+      "method": "Metod",
+      "parameters": "Parametrlar",
+      "returnType": "Qaytish turi",
+      "description": "Tavsif"
+    },
+    "methods": {
+      "init": "Xaritani style va iconlar bilan ishga tushirish",
+      "changeStyles": "Xarita stylini o'zgartirish",
+      "changeTheme": "Yorug' va qorong'i tema o'rtasida almashtirish",
+      "zoomTo": "Berilgan koordinataga uchish",
+      "fitBounds": "Barcha obyektlarni ko'rsatish uchun xaritani moslash",
+      "getBoundingBox": "Obyektlar bounding boxini hisoblash",
+      "onMoveEnd": "Xarita harakati tugashini tinglash",
+      "onMapClick": "Xarita bosilishini tinglash",
+      "onIconClick": "Icon bosilishini tinglash",
+      "onLayerClick": "onIconClick uchun alias (bir xil metod)",
+      "changeBackgroundColor": "Xarita fon rangini o'zgartirish",
+      "addLayer": "Xaritaga qatlam qo'shish",
+      "removeLayer": "Xaritadan qatlamni olib tashlash",
+      "addMarker": "Xaritaga marker qo'shish",
+      "removeMarker": "Markerni olib tashlash",
+      "renderRoutes": "Bir nechta marshrutni chizish",
+      "buildRouteWithLabels": "Label bilan marshrut qurish va ko'rsatish",
+      "buildMultiSegmentRouteWithLabels": "Ko'p segmentli marshrut qurish",
+      "clearAllRoutes": "Barcha marshrut qatlamlari va popup-larni tozalash",
+      "clearCache": "Lokal persistent keshni tozalash",
+      "highlightSearchResults": "Qidiruv natijalarini cleanup funksiyasi bilan ajratish",
+      "showBusRoute": "Avtobus joylashuvini cleanup funksiyasi bilan ko'rsatish"
+    },
+    "versionInfo": {
+      "title": "Versiya Ma'lumotlari",
+      "currentVersion": "Joriy versiya:",
+      "dependencies": "Bog'liqliklar:",
+      "repository": "Repository:"
+    },
+    "support": {
+      "title": "Yordam",
+      "description": "Muammo, savol yoki hissa uchun loyiha repositorysiga o'ting yoki Yarrow development jamoasi bilan bog'laning."
+    }
   }
 }

@@ -28,6 +28,8 @@ const boundingBoxCode = computed(() => `const geojsonData = {
 const boundingBox = yarrowMap.getBoundingBox(geojsonData);
 console.log(boundingBox);
 // ${t('utilityMethods.codeComments.output')}`)
+
+const clearCacheCode = computed(() => `await yarrowMap.clearCache();`)
 </script>
 
 <template>
@@ -74,6 +76,17 @@ console.log(boundingBox);
         </ul>
       </div>
     </div>
+
+    <div id="clear-local-cache" class="container">
+      <h3>{{ t('utilityMethods.clearLocalCache.title') }}</h3>
+      <p>{{ t('utilityMethods.clearLocalCache.description') }}</p>
+    </div>
+    <Code
+      :code="clearCacheCode"
+      language="typescript"
+      filename="clear-cache.ts"
+      file-type="TS"
+    />
   </div>
 </template>
 

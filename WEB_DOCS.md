@@ -8,6 +8,7 @@ This document provides a comprehensive guide to using the Yarrow Map Web SDK for
   - [Installation](#installation)
   - [Initialization](#initialization)
   - [Configuration Options](#configuration-options)
+  - [React Usage](#react-usage)
 - [Basic Map Manipulation](#basic-map-manipulation)
   - [Changing the Map Style](#changing-the-map-style)
   - [Changing the Map Theme](#changing-the-map-theme)
@@ -76,6 +77,8 @@ yarrowMap.init().then(() => {
 });
 ```
 
+**Note:** By default, all MapLibre controls (zoom, navigation, attribution) are automatically removed during initialization. Use MapLibre's `addControl()` method if you need to add specific controls.
+
 ### Configuration Options
 
 The `YarrowMapConfig` class accepts the following parameters:
@@ -87,7 +90,8 @@ const mapConfig = new YarrowMapConfig(
   zoom,         // number - Initial zoom level (default: 10)
   minZoom,      // number - Minimum zoom level (default: 0)
   maxZoom,      // number - Maximum zoom level (default: 19)
-  theme         // 'light' | 'dark' - Map theme (default: 'light')
+  theme,        // 'light' | 'dark' - Map theme (default: 'light')
+  cache         // { enabled?: boolean, lifespanDays?: number } - Local persistent cache config (default: { enabled: false, lifespanDays: 30 })
 );
 ```
 
@@ -102,7 +106,11 @@ const mapConfig = new YarrowMapConfig(
   12,                      // Initial zoom
   5,                       // Minimum zoom
   18,                      // Maximum zoom
-  'dark'                   // Theme (optional, default: 'light')
+  'dark',                  // Theme (optional, default: 'light')
+  {
+    enabled: true,         // Enable local persistent cache (default: false)
+    lifespanDays: 30       // Cache lifespan in days (default: 30)
+  }
 );
 
 const yarrowMap = new YarrowMap(mapConfig);
@@ -111,11 +119,113 @@ yarrowMap.init().then(() => {
 });
 ```
 
+### React Usage
+
+React APIs are exported from the `@yarrow/yarrow-map-web-sdk/react` subpath.
+
+**1. Quick start with `YarrowMapView`**
+
+```tsx
+import { YarrowMapView } from '@yarrow/yarrow-map-web-sdk/react';
+
+export const MapScreen = () => {
+  return (
+    <YarrowMapView
+      config={{
+        center: [69.2401, 41.2995], // [lng, lat]
+        zoom: 12,
+        theme: 'light',
+        cache: { enabled: true, lifespanDays: 30 },
+      }}
+      className="map-root"
+      style={{ width: '100%', height: '600px' }}
+    />
+  );
+};
+```
+
+**2. Access map instance with `onReady`**
+
+Use `onReady` when you want to run imperative map logic (add layers, subscribe to events, routes, search) after initialization.
+
+```tsx
+import { YarrowMapView } from '@yarrow/yarrow-map-web-sdk/react';
+
+export const MapScreen = () => {
+  return (
+    <YarrowMapView
+      config={{ center: [69.2401, 41.2995], zoom: 12 }}
+      onReady={(map) => {
+        map.changeStyles('hybrid');
+        map.onMapClick((lat, lng) => {
+          console.log('Clicked:', lat, lng);
+        });
+      }}
+      style={{ width: '100%', height: '600px' }}
+    />
+  );
+};
+```
+
+**3. Advanced composition with `useYarrowMap`**
+
+Use the hook when you need loading/error state, direct access to the map instance, or custom UI around the map container.
+
+```tsx
+import { useEffect } from 'react';
+import { useYarrowMap } from '@yarrow/yarrow-map-web-sdk/react';
+
+export const MapScreen = () => {
+  const { containerRef, map, isReady, error } = useYarrowMap({
+    config: {
+      center: [69.2401, 41.2995], // [lng, lat]
+      zoom: 12,
+      theme: 'dark',
+      cache: { enabled: true, lifespanDays: 14 },
+    },
+  });
+
+  useEffect(() => {
+    if (!map) return;
+    map.onMoveEnd((lat, lng, zoom) => {
+      console.log('Map moved:', { lat, lng, zoom });
+    });
+  }, [map]);
+
+  if (error) return <p>Failed to initialize map: {error.message}</p>;
+
+  return (
+    <div>
+      <div ref={containerRef} style={{ width: '100%', height: '600px' }} />
+      {!isReady && <p>Loading map...</p>}
+    </div>
+  );
+};
+```
+
+**4. Re-initialize map intentionally with `configKey`**
+
+`useYarrowMap` re-creates the map when config signature changes. You can explicitly control this behavior with `configKey`.
+
+```tsx
+const { containerRef } = useYarrowMap({
+  config: {
+    center: [69.2401, 41.2995],
+    zoom: 12,
+  },
+  configKey: `city-${cityId}`, // map will reinitialize when cityId changes
+});
+```
+
+**SSR note:** The React integration initializes only in browser environments (`window`/`document` required).
+
 ## Basic Map Manipulation
 
 ### Changing the Map Style
 
 You can change the map's visual style. The available styles are `satellite`, `hybrid`, and the default map style.
+
+The map supports up to **85-degree pitch** for 3D perspective views.
 
 ```javascript
 // Switch to satellite view
@@ -630,6 +740,18 @@ clearBuses();
 
 **Advanced Bus Route Features:**
 
+**Smooth Bus Animation:**
+Buses animate smoothly between positions, providing a realistic tracking experience:
+- 16-second animation duration between position updates
+- Uses `requestAnimationFrame` for smooth 60fps interpolation
+- Each bus has independent position tracking (`current` vs `target`)
+- Animation starts automatically when buses are displayed
+
+```javascript
+// Buses will animate smoothly between updates
+const clearBuses = await yarrowMap.showBusRoute('route-123');
+```
+
 **Performance Optimization:**
 - Maximum 100 buses displayed at once (randomly selected if more exist)
 - 5km radius filtering for general bus display (no route_id)
@@ -638,7 +760,7 @@ clearBuses();
 - Debounced map movement updates (500ms delay)
 
 **Automatic Updates:**
-- Bus locations update every 15 seconds
+- Bus locations update every 16 seconds
 - Map movement triggers bus location refresh (for general display)
 - Distance-based filtering (minimum 500m movement)
 
@@ -684,6 +806,14 @@ The bounding box contains:
 - `xMax`: Maximum longitude
 - `yMin`: Minimum latitude
 - `yMax`: Maximum latitude
+
+### Clearing Local Cache
+
+You can clear cached map resources programmatically:
+
+```javascript
+await yarrowMap.clearCache();
+```
 
 ## Advanced Features
 
@@ -798,7 +928,11 @@ constructor(
   zoom?: number,           // default: 10
   minZoom?: number,        // default: 0
   maxZoom?: number,        // default: 19
-  theme?: 'light' | 'dark' // default: 'light'
+  theme?: 'light' | 'dark', // default: 'light'
+  cache?: {
+    enabled?: boolean;      // default: false
+    lifespanDays?: number;  // default: 30 (1 month)
+  }
 )
 ```
 
@@ -825,6 +959,7 @@ constructor(
 | `buildRouteWithLabels()` | `start: [lat, lng], end: [lat, lng], profile: string` | `Promise<RouteResult>` | Build and display a route with labels |
 | `buildMultiSegmentRouteWithLabels()` | `coordinates: [lat, lng][], profile: string, language?: string` | `Promise<RouteResult>` | Build multi-segment route |
 | `clearAllRoutes()` | None | `void` | Clear all route layers and popups |
+| `clearCache()` | None | `Promise<void>` | Clear local persistent cache |
 | `highlightSearchResults()` | `query: string, options?: SearchOptions` | `() => void` | Highlight search results with cleanup function |
 | `showBusRoute(routeId?)` | `routeId?: string` | `Promise<() => void>` | Show bus locations with cleanup function |
 
@@ -867,9 +1002,8 @@ interface SearchOptions {
 
 ## Version Information
 
-- **Current Version**: 1.0.37
+- **Current Version**: 1.0.39
 - **Dependencies**: maplibre-gl ^5.5.0, axios ^1.7.9
-- **License**: MIT
 - **Repository**: https://git.yarrow.uz/yarrow-sdk/frontend/yarrow-map-web-sdk
 
 ## Support

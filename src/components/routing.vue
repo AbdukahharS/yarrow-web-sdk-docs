@@ -20,8 +20,9 @@ const multiStopRouteCode = computed(() => `const coordinates = [
   [41.325, 69.285],   // ${t('routing.codeComments.endPoint')}
 ];
 const profile = 'car';
+const language = 'en'; // Optional: 'en', 'ru', etc. (default: 'ru')
 
-yarrowMap.buildMultiSegmentRouteWithLabels(coordinates, profile).then(({ features, directions }) => {
+yarrowMap.buildMultiSegmentRouteWithLabels(coordinates, profile, language).then(({ features, directions }) => {
   console.log('${t('routing.codeComments.multiSegmentRoute')}', features);
   console.log('${t('routing.codeComments.directions')}', directions);
 });`)

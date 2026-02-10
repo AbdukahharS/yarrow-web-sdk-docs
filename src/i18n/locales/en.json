@@ -24,7 +24,11 @@
       "geocoding": "Geocoding",
       "layers": "Layer Management",
       "bestPractices": "Best Practices"
-    }
+    },
+    "reactUsage": "React Usage",
+    "apiReference": "API Reference",
+    "versionInformation": "Version Information",
+    "support": "Support"
   },
   "hero": {
     "title": "Web SDK Documentation",
@@ -49,6 +53,23 @@
       "title": "Configuration Options",
       "description": "The {yarrowMapConfig} class accepts the following parameters:",
       "exampleTitle": "Example with all options:"
+    },
+    "reactUsage": {
+      "title": "React Usage",
+      "intro": "React APIs are exported from the",
+      "quickStart": "1. Quick start with YarrowMapView",
+      "onReadyTitle": "2. Access map instance with onReady",
+      "onReadyDescription": "Use",
+      "hookTitle": "3. Advanced composition with useYarrowMap",
+      "hookDescription": "Use the hook for loading/error state, map instance access, and custom UI composition with",
+      "configKeyTitle": "4. Re-initialize map intentionally with configKey",
+      "configKeyDescription": "Control map recreation explicitly when configuration identity changes with",
+      "ssrNoteTitle": "SSR note:",
+      "ssrNoteDescription": "React integration initializes only in browser environments",
+      "controlsNoteTitle": "Note:",
+      "controlsNoteDescription": "By default, all MapLibre controls (zoom, navigation, attribution) are removed during initialization. Use MapLibre",
+      "requiredText": "required",
+      "ifNeededText": "if needed."
     }
   },
   "code": {
@@ -81,7 +102,9 @@
     "description": "Learn how to control your map's appearance and view programmatically.",
     "changeMapStyle": {
       "title": "Changing the Map Style",
-      "description": "You can change the map's visual style. The available styles are {satellite}, {hybrid}, and the default map style."
+      "description": "You can change the map's visual style. The available styles are {satellite}, {hybrid}, and the default map style.",
+      "pitchNote": "The map supports up to",
+      "pitchNoteSuffix": "for 3D perspective views."
     },
     "changeTheme": {
       "title": "Changing the Map Theme",
@@ -146,7 +169,9 @@
       "listenPOIs": "Listen for clicks on POIs",
       "poiClicked": "POI clicked:",
       "listenBuildings": "Listen for clicks on buildings",
-      "buildingClicked": "Building clicked:"
+      "buildingClicked": "Building clicked:",
+      "onLayerAlias": "Note: onLayerClick is an alias for onIconClick (same method)",
+      "sameAsOnIconClick": "Same as onIconClick"
     }
   },
   "layersAndData": {
@@ -351,6 +376,10 @@
     },
     "codeComments": {
       "output": "Output: { xMin: 69.240, xMax: 69.280, yMin: 41.299, yMax: 41.3111 }"
+    },
+    "clearLocalCache": {
+      "title": "Clearing Local Cache",
+      "description": "You can clear cached map resources programmatically:"
     }
   },
   "advancedFeatures": {
@@ -412,5 +441,51 @@
   },
   "app": {
     "title": "Yarrow Web SDK Docs"
+  },
+  "apiReference": {
+    "title": "API Reference",
+    "configClassTitle": "YarrowMapConfig Class",
+    "methodsTitle": "YarrowMap Class Methods",
+    "typeDefinitionsTitle": "Type Definitions",
+    "table": {
+      "method": "Method",
+      "parameters": "Parameters",
+      "returnType": "Return Type",
+      "description": "Description"
+    },
+    "methods": {
+      "init": "Initialize the map with styles and icons",
+      "changeStyles": "Change map style",
+      "changeTheme": "Switch between light and dark themes",
+      "zoomTo": "Fly to specific coordinates",
+      "fitBounds": "Fit map to show all features",
+      "getBoundingBox": "Calculate bounding box of features",
+      "onMoveEnd": "Listen for map movement end",
+      "onMapClick": "Listen for map clicks",
+      "onIconClick": "Listen for icon clicks",
+      "onLayerClick": "Alias for onIconClick (same method)",
+      "changeBackgroundColor": "Change map background color",
+      "addLayer": "Add a layer to the map",
+      "removeLayer": "Remove a layer from the map",
+      "addMarker": "Add a marker to the map",
+      "removeMarker": "Remove a marker from the map",
+      "renderRoutes": "Render multiple route features",
+      "buildRouteWithLabels": "Build and display a route with labels",
+      "buildMultiSegmentRouteWithLabels": "Build multi-segment route",
+      "clearAllRoutes": "Clear all route layers and popups",
+      "clearCache": "Clear local persistent cache",
+      "highlightSearchResults": "Highlight search results with cleanup function",
+      "showBusRoute": "Show bus locations with cleanup function"
+    },
+    "versionInfo": {
+      "title": "Version Information",
+      "currentVersion": "Current Version:",
+      "dependencies": "Dependencies:",
+      "repository": "Repository:"
+    },
+    "support": {
+      "title": "Support",
+      "description": "For issues, questions, or contributions, please visit the project repository or contact the Yarrow development team."
+    }
   }
 }

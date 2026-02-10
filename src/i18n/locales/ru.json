@@ -24,7 +24,11 @@
       "geocoding": "Геокодирование",
       "layers": "Управление слоями",
       "bestPractices": "Лучшие практики"
-    }
+    },
+    "reactUsage": "React Использование",
+    "apiReference": "Справочник API",
+    "versionInformation": "Информация о версии",
+    "support": "Поддержка"
   },
   "hero": {
     "title": "Документация Web SDK",
@@ -49,6 +53,23 @@
       "title": "Параметры конфигурации",
       "description": "Класс {yarrowMapConfig} принимает следующие параметры:",
       "exampleTitle": "Пример со всеми параметрами:"
+    },
+    "reactUsage": {
+      "title": "Использование React",
+      "intro": "React API экспортируются из подпути",
+      "quickStart": "1. Быстрый старт с YarrowMapView",
+      "onReadyTitle": "2. Доступ к экземпляру карты через onReady",
+      "onReadyDescription": "Используйте",
+      "hookTitle": "3. Расширенная композиция с useYarrowMap",
+      "hookDescription": "Используйте хук для состояния загрузки/ошибок, доступа к карте и кастомной компоновки UI с",
+      "configKeyTitle": "4. Принудительная реинициализация карты через configKey",
+      "configKeyDescription": "Управляйте пересозданием карты при изменении конфигурации с помощью",
+      "ssrNoteTitle": "SSR примечание:",
+      "ssrNoteDescription": "Интеграция React инициализируется только в браузерной среде",
+      "controlsNoteTitle": "Примечание:",
+      "controlsNoteDescription": "По умолчанию все контролы MapLibre (zoom, navigation, attribution) удаляются при инициализации. Используйте MapLibre",
+      "requiredText": "обязательны",
+      "ifNeededText": "при необходимости."
     }
   },
   "code": {
@@ -81,7 +102,9 @@
     "description": "Узнайте, как управлять внешним видом и представлением вашей карты программно.",
     "changeMapStyle": {
       "title": "Изменение стиля карты",
-      "description": "Вы можете изменить визуальный стиль карты. Доступные стили: {satellite}, {hybrid} и стиль карты по умолчанию."
+      "description": "Вы можете изменить визуальный стиль карты. Доступные стили: {satellite}, {hybrid} и стиль карты по умолчанию.",
+      "pitchNote": "Карта поддерживает наклон до",
+      "pitchNoteSuffix": "для 3D-перспективы."
     },
     "changeTheme": {
       "title": "Изменение темы карты",
@@ -146,7 +169,9 @@
       "listenPOIs": "Слушать клики по POI",
       "poiClicked": "POI щелкнут:",
       "listenBuildings": "Слушать клики по зданиям",
-      "buildingClicked": "Здание щелкнуто:"
+      "buildingClicked": "Здание щелкнуто:",
+      "onLayerAlias": "Примечание: onLayerClick является алиасом для onIconClick (тот же метод)",
+      "sameAsOnIconClick": "То же, что onIconClick"
     }
   },
   "layersAndData": {
@@ -351,6 +376,10 @@
     },
     "codeComments": {
       "output": "Выход: { xMin: 69.240, xMax: 69.280, yMin: 41.299, yMax: 41.3111 }"
+    },
+    "clearLocalCache": {
+      "title": "Очистка локального кэша",
+      "description": "Вы можете очистить кэшированные ресурсы карты программно:"
     }
   },
   "advancedFeatures": {
@@ -412,5 +441,51 @@
   },
   "app": {
     "title": "Документация Yarrow Web SDK"
+  },
+  "apiReference": {
+    "title": "Справочник API",
+    "configClassTitle": "Класс YarrowMapConfig",
+    "methodsTitle": "Методы класса YarrowMap",
+    "typeDefinitionsTitle": "Определения типов",
+    "table": {
+      "method": "Метод",
+      "parameters": "Параметры",
+      "returnType": "Тип возврата",
+      "description": "Описание"
+    },
+    "methods": {
+      "init": "Инициализация карты со стилями и иконками",
+      "changeStyles": "Изменить стиль карты",
+      "changeTheme": "Переключение между светлой и темной темой",
+      "zoomTo": "Перелет к указанным координатам",
+      "fitBounds": "Подогнать карту под все объекты",
+      "getBoundingBox": "Вычислить bounding box объектов",
+      "onMoveEnd": "Слушать завершение движения карты",
+      "onMapClick": "Слушать клики по карте",
+      "onIconClick": "Слушать клики по иконкам",
+      "onLayerClick": "Алиас для onIconClick (тот же метод)",
+      "changeBackgroundColor": "Изменить цвет фона карты",
+      "addLayer": "Добавить слой на карту",
+      "removeLayer": "Удалить слой с карты",
+      "addMarker": "Добавить маркер на карту",
+      "removeMarker": "Удалить маркер с карты",
+      "renderRoutes": "Отобразить несколько маршрутов",
+      "buildRouteWithLabels": "Построить и отобразить маршрут с подписями",
+      "buildMultiSegmentRouteWithLabels": "Построить многосегментный маршрут",
+      "clearAllRoutes": "Очистить все маршрутные слои и попапы",
+      "clearCache": "Очистить локальный persistent кэш",
+      "highlightSearchResults": "Подсветить результаты поиска с функцией очистки",
+      "showBusRoute": "Показать автобусы с функцией очистки"
+    },
+    "versionInfo": {
+      "title": "Информация о версии",
+      "currentVersion": "Текущая версия:",
+      "dependencies": "Зависимости:",
+      "repository": "Репозиторий:"
+    },
+    "support": {
+      "title": "Поддержка",
+      "description": "По вопросам, проблемам или вкладу посетите репозиторий проекта или свяжитесь с командой разработки Yarrow."
+    }
   }
 }

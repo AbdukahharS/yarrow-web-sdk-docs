@@ -21,6 +21,11 @@ yarrowMap.onIconClick('pois', (lat, lng, properties) => {
 // ${t('handlingEvents.codeComments.listenBuildings')}
 yarrowMap.onIconClick('buildings', (lat, lng, properties) => {
   console.log('${t('handlingEvents.codeComments.buildingClicked')}', properties);
+});
+
+// ${t('handlingEvents.codeComments.onLayerAlias')}
+yarrowMap.onLayerClick('pois', (clickLat, clickLng, clickProperties) => {
+  console.log('${t('handlingEvents.codeComments.sameAsOnIconClick')}', { clickLat, clickLng, clickProperties });
 });`)
 </script>
 

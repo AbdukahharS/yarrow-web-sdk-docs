@@ -9,6 +9,7 @@ import Search from '../components/search.vue'
 import PublicTransport from '../components/public-transport.vue'
 import UtilityMethods from '../components/utility-methods.vue'
 import AdvancedFeatures from '../components/advanced-features.vue'
+import ApiReference from '../components/api-reference.vue'
 </script>
 
 <template>
@@ -23,6 +24,7 @@ import AdvancedFeatures from '../components/advanced-features.vue'
     <PublicTransport />
     <UtilityMethods />
     <AdvancedFeatures />
+    <ApiReference />
   </div>
 </template>
 

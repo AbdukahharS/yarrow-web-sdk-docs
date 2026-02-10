@@ -60,6 +60,7 @@ yarrowMap.changeBackgroundColor('#f0f0f0'); // ${t('basicMap.codeComments.lightG
       <p>
         {{ t('basicMap.changeMapStyle.description', { satellite: 'satellite', hybrid: 'hybrid' }) }}
       </p>
+      <p>{{ t('basicMap.changeMapStyle.pitchNote') }} <span>85-degree pitch</span> {{ t('basicMap.changeMapStyle.pitchNoteSuffix') }}</p>
     </div>
     <Code
       :code="changeStylesCode"

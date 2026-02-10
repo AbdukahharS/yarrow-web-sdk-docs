@@ -22,6 +22,7 @@ const currentSDK = computed(() => {
 
 const webSDKLinks = computed(() => [
   { name: t('nav.gettingStarted'), href: '#getting-started' },
+  { name: t('nav.reactUsage'), href: '#react-usage' },
   { name: t('nav.basicMap'), href: '#basic-map' },
   { name: t('nav.handlingEvents'), href: '#handling-events' },
   { name: t('nav.layersAndData'), href: '#layers-and-data' },
@@ -30,6 +31,9 @@ const webSDKLinks = computed(() => [
   { name: t('nav.publicTransport'), href: '#public-transport' },
   { name: t('nav.utilityMethods'), href: '#utility-methods' },
   { name: t('nav.advancedFeatures'), href: '#advanced-features' },
+  { name: t('nav.apiReference'), href: '#api-reference' },
+  { name: t('nav.versionInformation'), href: '#version-information' },
+  { name: t('nav.support'), href: '#support' },
 ])
 
 const iOSSDKLinks = computed(() => [
