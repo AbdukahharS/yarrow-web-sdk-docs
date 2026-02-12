@@ -6,9 +6,9 @@ This document provides a comprehensive guide to using the Yarrow Map Web SDK for
 
 - [Getting Started](#getting-started)
   - [Installation](#installation)
+  - [React Usage](#react-usage)
   - [Initialization](#initialization)
   - [Configuration Options](#configuration-options)
-  - [React Usage](#react-usage)
 - [Basic Map Manipulation](#basic-map-manipulation)
   - [Changing the Map Style](#changing-the-map-style)
   - [Changing the Map Theme](#changing-the-map-theme)
@@ -52,6 +52,53 @@ First, add the Yarrow Map Web SDK to your project using your preferred package m
 npm install @yarrow/yarrow-map-web-sdk
 ```
 
+### React Usage
+
+React APIs are exported from the `@yarrow/yarrow-map-web-sdk/react` subpath.
+
+```tsx
+import { YarrowMapView } from '@yarrow/yarrow-map-web-sdk/react';
+
+export const MapScreen = () => {
+  return (
+    <YarrowMapView
+      config={{
+        center: [69.2401, 41.2995],
+        zoom: 12,
+        brandBadgePosition: 'bottom-left',
+      }}
+      style={{ width: '100%', height: '600px' }}
+    />
+  );
+};
+```
+
+You can also use the hook for custom composition:
+
+```tsx
+import { useYarrowMap } from '@yarrow/yarrow-map-web-sdk/react';
+
+export const MapScreen = () => {
+  const { containerRef, isReady, error } = useYarrowMap({
+    config: {
+      center: [69.2401, 41.2995],
+      zoom: 12,
+      brandBadgePosition: 'bottom-right',
+    },
+  });
+
+  return (
+    <div>
+      <div ref={containerRef} style={{ width: '100%', height: '600px' }} />
+      {isReady && <p>Map ready</p>}
+      {error && <p>Failed to initialize map</p>}
+    </div>
+  );
+};
+```
+
+**SSR note:** The React integration initializes the map only on the client side.
+
 ### Initialization
 
 To get started, you need to create an instance of `YarrowMap`. This requires a configuration object that specifies the container element, center coordinates, and zoom level.
@@ -81,18 +128,20 @@ yarrowMap.init().then(() => {
 
 ### Configuration Options
 
-The `YarrowMapConfig` class accepts the following parameters:
+The `YarrowMapConfig` class accepts a single configuration object:
 
 ```javascript
-const mapConfig = new YarrowMapConfig(
-  container,    // string | HTMLElement - ID of the div element or the element itself
-  center,       // [number, number] - Initial center [longitude, latitude] - MapLibre convention
-  zoom,         // number - Initial zoom level (default: 10)
-  minZoom,      // number - Minimum zoom level (default: 0)
-  maxZoom,      // number - Maximum zoom level (default: 19)
-  theme,        // 'light' | 'dark' - Map theme (default: 'light')
-  cache         // { enabled?: boolean, lifespanDays?: number } - Local persistent cache config (default: { enabled: false, lifespanDays: 30 })
-);
+const mapConfig = new YarrowMapConfig({
+  container,    // string | HTMLElement
+  center,       // [number, number] - [lng, lat]
+  zoom,         // number (default: 10)
+  minZoom,      // number (default: 0)
+  maxZoom,      // number (default: 19)
+  theme,        // 'light' | 'dark' (default: 'light')
+  cache,        // { enabled?: boolean, lifespanDays?: number }
+  brandBadgePosition, // 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+  controls      // { enabled?: boolean, position?: 'left'|'right', zoom?: boolean, compass?: boolean }
+});
 ```
 
 **Example with all options:**
@@ -100,124 +149,31 @@ const mapConfig = new YarrowMapConfig(
 ```javascript
 import { YarrowMap, YarrowMapConfig } from '@yarrow/yarrow-map-web-sdk';
 
-const mapConfig = new YarrowMapConfig(
-  'map',                    // Container ID
-  [69.2401, 41.2995],      // Center coordinates
-  12,                      // Initial zoom
-  5,                       // Minimum zoom
-  18,                      // Maximum zoom
-  'dark',                  // Theme (optional, default: 'light')
-  {
+const mapConfig = new YarrowMapConfig({
+  container: 'map',
+  center: [69.2401, 41.2995],
+  zoom: 12,
+  minZoom: 5,
+  maxZoom: 18,
+  theme: 'dark',
+  cache: {
     enabled: true,         // Enable local persistent cache (default: false)
     lifespanDays: 30       // Cache lifespan in days (default: 30)
-  }
-);
+  },
+  brandBadgePosition: 'top-right',
+  controls: {
+    enabled: true,         // Yarrow controls are OFF by default
+    position: 'right',     // Optional side of the map
+    zoom: true,            // Optional
+    compass: true          // Optional
+  },
+});
 
 const yarrowMap = new YarrowMap(mapConfig);
 yarrowMap.init().then(() => {
   console.log('Map initialized successfully!');
 });
 ```
-
-### React Usage
-
-React APIs are exported from the `@yarrow/yarrow-map-web-sdk/react` subpath.
-
-**1. Quick start with `YarrowMapView`**
-
-```tsx
-import { YarrowMapView } from '@yarrow/yarrow-map-web-sdk/react';
-
-export const MapScreen = () => {
-  return (
-    <YarrowMapView
-      config={{
-        center: [69.2401, 41.2995], // [lng, lat]
-        zoom: 12,
-        theme: 'light',
-        cache: { enabled: true, lifespanDays: 30 },
-      }}
-      className="map-root"
-      style={{ width: '100%', height: '600px' }}
-    />
-  );
-};
-```
-
-**2. Access map instance with `onReady`**
-
-Use `onReady` when you want to run imperative map logic (add layers, subscribe to events, routes, search) after initialization.
-
-```tsx
-import { YarrowMapView } from '@yarrow/yarrow-map-web-sdk/react';
-
-export const MapScreen = () => {
-  return (
-    <YarrowMapView
-      config={{ center: [69.2401, 41.2995], zoom: 12 }}
-      onReady={(map) => {
-        map.changeStyles('hybrid');
-        map.onMapClick((lat, lng) => {
-          console.log('Clicked:', lat, lng);
-        });
-      }}
-      style={{ width: '100%', height: '600px' }}
-    />
-  );
-};
-```
-
-**3. Advanced composition with `useYarrowMap`**
-
-Use the hook when you need loading/error state, direct access to the map instance, or custom UI around the map container.
-
-```tsx
-import { useEffect } from 'react';
-import { useYarrowMap } from '@yarrow/yarrow-map-web-sdk/react';
-
-export const MapScreen = () => {
-  const { containerRef, map, isReady, error } = useYarrowMap({
-    config: {
-      center: [69.2401, 41.2995], // [lng, lat]
-      zoom: 12,
-      theme: 'dark',
-      cache: { enabled: true, lifespanDays: 14 },
-    },
-  });
-
-  useEffect(() => {
-    if (!map) return;
-    map.onMoveEnd((lat, lng, zoom) => {
-      console.log('Map moved:', { lat, lng, zoom });
-    });
-  }, [map]);
-
-  if (error) return <p>Failed to initialize map: {error.message}</p>;
-
-  return (
-    <div>
-      <div ref={containerRef} style={{ width: '100%', height: '600px' }} />
-      {!isReady && <p>Loading map...</p>}
-    </div>
-  );
-};
-```
-
-**4. Re-initialize map intentionally with `configKey`**
-
-`useYarrowMap` re-creates the map when config signature changes. You can explicitly control this behavior with `configKey`.
-
-```tsx
-const { containerRef } = useYarrowMap({
-  config: {
-    center: [69.2401, 41.2995],
-    zoom: 12,
-  },
-  configKey: `city-${cityId}`, // map will reinitialize when cityId changes
-});
-```
-
-**SSR note:** The React integration initializes only in browser environments (`window`/`document` required).
 
 ## Basic Map Manipulation
 
@@ -246,14 +202,14 @@ You can set the initial theme in the configuration or switch between light and d
 
 ```javascript
 // Initialize with dark theme
-const mapConfig = new YarrowMapConfig(
-  'map',
-  [69.2401, 41.2995],
-  12,
-  5,
-  18,
-  'dark'  // Set initial theme to dark
-);
+const mapConfig = new YarrowMapConfig({
+  container: 'map',
+  center: [69.2401, 41.2995],
+  zoom: 12,
+  minZoom: 5,
+  maxZoom: 18,
+  theme: 'dark', // Set initial theme to dark
+});
 ```
 
 **Switching theme dynamically:**
@@ -923,15 +879,24 @@ try {
 
 ```typescript
 constructor(
-  container: string | HTMLElement,
-  center: [number, number],
-  zoom?: number,           // default: 10
-  minZoom?: number,        // default: 0
-  maxZoom?: number,        // default: 19
-  theme?: 'light' | 'dark', // default: 'light'
-  cache?: {
-    enabled?: boolean;      // default: false
-    lifespanDays?: number;  // default: 30 (1 month)
+  config: {
+    container: string | HTMLElement;
+    center: [number, number];
+    zoom?: number;           // default: 10
+    minZoom?: number;        // default: 0
+    maxZoom?: number;        // default: 19
+    theme?: 'light' | 'dark'; // default: 'light'
+    cache?: {
+      enabled?: boolean;      // default: false
+      lifespanDays?: number;  // default: 30 (1 month)
+    };
+    brandBadgePosition?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+    controls?: {
+      enabled?: boolean;      // default: false
+      position?: 'left' | 'right';
+      zoom?: boolean;         // default: true
+      compass?: boolean;      // default: true
+    };
   }
 )
 ```

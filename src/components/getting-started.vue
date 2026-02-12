@@ -41,30 +41,39 @@ yarrowMap.init().then(() => {
   console.log('${t('code.comments.successMessage')}');
 });`)
 
-const configOptionsCode = computed(() => `const mapConfig = new YarrowMapConfig(
+const configOptionsCode = computed(() => `const mapConfig = new YarrowMapConfig({
   container,    // ${t('code.comments.containerParam')}
-  center,       // ${t('code.comments.centerParam')}
+  center,       // [number, number] - [lng, lat]
   zoom,         // ${t('code.comments.zoomParam')}
   minZoom,      // ${t('code.comments.minZoomParam')}
   maxZoom,      // ${t('code.comments.maxZoomParam')}
   theme,        // ${t('code.comments.themeParam')}
-  cache         // { enabled?: boolean, lifespanDays?: number } - Local persistent cache config (default: { enabled: false, lifespanDays: 30 })
-);`)
+  cache,        // { enabled?: boolean, lifespanDays?: number }
+  brandBadgePosition, // 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+  controls      // { enabled?: boolean, position?: 'left'|'right', zoom?: boolean, compass?: boolean }
+});`)
 
 const fullExampleCode = computed(() => `import { YarrowMap, YarrowMapConfig } from '@yarrow/yarrow-map-web-sdk';
 
-const mapConfig = new YarrowMapConfig(
-  'map',                    // ${t('code.comments.containerIdComment')}
-  [69.2401, 41.2995],      // ${t('code.comments.centerCoordinatesComment')}
-  12,                      // ${t('code.comments.initialZoomComment')}
-  5,                       // ${t('code.comments.minimumZoomComment')}
-  18,                      // ${t('code.comments.maximumZoomComment')}
-  'dark',                  // ${t('code.comments.themeComment')}
-  {
-    enabled: true,         // Enable local persistent cache (default: false)
-    lifespanDays: 30       // Cache lifespan in days (default: 30)
-  }
-);
+const mapConfig = new YarrowMapConfig({
+  container: 'map',                    // ${t('code.comments.containerIdComment')}
+  center: [69.2401, 41.2995],         // ${t('code.comments.centerCoordinatesComment')}
+  zoom: 12,                           // ${t('code.comments.initialZoomComment')}
+  minZoom: 5,                         // ${t('code.comments.minimumZoomComment')}
+  maxZoom: 18,                        // ${t('code.comments.maximumZoomComment')}
+  theme: 'dark',                      // ${t('code.comments.themeComment')}
+  cache: {
+    enabled: true,                    // Enable local persistent cache (default: false)
+    lifespanDays: 30                  // Cache lifespan in days (default: 30)
+  },
+  brandBadgePosition: 'top-right',
+  controls: {
+    enabled: true,                    // Yarrow controls are OFF by default
+    position: 'right',
+    zoom: true,
+    compass: true
+  },
+});
 
 const yarrowMap = new YarrowMap(mapConfig);
 yarrowMap.init().then(() => {
@@ -77,71 +86,35 @@ export const MapScreen = () => {
   return (
     <YarrowMapView
       config={{
-        center: [69.2401, 41.2995], // [lng, lat]
+        center: [69.2401, 41.2995],
         zoom: 12,
-        theme: 'light',
-        cache: { enabled: true, lifespanDays: 30 },
-      }}
-      className="map-root"
-      style={{ width: '100%', height: '600px' }}
-    />
-  );
-};`)
-
-const reactOnReadyCode = computed(() => `import { YarrowMapView } from '@yarrow/yarrow-map-web-sdk/react';
-
-export const MapScreen = () => {
-  return (
-    <YarrowMapView
-      config={{ center: [69.2401, 41.2995], zoom: 12 }}
-      onReady={(map) => {
-        map.changeStyles('hybrid');
-        map.onMapClick((lat, lng) => {
-          console.log('Clicked:', lat, lng);
-        });
+        brandBadgePosition: 'bottom-left',
       }}
       style={{ width: '100%', height: '600px' }}
     />
   );
 };`)
 
-const reactHookCode = computed(() => `import { useEffect } from 'react';
-import { useYarrowMap } from '@yarrow/yarrow-map-web-sdk/react';
+const reactHookCode = computed(() => `import { useYarrowMap } from '@yarrow/yarrow-map-web-sdk/react';
 
 export const MapScreen = () => {
-  const { containerRef, map, isReady, error } = useYarrowMap({
+  const { containerRef, isReady, error } = useYarrowMap({
     config: {
-      center: [69.2401, 41.2995], // [lng, lat]
+      center: [69.2401, 41.2995],
       zoom: 12,
-      theme: 'dark',
-      cache: { enabled: true, lifespanDays: 14 },
+      brandBadgePosition: 'bottom-right',
     },
   });
-
-  useEffect(() => {
-    if (!map) return;
-    map.onMoveEnd((lat, lng, zoom) => {
-      console.log('Map moved:', { lat, lng, zoom });
-    });
-  }, [map]);
-
-  if (error) return <p>Failed to initialize map: {error.message}</p>;
 
   return (
     <div>
       <div ref={containerRef} style={{ width: '100%', height: '600px' }} />
-      {!isReady && <p>Loading map...</p>}
+      {isReady && <p>Map ready</p>}
+      {error && <p>Failed to initialize map</p>}
     </div>
   );
 };`)
 
-const reactConfigKeyCode = computed(() => `const { containerRef } = useYarrowMap({
-  config: {
-    center: [69.2401, 41.2995],
-    zoom: 12,
-  },
-  configKey: \`city-\${cityId}\`, // map will reinitialize when cityId changes
-});`)
 </script>
 
 <template>
@@ -158,6 +131,33 @@ const reactConfigKeyCode = computed(() => `const { containerRef } = useYarrowMap
       <button class="install-button btn-animate" @click="copyToClipboard">
         {{ buttonText }}
       </button>
+    </div>
+
+    <div id="react-usage" class="container">
+      <h2>{{ t('gettingStarted.reactUsage.title') }}</h2>
+      <p>{{ t('gettingStarted.reactUsage.intro') }} <span>@yarrow/yarrow-map-web-sdk/react</span>.</p>
+      <h3>{{ t('gettingStarted.reactUsage.quickStart') }}</h3>
+    </div>
+    <Code
+      :code="reactQuickStartCode"
+      language="tsx"
+      filename="react-quick-start.tsx"
+      file-type="TSX"
+    />
+
+    <div class="container">
+      <h3>{{ t('gettingStarted.reactUsage.hookTitle') }}</h3>
+      <p>{{ t('gettingStarted.reactUsage.hookDescription') }} <span>useYarrowMap</span>.</p>
+    </div>
+    <Code
+      :code="reactHookCode"
+      language="tsx"
+      filename="react-use-yarrow-map.tsx"
+      file-type="TSX"
+    />
+
+    <div class="container">
+      <p class="note"><strong>{{ t('gettingStarted.reactUsage.ssrNoteTitle') }}</strong> {{ t('gettingStarted.reactUsage.ssrNoteDescription') }}</p>
     </div>
 
     <div class="container">
@@ -198,56 +198,6 @@ const reactConfigKeyCode = computed(() => `const { containerRef } = useYarrowMap
       filename="example.js"
       file-type="JS"
     />
-
-    <div id="react-usage" class="container">
-      <h2>{{ t('gettingStarted.reactUsage.title') }}</h2>
-      <p>{{ t('gettingStarted.reactUsage.intro') }} <span>@yarrow/yarrow-map-web-sdk/react</span>.</p>
-      <h3>{{ t('gettingStarted.reactUsage.quickStart') }}</h3>
-    </div>
-    <Code
-      :code="reactQuickStartCode"
-      language="tsx"
-      filename="react-quick-start.tsx"
-      file-type="TSX"
-    />
-
-    <div class="container">
-      <h3>{{ t('gettingStarted.reactUsage.onReadyTitle') }}</h3>
-      <p>{{ t('gettingStarted.reactUsage.onReadyDescription') }} <span>onReady</span>.</p>
-    </div>
-    <Code
-      :code="reactOnReadyCode"
-      language="tsx"
-      filename="react-on-ready.tsx"
-      file-type="TSX"
-    />
-
-    <div class="container">
-      <h3>{{ t('gettingStarted.reactUsage.hookTitle') }}</h3>
-      <p>{{ t('gettingStarted.reactUsage.hookDescription') }} <span>useYarrowMap</span>.</p>
-    </div>
-    <Code
-      :code="reactHookCode"
-      language="tsx"
-      filename="react-use-yarrow-map.tsx"
-      file-type="TSX"
-    />
-
-    <div class="container">
-      <h3>{{ t('gettingStarted.reactUsage.configKeyTitle') }}</h3>
-      <p>{{ t('gettingStarted.reactUsage.configKeyDescription') }} <span>configKey</span>.</p>
-    </div>
-    <Code
-      :code="reactConfigKeyCode"
-      language="tsx"
-      filename="react-config-key.tsx"
-      file-type="TSX"
-    />
-
-    <div class="container">
-      <p class="note"><strong>{{ t('gettingStarted.reactUsage.ssrNoteTitle') }}</strong> {{ t('gettingStarted.reactUsage.ssrNoteDescription') }} (<span>window</span>/<span>document</span> {{ t('gettingStarted.reactUsage.requiredText') }}).</p>
-      <p class="note"><strong>{{ t('gettingStarted.reactUsage.controlsNoteTitle') }}</strong> {{ t('gettingStarted.reactUsage.controlsNoteDescription') }} <span>addControl()</span> {{ t('gettingStarted.reactUsage.ifNeededText') }}</p>
-    </div>
   </div>
 </template>
 

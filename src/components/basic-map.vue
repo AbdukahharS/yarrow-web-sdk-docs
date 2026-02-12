@@ -15,14 +15,14 @@ yarrowMap.changeStyles('hybrid');
 yarrowMap.changeStyles();`)
 
 const initialThemeCode = computed(() => `// ${t('basicMap.codeComments.initializeDarkTheme')}
-const mapConfig = new YarrowMapConfig(
-  'map',
-  [69.2401, 41.2995],
-  12,
-  5,
-  18,
-  'dark'  // ${t('basicMap.codeComments.setInitialTheme')}
-);`)
+const mapConfig = new YarrowMapConfig({
+  container: 'map',
+  center: [69.2401, 41.2995],
+  zoom: 12,
+  minZoom: 5,
+  maxZoom: 18,
+  theme: 'dark', // ${t('basicMap.codeComments.setInitialTheme')}
+});`)
 
 const switchThemeCode = computed(() => `// ${t('basicMap.codeComments.switchDarkMode')}
 await yarrowMap.changeTheme('dark');

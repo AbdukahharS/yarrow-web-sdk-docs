@@ -6,15 +6,24 @@ import Code from './code.vue'
 const { t } = useI18n()
 
 const configClassCode = computed(() => `constructor(
-  container: string | HTMLElement,
-  center: [number, number],
-  zoom?: number,           // default: 10
-  minZoom?: number,        // default: 0
-  maxZoom?: number,        // default: 19
-  theme?: 'light' | 'dark', // default: 'light'
-  cache?: {
-    enabled?: boolean;      // default: false
-    lifespanDays?: number;  // default: 30 (1 month)
+  config: {
+    container: string | HTMLElement;
+    center: [number, number];
+    zoom?: number;           // default: 10
+    minZoom?: number;        // default: 0
+    maxZoom?: number;        // default: 19
+    theme?: 'light' | 'dark'; // default: 'light'
+    cache?: {
+      enabled?: boolean;      // default: false
+      lifespanDays?: number;  // default: 30 (1 month)
+    };
+    brandBadgePosition?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+    controls?: {
+      enabled?: boolean;      // default: false
+      position?: 'left' | 'right';
+      zoom?: boolean;         // default: true
+      compass?: boolean;      // default: true
+    };
   }
 )`)
 
