@@ -9,13 +9,15 @@ const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 
-const sdkOptions = [
-  { name: 'Web SDK', value: 'web-sdk', path: '/web-sdk' },
-  { name: 'iOS SDK', value: 'ios-sdk', path: '/ios-sdk' }
-]
+const sdkOptions = computed(() => [
+  { name: t('sdk.web'), value: 'web-sdk', path: '/web-sdk' },
+  { name: t('sdk.ios'), value: 'ios-sdk', path: '/ios-sdk' },
+  { name: t('sdk.flutter'), value: 'flutter-sdk', path: '/flutter-sdk' }
+])
 
 const currentSDK = computed(() => {
   const path = route.path
+  if (path.includes('flutter')) return 'flutter-sdk'
   if (path.includes('ios')) return 'ios-sdk'
   return 'web-sdk'
 })
@@ -53,12 +55,76 @@ const iOSSDKLinks = computed(() => [
   { name: t('nav.ios.bestPractices'), href: '#ios-best-practices' },
 ])
 
+const toHeadingId = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/`/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+
+const flutterSections = [
+  { key: 'nav.flutter.whatThisPackageProvides', anchor: '1. What this package provides' },
+  { key: 'nav.flutter.requirements', anchor: '2. Requirements' },
+  { key: 'nav.flutter.installation', anchor: '3. Installation' },
+  { key: 'nav.flutter.import', anchor: '3.1 Import' },
+  { key: 'nav.flutter.quickStart', anchor: '4. Quick start' },
+  { key: 'nav.flutter.coreObjectsAndLifecycle', anchor: '5. Core objects and lifecycle' },
+  { key: 'nav.flutter.yarrowMapView', anchor: '5.1 YarrowMapView' },
+  { key: 'nav.flutter.yarrowMapController', anchor: '5.2 YarrowMapController' },
+  { key: 'nav.flutter.readinessRules', anchor: '5.3 Readiness rules' },
+  { key: 'nav.flutter.disposalRules', anchor: '5.4 Disposal rules' },
+  { key: 'nav.flutter.configuration', anchor: '6. Configuration (YarrowMapConfig)' },
+  { key: 'nav.flutter.fieldDetails', anchor: '6.1 Field details' },
+  { key: 'nav.flutter.themeEnum', anchor: '6.2 Theme enum' },
+  { key: 'nav.flutter.badgePositionEnum', anchor: '6.3 Badge position enum' },
+  { key: 'nav.flutter.controlsConfig', anchor: '6.4 Controls config' },
+  { key: 'nav.flutter.apiReference', anchor: '7. YarrowMap API reference' },
+  { key: 'nav.flutter.styleTheme', anchor: '7.1 Style/theme' },
+  { key: 'nav.flutter.camera', anchor: '7.2 Camera' },
+  { key: 'nav.flutter.globalMapEvents', anchor: '7.3 Global map events' },
+  { key: 'nav.flutter.featureClickEvents', anchor: '7.4 Feature click events' },
+  { key: 'nav.flutter.layers', anchor: '7.5 Layers' },
+  { key: 'nav.flutter.markers', anchor: '7.6 Markers' },
+  { key: 'nav.flutter.routing', anchor: '7.7 Routing' },
+  { key: 'nav.flutter.searchHighlight', anchor: '7.8 Search highlight' },
+  { key: 'nav.flutter.busTracking', anchor: '7.9 Bus tracking' },
+  { key: 'nav.flutter.cache', anchor: '7.10 Cache' },
+  { key: 'nav.flutter.endpointContract', anchor: '8. Endpoint contract expected by SDK' },
+  { key: 'nav.flutter.usageExamples', anchor: '9. Usage examples by feature' },
+  { key: 'nav.flutter.initializeWithDarkTheme', anchor: '9.1 Initialize with dark theme, left controls, cache' },
+  { key: 'nav.flutter.safeAccess', anchor: '9.2 Safe access from UI handlers' },
+  { key: 'nav.flutter.customSymbolLayer', anchor: '9.3 Add a custom symbol layer and click handling' },
+  { key: 'nav.flutter.clusteredPoints', anchor: '9.4 Add clustered points' },
+  { key: 'nav.flutter.buildRouteWithLabels', anchor: '9.5 Build route with labels' },
+  { key: 'nav.flutter.multiSegmentRoute', anchor: '9.6 Multi-segment route with language' },
+  { key: 'nav.flutter.searchLifecycle', anchor: '9.7 Search lifecycle with cancellation' },
+  { key: 'nav.flutter.busLifecycle', anchor: '9.8 Bus lifecycle with cancellation' },
+  { key: 'nav.flutter.markerAddRemove', anchor: '9.9 Marker add/remove' },
+  { key: 'nav.flutter.coordinateConventions', anchor: '10. Coordinate conventions (important)' },
+  { key: 'nav.flutter.errorHandling', anchor: '11. Error handling and defensive patterns' },
+  { key: 'nav.flutter.protectEarlyCalls', anchor: '11.1 Protect early calls' },
+  { key: 'nav.flutter.catchRequestFailures', anchor: '11.2 Catch request failures' },
+  { key: 'nav.flutter.cancelLongRunningTasks', anchor: '11.3 Always cancel long-running tasks' },
+  { key: 'nav.flutter.commonPitfalls', anchor: '12. Common pitfalls' },
+  { key: 'nav.flutter.fullScreenExample', anchor: '13. Full screen example' },
+  { key: 'nav.flutter.publicExports', anchor: '14. Public exports from package' }
+]
+
+const flutterSDKLinks = computed(() =>
+  flutterSections.map((section) => ({
+    name: t(section.key),
+    href: `#${toHeadingId(section.anchor)}`
+  }))
+)
+
 const links = computed(() => {
-  return currentSDK.value === 'ios-sdk' ? iOSSDKLinks.value : webSDKLinks.value
+  if (currentSDK.value === 'ios-sdk') return iOSSDKLinks.value
+  if (currentSDK.value === 'flutter-sdk') return flutterSDKLinks.value
+  return webSDKLinks.value
 })
 
 const handleSDKChange = (value: string) => {
-  const sdk = sdkOptions.find(s => s.value === value)
+  const sdk = sdkOptions.value.find(s => s.value === value)
   if (sdk) {
     router.push(sdk.path)
   }
@@ -110,7 +176,8 @@ const setupObserver = () => {
   // Wait for next tick to ensure DOM is updated
   setTimeout(() => {
     links.value.forEach((link) => {
-      const element = document.querySelector(link.href)
+      const id = link.href.startsWith('#') ? link.href.slice(1) : link.href
+      const element = document.getElementById(id)
       if (element) {
         observer?.observe(element)
       }
@@ -262,10 +329,15 @@ aside {
   height: 100vh;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
-  padding: 45px 35px;
+  padding: 45px 25px;
   transition: transform 0.3s ease;
   z-index: 1000;
   overflow-y: auto;
+  direction: rtl;
+
+  * {
+    direction: ltr;
+  }
 
   .sdk-selector {
     margin-top: 30px;
@@ -275,7 +347,7 @@ aside {
     margin-top: 30px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
 
     a {
       font-weight: 600;

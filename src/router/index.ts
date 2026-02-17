@@ -21,6 +21,14 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: 'iOS SDK Documentation'
     }
+  },
+  {
+    path: '/flutter-sdk',
+    name: 'FlutterSDK',
+    component: () => import('../pages/FlutterSDKPage.vue'),
+    meta: {
+      title: 'Flutter SDK Documentation'
+    }
   }
 ]
 
